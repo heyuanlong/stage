@@ -216,4 +216,13 @@ $ git push origin :serverfix
 
 
 
+衍合
+衍合是指一条分支树叉接到另个树叉上去。
+现在我们决定把 server 分支的变化也包含进来。我们可以直接把 server 分支衍合到 master，而不用手工切换到 server 分支后再执行衍合操作 — git rebase [主分支] [特性分支] 命令会先取出特性分支 server，然后在主分支 master 上重演：
+$ git rebase master server
+再
+然后就可以快进主干分支 master 了：
+$ git checkout master
+$ git merge server
+这样master就和server的head就在同一节点上了
 
