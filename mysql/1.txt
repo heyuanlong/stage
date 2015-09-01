@@ -1,0 +1,54 @@
+
+http://www.cnblogs.com/lyhabc/p/3691555.html
+
+CREATE TABLE emp
+(
+id INT DEFAULT 12
+)
+
+CREATE TABLE emp (
+ID INT  PRIMARY KEY AUTO_INCREMENT
+) AUTO_INCREMENT = 100 ; --（设置自增ID从100开始）
+
+查看全局变量
+SHOW GLOBAL VARIABLES LIKE 'auto_incre%'; -- 全局变量
+
+查看表结构
+desc tablename;
+
+
+修改表名
+ALTER TABLE emp RENAME emp2
+
+修改字段的数据类型
+ALTER TABLE emp2 MODIFY id BIGINT
+
+修改字段
+ALTER TABLE emp2 CHANGE id iid INT
+
+添加字段
+MYSQL里可以使用FIRST和AFTER关键字指定添加的字段的位置
+ALTER TABLE emp2 ADD NAME CHAR(200)
+
+删除字段
+ALTER TABLE emp2 DROP NAME
+
+删除外键约束
+ALTER TABLE emp2 DROP FOREIGN KEY fk_emp_dept
+
+删除表
+DROP TABLE emp2
+DROP TABLE IF EXISTS emp1 ,emp2
+
+
+CREATE TABLE TESTIdentity(
+ID int unsigned   not null auto_increment,
+NID INT UNSIGNED ,
+name varchar(10) not null,
+  key(id))engine=INNODB auto_increment=100
+;
+
+无论innodb引擎还是MYISAM引擎的表中，只能有一个自增列，并且自增列一定是索引列，无论是二级索引还是主键索引
+这里跟SQLSERVER是不一样，SQLSERVER允许一张表有多个自增列，并且不需要在自增列上创建索引
+
+一般系统定义的全局变量都是以@@开头，用户自定义变量以@开头。

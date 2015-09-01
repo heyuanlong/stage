@@ -1,0 +1,114 @@
+MySQL中select的基本语法形式：
+
+select 属性列表
+from 表名和视图列表
+[where 条件表达式]
+[group by 属性名[having 条件表达式]]
+[order by 属性名[asc|desc]]
+[limit <offset>,row count]
+
+where子句：按照“条件表达式”指定的条件进行查询。
+group by子句：按照“属性名”指定的字段进行分组。
+having子句：有group by才能having子句，只有满足“条件表达式”中指定的条件的才能够输出。
+group by子句通常和count()、sum()等聚合函数一起使用。
+order by子句：按照“属性名”指定的字段进行排序。排序方式由“asc”和“desc”两个参数指出，默认是按照“asc”来排序，即升序。
+
+
+SELECT * FROM fruits
+SELECT f_id,f_name FROM fruits WHERE f_price >5.1
+SELECT f_id,f_name FROM fruits WHERE s_id IN(101,102)
+SELECT f_id,f_name FROM fruits WHERE s_id NOT IN(101,102)
+SELECT f_id,f_name FROM fruits WHERE f_price BETWEEN 2 AND 10
+SELECT f_id,f_name FROM fruits WHERE f_price NOT  BETWEEN 2 AND 10
+
+
+
+带like的字符匹配查询
+1、百分号通配符“%”，匹配任意长度的字符，甚至包括零字符
+SELECT f_id,f_name FROM fruits WHERE f_name LIKE 'b%y'
+2、下划线通配符“_”,一次只能匹配任意一个字符
+SELECT f_id,f_name FROM fruits WHERE f_name LIKE '____n'
+
+
+
+查询空值
+SELECT * FROM customers WHERE c_city IS NULL
+SELECT * FROM customers WHERE c_city IS NOT NULL
+
+
+DISTINCT关键字//不显示重复数据
+SELECT DISTINCT s_id FROM fruits
+
+
+GROUP BY
+SELECT s_id ,COUNT(1) AS total FROM fruits GROUP BY s_id;
+根据s_id分组，并计算每组有多少个。
+
+
+having：过滤分组
+根据s_id对fruits表中的数据进行分组，并显示水果种类大于1的分组信息
+SELECT s_id ,GROUP_CONCAT(f_name) AS NAMES FROM fruits GROUP BY s_id HAVING COUNT(f_name)>1
+
+
+limit限制查询结果的数量
+LIMIT[位置偏移量]，行数//偏移量从0开始
+SELECT * FROM fruits LIMIT 4,3
+
+
+子查询 （where后面还有一个select语句）
+ANY关键字接在一个比较操作符的后面，表示若与子查询返回的任何值比较为TRUE，则返回TRUE
+返回tbl2表的所有num2列，然后将tbl1中的num1的值与之进行比较，只要大于num2的任何一个值，即为符合查询条件的结果
+SELECT num1 FROM tbl1 WHERE num1>ANY(SELECT num2 FROM tbl2)
+
+
+
+合并查询
+使用UNION关键字，合并结果时，两个查询对应的列数和数据类型必须相同。
+各个SELECT语句之间使用UNION或UNION ALL关键字分隔
+UNION：执行的时候删除重复的记录，所有返回的行都是唯一的
+UNION ALL：不删除重复行也不对结果进行自动排序
+
+SELECT s_id,f_name,f_price    
+FROM fruits
+WHERE f_price<9.0
+UNION
+SELECT s_id,f_name,f_price
+FROM fruits
+WHERE s_id IN (101,103)
+
+
+正则表达式查询
+1、查询以特定字符或字符串开头的记录
+SELECT * FROM fruits WHERE f_name REGEXP '^b'
+
+2、查询以特定字符或字符串结尾的记录
+SELECT * FROM fruits WHERE f_name REGEXP 'y$'
+
+3、用符号“.”来代替字符串中的任意一个字符
+SELECT * FROM fruits WHERE f_name REGEXP 'a.g'
+
+4、使用“*”和“+”来匹配多个字符
+星号“*”匹配前面的字符任意多次，包括0次。加号“+”匹配前面的字符至少一次
+SELECT * FROM fruits WHERE f_name REGEXP '^ba*'
+
+5、匹配指定字符串
+正则表达式可以匹配指定字符串，只要这个字符串在查询文本中即可，如要匹配多个字符串，多个字符串之间使用分隔符“|”隔开
+SELECT * FROM fruits WHERE f_name REGEXP 'on|ap'
+
+6、匹配指定字符中的任意一个
+SELECT * FROM fruits WHERE f_name REGEXP '[ot]'
+
+7、匹配指定字符以外的字符
+SELECT * FROM fruits WHERE f_id REGEXP '[^a-e1-2]'
+
+8、使用{n,} 或者{n,m}来指定字符串连续出现的次数
+“字符串{n,}”，表示至少匹配n次前面的字符；“字符串{n,m}”表示匹配前面的字符串不少于n次，不多于m次。
+ SELECT * FROM fruits WHERE f_name REGEXP 'r{2,}'
+
+
+
+
+
+
+
+
