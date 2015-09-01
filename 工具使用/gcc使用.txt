@@ -1,0 +1,92 @@
+一步到位的编译指令是:
+gcc test.c -o test
+
+实质上，上述编译过程是分为四个阶段进行的，即
+预处理(也称预编译，Preprocessing)、
+编译(Compilation)、
+汇编 (Assembly)
+连接(Linking)。
+
+2.1预处理
+gcc -E test.c -o test.i 或 gcc -E test.c
+
+
+2.2编译为汇编代码(Compilation)
+预处理之后，可直接对生成的test.i文件编译，生成汇编代码：
+gcc -S test.i -o test.s
+gcc的-S选项，表示在程序编译期间，在生成汇编代码后，停止，-o输出汇编代码文件。
+
+
+2.3汇编(Assembly)
+对于上一小节中生成的汇编代码文件test.s，gas汇编器负责将其编译为目标文件，如下：
+gcc -c test.s -o test.o
+
+
+2.4连接(Linking)
+gcc连接器是gas提供的，负责将程序的目标文件与所需的所有附加的目标文件连接起来，最终生成可执行文件。附加的目标文件包括静态连接库和动态连接库。
+gcc test.o -o test
+
+
+以-W开头，其中最有价值的当数-Wall了，使用它能够使GCC产生尽可能多的警告信息。
+gcc -Wall illcode.c -o illcode
+在编译程序时带上-Werror选项，那么GCC会在所有产生警告的地方停止编译，迫使程序员对自己的代码进行修改，如下：
+gcc -Werror test.c -o test
+
+
+虽然Linux下的大多数函数都默认将头文件放到/usr/include/目录下，而库文件则放到/usr/lib/目录下；Windows所使用的库文件主要放在Visual Stido的目录下的include和lib，以及系统文件夹下。但也有的时候，我们要用的库不再这些目录下，所以GCC在编译时必须用自己的办法来查找所需要的头文件和库文件。
+
+
+例如
+我们的程序test.c是在linux上使用c连接mysql，这个时候我们需要去mysql官网下载MySQL Connectors的C库，下载下来解压之后，有一个include文件夹，里面包含mysql connectors的头文件，还有一个lib文件夹，里面包含二进制so文件libmysqlclient.so
+其中inclulde文件夹的路径是/usr/dev/mysql/include,lib文件夹是/usr/dev/mysql/lib
+
+ 
+5.1编译成可执行文件
+首先我们要进行编译test.c为目标文件，这个时候需要执行
+gcc –c –I /usr/dev/mysql/include test.c –o test.o
+
+5.2链接
+最后我们把所有目标文件链接成可执行文件:
+gcc –L /usr/dev/mysql/lib –lmysqlclient test.o –o test
+
+Linux下的库文件分为两大类分别是动态链接库（通常以.so结尾）和静态链接库（通常以.a结尾），二者的区别仅在于程序执行时所需的代码是在运行时动态加载的，还是在编译时静态加载的。
+
+5.3强制链接时使用静态链接库
+默认情况下， GCC在链接时优先使用动态链接库，只有当动态链接库不存在时才考虑使用静态链接库，如果需要的话可以在编译时加上-static选项，强制使用静态链接库（前提是存在静态库.a）。
+
+在/usr/dev/mysql/lib目录下有链接时所需要的库文件libmysqlclient.so和libmysqlclient.a，为了让GCC在链接时只用到静态链接库，可以使用下面的命令:
+gcc –L /usr/dev/mysql/lib –static –lmysqlclient test.o –o test
+
+
+
+静态库链接时搜索路径顺序：
+
+1. ld会去找GCC命令中的参数-L
+2. 再找gcc的环境变量LIBRARY_PATH
+3. 再找内定目录 /lib /usr/lib /usr/local/lib 这是当初compile gcc时写在程序内的
+
+动态链接时、执行时搜索路径顺序:
+
+1. 编译目标代码时指定的动态库搜索路径
+2. 环境变量LD_LIBRARY_PATH指定的动态库搜索路径
+3. 配置文件/etc/ld.so.conf中指定的动态库搜索路径
+4. 默认的动态库搜索路径/lib
+5. 默认的动态库搜索路径/usr/lib
+
+有关环境变量：
+LIBRARY_PATH环境变量：指定程序静态链接库文件搜索路径
+LD_LIBRARY_PATH环境变量：指定程序动态链接库文件搜索路径
+
+
+
+
+
+
+
+
+
+
+
+
+
+
