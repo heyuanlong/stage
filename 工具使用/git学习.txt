@@ -1,0 +1,228 @@
+集中化版本控制 如subversion  是一个服务机，多个客户机 
+分布式版本控制 如git 是一个主服务机 ，多个本地服务机
+
+git config ******  配置
+git config --list 查看配置
+
+获取帮助  git help    git help add
+
+
+查看变化git status
+创建仓库
+1 git init
+2 git clone
+
+工作目录下面的所有文件都不外乎这两种状态：已跟踪或未跟踪。
+在 Git 内都只有三种状态：已提交（committed），已修改（modified）和已暂存（staged）。
+要确定哪些文件当前处于什么状态，可以用 git status 命令
+
+
+add 放入暂存区
+
+忽略某些文件
+一般我们总会有些文件无需纳入 Git 的管理，也不希望它们总出现在未跟踪文件列表。通常都是些自动生成的文件，比如日志文件，或者编译过程中创建的临时文件等。我们可以创建一个名为 .gitignore 的文件，列出要忽略的文件模式。来看一个实际的例子：
+
+$ cat .gitignore
+*.[oa]
+*~
+我们再看一个 .gitignore 文件的例子：
+
+# 此为注释 – 将被 Git 忽略
+# 忽略所有 .a 结尾的文件
+*.a
+# 但 lib.a 除外
+!lib.a
+# 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO
+/TODO
+# 忽略 build/ 目录下的所有文件
+build/
+# 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
+doc/*.txt
+# ignore all .txt files in the doc/ directory
+doc/**/*.txt
+
+
+若要看已经暂存起来的文件和上次提交时的快照之间的差异，可以用 git diff --cached 命令。（Git 1.6.1 及更高版本还允许使用 git diff --staged，效果是相同的，但更好记些。
+
+git  commit
+可以看到，提交后它会告诉你，当前是在哪个分支（master）提交的，本次提交的完整 SHA-1 校验和是什么（463dc4f），以及在本次提交中，有多少文件修订过，多少行添改和删改过。
+
+
+跳过使用暂存区域
+尽管使用暂存区域的方式可以精心准备要提交的细节，但有时候这么做略显繁琐。Git 提供了一个跳过使用暂存区域的方式，只要在提交的时候，给 git commit 加上 -a 选项，Git 就会自动把所有已经跟踪过的文件暂存起来一并提交，从而跳过 git add 步骤：
+
+
+移除文件
+要从 Git 中移除某个文件，就必须要从已跟踪文件清单中移除（确切地说，是从暂存区域移除），然后提交。可以用 git rm 命令完成此项工作，并连带从工作目录中删除指定的文件，这样以后就不会出现在未跟踪文件清单中了。
+
+另外一种情况是，我们想把文件从 Git 仓库中删除（亦即从暂存区域移除），但仍然希望保留在当前工作目录中。换句话说，仅是从跟踪清单中删除。比如一些大型日志文件或者一堆 .a 编译文件，不小心纳入仓库后，要移除跟踪但不删除文件，以便稍后在 .gitignore 文件中补上，用 --cached 选项即可：
+$ git rm --cached readme.txt
+
+
+
+移动文件
+$ git mv file_from file_to
+
+
+
+查看提交历史
+git log
+$ git log -p -2
+我们常用 -p 选项展开显示每次提交的内容差异，用 -2 则仅显示最近的两次更新：
+
+
+
+想要撤消刚才的提交操作，可以使用 --amend 选项重新提交：
+$ git commit --amend
+
+
+
+
+
+
+
+
+
+要参与任何一个 Git 项目的协作，必须要了解该如何管理远程仓库。远程仓库是指托管在网络上的项目仓库，可能会有好多个，其中有些你只能读，另外有些可以写。
+查看当前的远程库
+要查看当前配置有哪些远程仓库，可以用 git remote 命令，它会列出每个远程库的简短名字。在克隆完某个项目后，至少可以看到一个名为 origin 的远程库，Git 默认使用这个名字来标识你所克隆的原始仓库：
+$ git remote
+origin
+
+也可以加上 -v 选项（译注：此为 --verbose 的简写，取首字母），显示对应的克隆地址：
+$ git remote -v
+origin  git://github.com/schacon/ticgit.git (fetch)
+origin  git://github.com/schacon/ticgit.git (push)
+
+这样一来，我就可以非常轻松地从这些用户的仓库中，拉取他们的提交到本地。请注意，上面列出的地址只有 origin 用的是 SSH URL 链接，所以也只有这个仓库我能推送数据上去（我们会在第四章解释原因）。
+
+
+
+从远程仓库抓取数据
+正如之前所看到的，可以用下面的命令从远程仓库抓取数据到本地：
+$ git fetch [remote-name]
+
+
+如果是克隆了一个仓库，此命令会自动将远程仓库归于 origin 名下。所以，git fetch origin 会抓取从你上次克隆以来别人上传到此远程仓库中的所有更新（或是上次 fetch 以来别人提交的更新）。有一点很重要，需要记住，fetch 命令只是将远端的数据拉到本地仓库，并不自动合并到当前工作分支，只有当你确实准备好了，才能手工合并。
+
+如果设置了某个分支用于跟踪某个远端仓库的分支（参见下节及第三章的内容），可以使用 git pull 命令自动抓取数据下来，然后将远端分支自动合并到本地仓库中当前分支。
+
+
+推送数据到远程仓库
+项目进行到一个阶段，要同别人分享目前的成果，可以将本地仓库中的数据推送到远程仓库。实现这个任务的命令很简单： git push [remote-name] [branch-name]。
+
+如果在你推数据前，已经有其他人推送了若干更新，那你的推送操作就会被驳回。你必须先把他们的更新抓取到本地，合并到自己的项目中，然后才可以再次推送。
+
+
+碰到远端仓库服务器迁移，或者原来的克隆镜像不再使用，又或者某个参与者不再贡献代码，那么需要移除对应的远端仓库，可以运行 git remote rm 命令：
+$ git remote rm paul
+
+
+
+
+Git 命令别名
+Git 并不会推断你输入的几个字符将会是哪条命令，不过如果想偷懒，少敲几个命令的字符，可以用 git config 为命令设置别名。来看看下面的例子：
+
+$ git config --global alias.co checkout
+$ git config --global alias.br branch
+$ git config --global alias.ci commit
+$ git config --global alias.st status
+现在，如果要输入 git commit 只需键入 git ci 即可。
+
+
+
+Git 又是如何创建一个新的分支的呢？答案很简单，创建一个新的分支指针。比如新建一个 testing 分支，可以使用 git branch 命令：
+$ git branch testing
+
+要切换到其他分支，可以执行 git checkout 命令。
+$ git checkout testing
+
+分支结构像是一个分支树。
+
+
+$ git checkout -b iss53
+这相当于执行下面这两条命令：
+$ git branch iss53
+$ git checkout iss53
+
+
+有必要作些测试，确保修补是成功的，然后回到 master 分支并把它合并进来，然后发布到生产服务器。用 git merge 命令来进行合并：
+$ git checkout master
+$ git merge hotfix
+
+
+合并以后：
+hotfix 已经完成了历史使命，可以删掉了。使用 git branch 的 -d 选项执行删除操作：
+$ git branch -d hotfix
+Deleted branch hotfix (was 3a0874c).
+
+
+分支的合并
+$ git checkout master
+$ git merge iss53
+没有祖孙关系的分支合并以后会产生新的快照
+有祖孙关系的分支合并以后只会移动head
+
+
+既然之前的工作成果已经合并到 master 了，那么 iss53 也就没用了。你可以就此删除它，并在问题追踪系统里关闭该问题。
+$ git branch -d iss53
+
+
+遇到冲突时的分支合并
+有时候合并操作并不会如此顺利。如果在不同的分支中都修改了同一个文件的同一部分，Git 就无法干净地把两者合到一起（译注：逻辑上说，这种问题只能由人来裁决。）。
+
+冲突的文件包含类似下面这样的部分：
+<<<<<<< HEAD
+<div id="footer">contact : email.support@github.com</div>
+=======
+<div id="footer">
+  please contact us at support@github.com
+</div>
+>>>>>>> iss53
+
+在解决了所有文件里的所有冲突后，运行 git add 将把它们标记为已解决状态（译注：实际上就是来一次快照保存到暂存区域。）。因为一旦暂存，就表示冲突已经解决。如果你想用一个有图形界面的工具来解决这些问题，不妨运行 git mergetool，它会调用一个可视化的合并工具并引导你解决所有冲突：
+
+
+
+
+git branch 命令不仅仅能创建和删除分支，如果不加任何参数，它会给出当前所有分支的清单：
+$ git branch
+  iss53
+* master
+  testing
+
+
+$ git branch -d testing
+如果还没有merge就执行上一句会报错。可以用大写的删除选项 -D 强制执行。
+
+
+
+假设你们团队有个地址为 git.ourcompany.com 的 Git 服务器。如果你从这里克隆，Git 会自动为你将此远程仓库命名为 origin，并下载其中所有的数据，建立一个指向它的 master 分支的指针，在本地命名为 origin/master，但你无法在本地更改其数据。接着，Git 建立一个属于你自己的本地 master 分支，始于 origin 上 master 分支相同的位置，你可以就此开始工作（见图 3-22）：
+
+可以运行 git fetch origin 来同步远程服务器上的数据到本地。该命令首先找到 origin 是哪个服务器（本例为 git.ourcompany.com），从上面获取你尚未拥有的数据，更新你本地的数据库，然后把 origin/master 的指针移到它最新的位置上
+
+
+推送本地分支
+运行 git push (远程仓库名) (分支名)：
+
+
+跟踪分支
+在跟踪分支里输入 git push，Git 会自行推断应该向哪个服务器的哪个分支推送数据。同样，在这些分支里运行 git pull 会获取所有远程索引，并把它们的数据都合并到本地分支中来。
+
+
+删除远程分支
+git push [远程名] :[分支名]。如果想在服务器上删除 serverfix 分支，运行下面的命令：
+$ git push origin :serverfix
+
+
+
+衍合
+衍合是指一条分支树叉接到另个树叉上去。
+现在我们决定把 server 分支的变化也包含进来。我们可以直接把 server 分支衍合到 master，而不用手工切换到 server 分支后再执行衍合操作 — git rebase [主分支] [特性分支] 命令会先取出特性分支 server，然后在主分支 master 上重演：
+$ git rebase master server
+再
+然后就可以快进主干分支 master 了：
+$ git checkout master
+$ git merge server
+这样master就和server的head就在同一节点上了
+
