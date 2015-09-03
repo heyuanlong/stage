@@ -52,7 +52,14 @@ public:
 istream：
 member functions:
 istream::gcount        //返回最后一次非格式化读操作读取的字符数。
-istream::get
+
+int get();
+istream& get (char& c);	
+istream& get (char* s, streamsize n);
+istream& get (char* s, streamsize n, char delim);
+istream& get (streambuf& sb);
+istream& get (streambuf& sb, char delim);
+
 istream::getline
 istream::ignore       //忽略输入流中的一个字符。​   其实是移动了流指针，可用unget返回。
 istream::operator>>

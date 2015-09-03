@@ -1,0 +1,97 @@
+---request
+
+struct
+{
+std::string method;
+bool have_s;
+std::string host;
+std::string path;
+std::string procol;
+std::map<std::string,std::string> urlparam;
+std::map<std::string,std::string> headparam;
+std::map<std::string,std::string> cookieparam;
+std::string body;
+}
+
+
+setmethod
+
+sethttphaves
+sethost
+setpath
+setparam
+
+setprocol
+
+setheadparam
+
+setcookie(key,value)
+
+setbody(const char *)
+
+parseRequest
+packetRequest
+
+
+---response
+struct
+{
+std::string procol;
+int statuscode;
+std::string statusdes;
+std::map<std::string,std::string> headparam;
+std::map<std::string,std::string> cookieparam;
+std::string body;
+}
+
+
+setprocol
+setStatusCode
+setStatusDes
+
+setheadparam
+
+setSet-Cookie
+
+setbody(const char *)
+
+parseResponse
+packetResponse
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GET http://www.telerik.com/UpdateCheck.aspx?isBeta=False HTTP/1.1
+User-Agent: Fiddler/2.5.1.2 (.NET 2.0.50727.5466; WinNT 6.1.7601 SP1; zh-CN; 4xAMD64)
+Pragma: no-cache
+Accept-Language: zh-CN
+Referer: http://fiddler2.com/client/2.5.1.2
+Host: www.telerik.com
+Accept-Encoding: gzip, deflate
+Connection: Close
+
+
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Content-Type: text/plain; charset=utf-8
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Server: Microsoft-IIS/7.5
+Set-Cookie: sid=dB4FETAlzSoEAyFVVn/Y+xM99xWjBu/qh++3B89IVXEowCWi9OcGiYWz6SAYobmxIdLRx95MgkTrKLxu+YnVxMOU+px+mE5QmYJMB4vr17JGnc9AeBrXny4ddYbSadaJhIw+c1KqOgDElVCv073BubC2e0E=; expires=Sun, 31-Aug-2025 12:19:00 GMT; path=/
+Access-Control-Allow-Origin: http://converter.telerik.com
+Date: Thu, 03 Sep 2015 12:18:59 GMT
+Content-Length: 671
+Connection: close
+
+         `I %&/m 
