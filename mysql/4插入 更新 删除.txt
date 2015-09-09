@@ -1,14 +1,32 @@
 http://www.cnblogs.com/lyhabc/p/3776000.html
 
+插入
+INSERT INTO person_old
+VALUES (11,'Harry',20,'student'),(12,'Beckham',31,'police')
+
+INSERT INTO person(id,NAME,age,info)
+SELECT id,NAME,age,info FROM person_old;
+
+
+更新
+UPDATE person SET info ='police' WHERE id BETWEEN 14 AND 17
+
+
+
+删除
+DELETE FROM  person  WHERE id BETWEEN 14 AND 17
+
+
+如果要删除表的所有记录可以使用下面的两种方法
+##方法一
+DELETE     FROM person
+##方法二
+TRUNCATE TABLE  person
 
 
 
 
-
-
-
-
-
-
+索引(太多，还是直接看博客吧！！！)
+http://www.cnblogs.com/lyhabc/p/3776739.html
 
 
