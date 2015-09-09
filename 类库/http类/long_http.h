@@ -1,3 +1,5 @@
+#include <string>
+#include <map>
 class long_http
 {
 public:
@@ -26,19 +28,20 @@ public:
 	bool set_resquest_cookie(const char*,const char*);
 	bool set_resquest_body(const char *);
 
-	bool get_resquest_method(const char*);
+	bool get_resquest_method(std::string *);
 	bool get_resquest_httphaves();
-	bool get_resquest_host(char*);
-	bool get_resquest_path(char*);
-	bool get_resquest_urlparam(const char*,char*);
+	bool get_resquest_host(std::string *);
+	bool get_resquest_path(std::string *);
+	bool get_resquest_urlparam(const char*,std::string *);
 	bool get_resquest_procol(char*);
-	bool get_resquest_headparam(const char*,char*);
-	bool get_resquest_cookie(const char*,char*);
-	bool get_resquest_body(char *);
+	bool get_resquest_headparam(const char*,std::string *);
+	bool get_resquest_cookie(const char*,std::string *);
+	bool get_resquest_body(std::string  *);
+	bool clear_resquest();
 
 
 	bool parse_resquest_Request(const char *);
-	bool packet_resquest_Request(char *);
+	bool packet_resquest_Request(std::string  *);
 	struct request mrequest_struct;
 
 
@@ -59,15 +62,16 @@ public:
 	bool set_response_cookie(const char*,const char*);
 	bool set_response_body(const char *);
 
-	bool get_response_procol(char*);
-	bool get_response_StatusCode();
-	bool get_response_StatusDes(char*);
-	bool get_response_headparam(const char*,char*);
-	bool get_response_cookie(const char*,char*);
-	bool get_response_body(char *);
+	bool get_response_procol(std::string *);
+	int get_response_StatusCode();
+	bool get_response_StatusDes(std::string *);
+	bool get_response_headparam(const char*,std::string *);
+	bool get_response_cookie(const char*,std::string *);
+	bool get_response_body(std::string  *);
+	bool clear_response();
 
 	bool parse_response_Request(const char *);
-	bool packet_response_Request(char *);
+	bool packet_response_Request(std::string *);
 	struct request mresponse_struct;
 
 };
