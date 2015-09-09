@@ -74,6 +74,10 @@ public:
 	bool packet_response_Request(std::string *);
 	struct request mresponse_struct;
 
+
+private:
+	bool deal_request_url(std::string &);
+	bool deal_request_cookie(std::string &str);
 };
 
 

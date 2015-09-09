@@ -211,12 +211,110 @@ bool long_http::clear_resquest()
 
 bool long_http::parse_resquest_Request(const char * str)
 {
+	std::istringstream is(str);
+	std::getline(is,mrequest_struct.method,' ');
+
+	std::string tempurl;
+	std::getline(is,tempurl,' ');
+	if (deal_request_url(tempurl) == false)//处理整条URL
+	{
+		return false;
+	}
+
+	std::getline(is,mrequest_struct.procol,'\r');
+
+	if (!is.good() 
+		|| mrequest_struct.method.empty()
+		|| tempurl.empty()
+		|| mrequest_struct.procol.empty() )
+	{
+		return false;
+	}
+	char c;
+	is.get(c);
+	if (c ！= '\n')
+	{
+		return false;
+	}
+	std::string key,value;
+	char sp,cr,lf;
+	while(true)
+	{
+		is.get(cr);
+		is.get(lf);
+		if (!is.good() )
+		{
+			return false;
+		}
+		if (cr == '\r')
+		{
+			if ( lf == '\n' )
+            {
+                break;
+            }
+            else
+            {
+                return false;
+            }
+		}
+		is.unget();
+		is.unget();
+
+		std::getline( is, key, ':' );
+		is.get(sp);
+		std::getline(is,value,'\r');
+		is.get(lf);
+		if ( !is.good()
+            || key.empty()
+            || value.empty()
+            || sp != ' '
+            || lf != '\n' )
+        {
+            return false;
+        }
+        if (key.compare("Cookie") == 0)
+        {
+        	if(deal_request_cookie(value) == false)
+        		return false;
+        }
+        else
+        {
+        	set_resquest_headparam(key,value);
+        }
+	}
+
+	std::istringstream::pos_type  curr= is.tellg();
+	is.seekg(0,is.end);
+	std::istringstream::pos_type  endd= is.tellg();
+	unsigned long long bodylength = endd - curr;
+	if (bodylength == 0)
+	{
+		return true;
+	}
+	is.seekg(curr,is.beg);
+	char *buf = (char *)malloc(bodylength+1);
+	memset(buf,0,sizeof(buf));
+	is.read(buf,bodylength);
+	mresponse_struct.body = buf;
+	free(buf);
+
+	return true;
 
 }
 bool long_http::packet_resquest_Request(std::string  * stdstr)
 {
 
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -372,3 +470,82 @@ bool long_http::packet_response_Request(std::string  *stdstr)
 }
 
 
+bool long_http::deal_request_url(std::string &str)
+{
+	str += '&';
+    std::istringstream uis(str);
+    std::string tempstr;
+    char c;
+    std::getline(uis,tempstr,'/');
+    if (tempstr[4] == 's')
+    {
+    	mresponse_struct.have_s = true;
+    }
+    uis.get(c);
+    if (!uis.good()
+    	|| c != '/' )
+    {
+    	return false;
+    }
+    std::istringstream::pos_type curr = uis.tellg();
+    uis>>tempstr;
+    std::string::size_type f = tempstr.find('/');
+    if (f == std::string::npos)
+    {
+    	mresponse_struct.host = tempstr;
+    	return true;
+    }
+
+	uis.seekg(curr,uis.beg);
+	std::getline(uis,tempstr,'/');
+	mresponse_struct.host = tempstr;//host
+    if (!uis.good())
+    {
+    	return true;
+    }
+
+	curr = uis.tellg();
+    uis>>tempstr;
+    f = tempstr.find('?');
+    if (f == std::string::npos)
+    {
+    	mresponse_struct.path = tempstr;
+    	return true;
+    }
+
+    uis.seekg(curr,uis.beg);
+	std::getline(uis,tempstr,'?');
+	mresponse_struct.path = tempstr;//path
+	if (!uis.good())
+	{
+		return true;
+	}
+
+	std::string key,value;
+	while(uis.good())//如果这样不行可以加上get good unget
+	{
+		std::getline(uis,key,'=');
+		std::getline(uis,value,'&');
+		set_resquest_urlparam(key,value);
+	}
+
+	return true;
+}
+
+bool long_http::deal_request_cookie(std::string &str)
+{
+	str += ',';
+    std::istringstream uis(str);
+    std::string key,value;
+    while(uis.good())//
+    {
+		std::getline(uis,key,'=');
+		std::getline(uis,value,',');
+		if (uis.peek() == ' ')
+		{
+			uis.ignore();
+		}
+		set_resquest_cookie(key,value);    	
+    }
+    return true;
+}
