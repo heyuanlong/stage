@@ -219,7 +219,7 @@ bool long_http::clear_resquest()
 
 
 
-bool long_http::parse_resquest_Request(const char * str)
+bool long_http::parse_resquest(const char * str)
 {
 	std::istringstream is(str);
 	std::getline(is, mrequest_struct.method, ' ');
@@ -284,7 +284,7 @@ bool long_http::parse_resquest_Request(const char * str)
 		}
 		if (key.compare("Cookie") == 0)
 		{
-			if (deal_request_cookie(value) == false)
+			if (deal_cookie(value, DEALREQUSET) == false)
 				return false;
 		}
 		else
@@ -301,25 +301,26 @@ bool long_http::parse_resquest_Request(const char * str)
 	{
 		return true;
 	}
+	bodylength += 1;
 	is.seekg(curr, is.beg);
-	char *buf = (char *)malloc(bodylength + 1);
-	memset(buf, 0, sizeof(buf));
+	char *buf = (char *)malloc(bodylength);
+	memset(buf, 0, bodylength);
 	is.read(buf, bodylength);
 	mrequest_struct.body = buf;
 	free(buf);
 
-char s[12];
+	char s[12];
 #if (defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__))
 	sprintf_s(s, "%u", bodylength);
 #elif defined(__linux__) || defined(__linux)
 	sprintf(s, "%u", bodylength);
 #endif
-	set_resquest_headparam("Content-Length",s);
-	
+	set_resquest_headparam("Content-Length", s);
+
 	return true;
 
 }
-bool long_http::packet_resquest_Request(std::string  * stdstr)
+bool long_http::packet_resquest(std::string  * stdstr)
 {
 	std::string str;
 	int iac = 0;
@@ -497,9 +498,10 @@ bool long_http::get_response_procol(std::string * stdstr)
 	*stdstr = mresponse_struct.procol;
 	return true;
 }
-int long_http::get_response_StatusCode()
+bool long_http::get_response_StatusCode(std::string * stdstr)
 {
-	return mresponse_struct.statuscode;
+	*stdstr =  mresponse_struct.statuscode;
+	return true;
 
 }
 bool long_http::get_response_StatusDes(std::string * stdstr)
@@ -543,7 +545,7 @@ bool long_http::clear_response()
 
 
 	mresponse_struct.procol = "HTTP/1.1";			//HTTP/1.1
-	mresponse_struct.statuscode = 0;		// 200
+	mresponse_struct.statuscode = "0";		// 200
 	mresponse_struct.statusdes = "";		// ok
 	mresponse_struct.headparam.clear();	    //
 	mresponse_struct.cookieparam.clear();	//Set-Cookie: sid=dB0E=; expires=Sun, 31-Aug-2025 12:19:00 GMT
@@ -555,13 +557,156 @@ bool long_http::clear_response()
 
 
 
-bool long_http::parse_response_Request(const char * str)
+bool long_http::parse_response(const char * str)
 {
+	std::istringstream is(str);
+	std::getline(is, mresponse_struct.procol, ' ');
+	std::getline(is, mresponse_struct.statuscode, ' ');
+
+	// 	std::string tempstr;
+	// 	std::getline(is, tempstr, ' ');
+	// unsigned int out;
+	// #if (defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__))
+	// 	sscanf_s(tempstr.c_str(), "%u", &out);
+	// #elif defined(__linux__) || defined(__linux)
+	// 	sscanf(tempstr.c_str(), "%u", &out);
+	// #endif
+	// 	mresponse_struct.statuscode = out;
+
+	std::getline(is, mresponse_struct.statusdes, '\r');
+
+
+	if (!is.good()
+		|| mresponse_struct.procol.empty()
+		//|| tempstr.empty()
+		|| mresponse_struct.statuscode.empty()
+		|| mresponse_struct.statusdes.empty())
+	{
+		return false;
+	}
+	char c;
+	is.get(c);
+	if (c != '\n')
+	{
+		return false;
+	}
+	std::string key, value;
+	char sp, cr, lf;
+	while (true)
+	{
+		is.get(cr);
+		is.get(lf);
+		if (!is.good())
+		{
+			return false;
+		}
+		if (cr == '\r')
+		{
+			if (lf == '\n')
+			{
+				break;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		is.unget();
+		is.unget();
+
+		std::getline(is, key, ':');
+		is.get(sp);
+		std::getline(is, value, '\r');
+		is.get(lf);
+		if (!is.good()
+			|| key.empty()
+			|| value.empty()
+			|| sp != ' '
+			|| lf != '\n')
+		{
+			return false;
+		}
+		if (key.compare("Set-Cookie") == 0)
+		{
+			if (deal_cookie(value, DEALRESPONSE) == false)
+				return false;
+		}
+		else
+		{
+			set_response_headparam(key.c_str(), value.c_str());
+		}
+	}
+
+	std::istringstream::pos_type  curr = is.tellg();
+	is.seekg(0, is.end);
+	std::istringstream::pos_type  endd = is.tellg();
+	unsigned long int bodylength = endd - curr;
+	if (bodylength == 0)
+	{
+		return true;
+	}
+	bodylength += 1;
+	is.seekg(curr, is.beg);
+	char *buf = (char *)malloc(bodylength);
+	memset(buf, 0, bodylength);
+
+	is.read(buf, bodylength);
+	mresponse_struct.body = buf;
+	free(buf);
+
+	char s[12];
+#if (defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__))
+	sprintf_s(s, "%u", bodylength);
+#elif defined(__linux__) || defined(__linux)
+	sprintf(s, "%u", bodylength);
+#endif
+	set_response_headparam("Content-Length", s);
+
 	return true;
 
 }
-bool long_http::packet_response_Request(std::string  *stdstr)
+bool long_http::packet_response(std::string  *stdstr)
 {
+	std::string str;
+	int iac = 0;
+	std::string crlf = "\r\n";
+
+	str += mresponse_struct.procol;
+	str += " ";
+	str += mresponse_struct.statuscode;
+	str += " ";
+	str += mresponse_struct.statusdes;
+	str += crlf;
+
+	std::map<std::string, std::string>::iterator b_hpa = mresponse_struct.headparam.begin(), e_hpa = mresponse_struct.headparam.end();
+	for (; b_hpa != e_hpa; ++b_hpa)
+	{
+		str += b_hpa->first + ": " + b_hpa->second + crlf;
+	}
+
+	if (!mresponse_struct.cookieparam.empty())
+	{
+		iac = 0;
+		str += "Set-Cookie: ";
+		std::map<std::string, std::string>::iterator bcookiepa = mresponse_struct.cookieparam.begin(),
+			ecookiepa = mresponse_struct.cookieparam.end();
+		iac = 0;
+		for (; bcookiepa != ecookiepa; ++bcookiepa)
+		{
+			if (iac > 0)
+			{
+				str += "; ";
+			}
+			str += bcookiepa->first + "=" + bcookiepa->second;
+			++iac;
+		}
+		str += crlf;
+	}
+	str += crlf;
+	str += mresponse_struct.body;
+
+	*stdstr = str;
+
 	return true;
 
 }
@@ -635,7 +780,7 @@ bool long_http::deal_request_url(std::string &str)
 	return true;
 }
 
-bool long_http::deal_request_cookie(std::string &str)
+bool long_http::deal_cookie(std::string &str, int i)
 {
 	str += ',';
 	std::istringstream uis(str);
@@ -653,7 +798,11 @@ bool long_http::deal_request_cookie(std::string &str)
 		{
 			uis.ignore();
 		}
-		set_resquest_cookie(key.c_str(), value.c_str());
+		if (i == DEALREQUSET)
+			set_resquest_cookie(key.c_str(), value.c_str());
+		else if (i == DEALRESPONSE)
+			set_response_cookie(key.c_str(), value.c_str());
+
 	}
 	return true;
 }
