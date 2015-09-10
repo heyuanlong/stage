@@ -691,10 +691,11 @@ std::string  http::packet(REQUEST& request)
             str += fcookie->first + "=" + fcookie->second;
             ++iac;
         }
+        str += crlf;
     }
 
     
-    str += crlf +crlf;
+    str += crlf; 
     str += request.body;
 
     return str;

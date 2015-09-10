@@ -1,5 +1,12 @@
 #include <string>
+#include <string.h>
 #include <map>
+#include <utility>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sstream>
+
+
 class long_http
 {
 public:
@@ -33,7 +40,7 @@ public:
 	bool get_resquest_host(std::string *);
 	bool get_resquest_path(std::string *);
 	bool get_resquest_urlparam(const char*,std::string *);
-	bool get_resquest_procol(char*);
+	bool get_resquest_procol(std::string *);
 	bool get_resquest_headparam(const char*,std::string *);
 	bool get_resquest_cookie(const char*,std::string *);
 	bool get_resquest_body(std::string  *);
@@ -72,7 +79,7 @@ public:
 
 	bool parse_response_Request(const char *);
 	bool packet_response_Request(std::string *);
-	struct request mresponse_struct;
+	struct response mresponse_struct;
 
 
 private:
