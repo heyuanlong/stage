@@ -1,0 +1,38 @@
+makefile真奇怪，有一处错了，那么整个文件就可能报废了。
+-fPIC 作用于编译阶段，告诉编译器产生与位置无关代码(Position-Independent Code)，
+
+
+
+CFLAGS= -g -O3 `pkg-config opencv --cflags`  
+LIBS = `pkg-config opencv --libs`  
+C_SRC = $(wildcard *.c)  
+C_OBJ = $(patsubst %c, %o, $(C_SRC))  
+CPP_SRC = $(wildcard *.cpp)  
+CPP_OBJ = $(patsubst %cpp, %o, $(CPP_SRC))  
+  
+.PHONY:all clean  
+all:$(CPP_OBJ) $(C_OBJ)  
+.c.o:  
+    gcc $(CFLAGS) -o $@ $< $(LIBS)   
+.cpp.o:  
+    g++ $(CFLAGS) -o $@ $< $(LIBS)  
+  
+clean:  
+    rm *~ *.o -f 
+
+1.
+c_src和c_obj中，$(wildcard *.c, *.cpp, /***/***/*.c)是为了找出目录和指定目录下所有的后缀为c和cpp的文件
+2.
+$(patsubst %cpp, %o, $(CPP_SRC))中是为了将CPP_SRC的所有的cpp文件的后缀替换为o文件，这个功能也可以通过CPP_OBJ=$(CPP_SRC:%.c=%.o)实现
+
+
+Makfile相关函数说明：
+1、wildcard : 扩展通配符
+2、notdir ： 去除路径
+3、patsubst ：替换通配符
+
+src=$(wildcard *.c ./sub/*.c)
+dir=$(notdir $(src))				
+obj=$(patsubst %.c,%.o,$(dir) )																				
+
+

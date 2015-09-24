@@ -12,11 +12,9 @@ git config --list 查看配置
 1 git init
 2 git clone
 
-工作目录下面的所有文件都不外乎这两种状态：已跟踪或未跟踪。
-在 Git 内都只有三种状态：已提交（committed），已修改（modified）和已暂存（staged）。
+工作目录下面的所有文件都不外乎这两种状态：已跟踪或未跟踪（其实就是add和未add的区别，已跟踪的话，git就会知道该文件发生了什么）。
+在 Git 内都只有三种状态：已提交（committed），已修改（modified，跟踪的文件都有这个提示）和已暂存（staged，只是add了未提交过）。
 要确定哪些文件当前处于什么状态，可以用 git status 命令
-
-
 add 放入暂存区
 
 忽略某些文件
