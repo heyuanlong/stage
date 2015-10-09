@@ -1,6 +1,8 @@
 makefile真奇怪，有一处错了，那么整个文件就可能报废了。
 -fPIC 作用于编译阶段，告诉编译器产生与位置无关代码(Position-Independent Code)，
 
+http://www.cnblogs.com/tianyajuanke/archive/2013/02/16/2610276.html
+
 
 
 CFLAGS= -g -O3 `pkg-config opencv --cflags`  
