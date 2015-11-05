@@ -38,3 +38,34 @@ dir=$(notdir $(src))
 obj=$(patsubst %.c,%.o,$(dir) )																				
 
 
+
+
+
+
+///------------------------------------------
+Ò»¸öÀý×Ó£º
+DIR=src/battle src/conn src/core src/http src/include src/inner src/os src/service src/third-party src/third-party/json
+SRC=$(foreach dir, $(DIR), $(wildcard $(dir)/*.cpp))
+OBJDIR=./obj
+SRCNAME=$(notdir $(SRC))
+OBJ=$(patsubst %.cpp, $(OBJDIR)/%.obj, $(SRCNAME))
+INC=$(foreach dir, $(DIR), -I $(dir)/) 
+LIB=-L/usr/local/lib -lpthread -levent -levent_core
+
+DESLIB=./build/libmatchvs.so
+CC=g++ -g -w
+
+all: ctrl $(DESLIB)
+
+$(DESLIB):$(OBJ)
+		$(CC) -shared -fPIC -o $@ $^ $(LIB)
+
+$(OBJDIR)/%.obj:$(OBJDIR)/%.cpp
+		$(CC) $(INC)  -shared -fPIC -c $< -o $@  
+
+ctrl:
+	rsync -avzP $(SRC) $(OBJDIR)
+	
+clean:
+	rm ./obj/* -f
+///------------------------------------------
