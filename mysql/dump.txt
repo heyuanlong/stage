@@ -1,0 +1,38 @@
+由于导出的数据没有create database;和use database;
+但是有DROP TABLE IF EXISTS `battle_game`;
+
+所以：
+
+导入数据库
+shell> mysqladmin –u root –p create target_db_name
+shell> mysql –u root –p target_db_name < backup-file.sql
+就是:shell> mysql 数据库名 < 文件名
+ 
+或者使用source 命令
+进入mysql数据库控制台，mysql -u root –p
+
+mysql>use 数据库
+然后使用source命令，后面参数为脚本文件（.sql文件）
+mysql>source d:student.sql
+
+
+
+导出数据库
+mysqldump -u用戶名 -p密码 -d 数据库名 表名 > 脚本名;
+
+导出整个数据库结构和数据
+mysqldump -h localhost -uroot -p123456 database > dump.sql
+导出单个数据表结构和数据
+mysqldump -h localhost -uroot -p123456  database table > dump.sql
+
+
+导出整个数据库结构（不包含数据）
+mysqldump -h localhost -uroot -p123456  -d database > dump.sql
+导出单个数据表结构（不包含数据）
+mysqldump -h localhost -uroot -p123456  -d database table > dump.sql
+
+
+导出整个数据库数据（不含结构）
+mysqldump -h localhost -uroot -p123456  -t database > dump.sql
+导出单个数据表结构（不包含数据）
+mysqldump -h localhost -uroot -p123456  -t database table > dump.sql
