@@ -1,0 +1,90 @@
+线程{
+	pthread_equal
+	pthread_self
+	pthread_create
+	pthread_exit(线程自身调用)
+	pthread_cancel(请求取消同一进程的其他线程)
+	pthread_join
+	pthread_cleanup_push(用于线程退出时调用)
+	pthread_cleanup_pop
+	pthread_detach(分离线程)
+
+	结构体
+	pthread_t
+	pthread_attr_t
+}
+
+线程互斥量{
+	pthread_mutex_init
+	pthread_mutex_destroy
+	pthread_mutex_lock
+	pthread_mutex_trylock
+	pthread_mutex_unlock
+	pthread_mutex_timedlock(超时返回ETIMEDOUT)
+
+	结构体
+	pthread_mutex_t
+	pthread_mutexattr_t
+	PTHREAD_MUTEX_INITIALIZER
+}
+
+读写锁(共享互斥锁)
+{
+	pthread_rwlock_init
+	pthread_rwlock_destroy
+	pthread_rwlock_rdlock
+	pthread_rwlock_wrlock
+	pthread_rwlock_unlock
+	pthread_rwlock_tryrdlock
+	pthread_rwlock_trywrlock
+	pthread_rwlock_timedrdlock
+	pthread_rwlock_timedwrlock
+
+	结构体
+	pthread_rwlock_t
+	pthread_rwlockattr_t
+	PTHREAD_RWLOCK_INITIALIZER
+}
+
+条件变量(需要互斥量的配合)
+{
+	pthread_cond_init
+	pthread_cond_destroy
+	pthread_cond_wait(pthread_cond_t *,pthread_mutex_t *)
+	pthread_cond_timedwait
+	pthread_cond_signal
+	pthread_cond_broadcast
+
+	结构体
+	pthread_cond_t
+	pthread_condattr_t
+	PTHREAD_COND_INITIALIZER
+}
+
+
+
+
+自旋锁(获锁之前一直处于忙等)
+{
+	pthread_spin_init(pthread_spinlock_t *lock,int pshared)
+	//if pshared==PTHREAD_PROCESS_SHARED可用于进程间，pshared==PTHREAD_PROCESS_PRIVATE用于进程内 
+	pthread_spin_destroy
+	pthread_spin_lock
+	pthread_spin_trylock
+	pthread_spin_unlock
+
+	结构体
+	pthread_spinlock_t
+}
+
+屏障(直到所有的合作线程都达到某一点)
+{
+	pthread_barrier_init
+	pthread_barrier_destroy
+	pthread_barrier_wait
+
+	结构体
+	pthread_barrier_t
+	pthread_barrierattr_t
+}
+
