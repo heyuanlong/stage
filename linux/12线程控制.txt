@@ -1,0 +1,68 @@
+线程属性
+pthread_attr_init
+pthread_attr_destroy
+pthread_attr_getdetachstate 线程分离属性
+pthread_attr_setdetachstate
+pthread_attr_getstack 设置线程的起始地址和大小
+pthread_attr_setstack
+pthread_attr_getstacksize 设置线程的大小
+pthread_attr_setstacksize
+pthread_attr_getguardsize 设置线程警戒区
+pthread_attr_setguardsize
+
+同步属性：
+1互斥量属性
+pthread_mutexattr_init
+pthread_mutexattr_destroy
+pthread_mutexattr_getpshared  互斥量的进程共享属性
+pthread_mutexattr_setpshared
+pthread_mutexattr_getrobust   健壮属性
+pthread_mutexattr_setrobust
+pthread_mutexattr_consistent
+pthread_mutexattr_gettype     互斥量类型属性
+pthread_mutexattr_settype
+
+2读写锁属性
+pthread_rwlockattr_init
+pthread_rwlockattr_destroy
+pthread_rwlockattr_getpshared 进程共享属性
+pthread_rwlockattr_setpshared
+
+3条件变量属性
+pthread_condattr_init
+pthread_condattr_destroy
+pthread_condattr_getpshared  进程共享属性
+pthread_condattr_setpshared
+pthread_condattr_getlock     时钟属性控制计算pthread_cond_timedwait函数的超时参数时采用的是哪个时钟
+pthread_condattr_setlock
+
+4屏障属性
+pthread_barrierattr_init
+pthread_barrierattr_destroy
+pthread_barrierattr_getpshared 进程共享属性
+pthread_barrierattr_setpshared
+
+
+可重入函数和不可重入函数
+
+#include <stdio.h>
+int ftrylockfile(FILE *fp)   锁文件描述符
+void flockfile(FILE *fp)
+void funlockfile(FILE *fp)
+
+线程取消选项
+int pthread_setcancelstate(int state,int *oldstate)//修改线程是否可被其他线程取消
+void pthread_testcancel(void ) 设置取消检查点
+int pthread_setcanceltype(int type,int *oldtype)//设置异步取消或推迟取消
+
+线程和信号
+int pthread_sigmask(int how,const sigset_t *set,sigset_t *oldset); //设置线程屏蔽的信号集
+int sigwait(const sigset_t *set,int *signop);  //set参数指定了线程等待的信号集
+int pthead_kill(pthread_t thread,int signo);
+
+
+
+
+
+
+
