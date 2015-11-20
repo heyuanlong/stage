@@ -1,4 +1,4 @@
-由于导出的数据没有create database;和use database;
+由于导出的单个数据库的数据没有create database;和use database;
 但是有DROP TABLE IF EXISTS `battle_game`;
 
 所以：
@@ -36,3 +36,13 @@ mysqldump -h localhost -uroot -p123456  -d database table > dump.sql
 mysqldump -h localhost -uroot -p123456  -t database > dump.sql
 导出单个数据表结构（不包含数据）
 mysqldump -h localhost -uroot -p123456  -t database table > dump.sql
+
+
+
+
+1 导出所有库（会有creat database ***;）
+ 系统命令行
+ mysqldump -uusername -ppassword --all-databases > all.sql
+2 导入所有库
+ mysql命令行
+ mysql>source all.sql;
