@@ -1,0 +1,12 @@
+grant 权限 on 数据库对象 to 用户
+
+grant alter  on testdb.* to developer@'192.168.0.%';
+grant all privileges on testdb to dba@'localhost'
+(      http://www.cnblogs.com/hcbin/archive/2010/04/23/1718379.html     )
+
+
+
+revoke 跟 grant 的语法差不多，只需要把关键字 “to” 换成 “from” 即可：
+grant all on *.* to dba@localhost;
+revoke all on *.* from dba@localhost;
+ 
