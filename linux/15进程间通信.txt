@@ -16,7 +16,6 @@ int mkfifo(const char *pathname, mode_t mode);
 2.IPC不使用文件描述符（所以不能用上事件模型）
 
 
-
 key_t ftok(const char *pathname, int proj_id);
 
 
@@ -70,18 +69,18 @@ POSIX信号量
 
 进程间同步
 {
-XSI信号量
-POSIC信号量
-文件记录锁
-共享存储中的互斥量（最快）
+	XSI信号量
+	POSIC信号量
+	文件记录锁
+	共享存储中的互斥量（最快）
 }
 
 进程间数据来往
 {
-pipe（父子进程）
-FIFO
-消息队列
-共享存储器
+	pipe（父子进程）
+	FIFO
+	消息队列
+	共享存储器
 }
 
 
