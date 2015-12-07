@@ -1,0 +1,20 @@
+open
+openat
+close
+lseek(超过文件尾端一般要write一个'\0')
+read
+write
+fork(父子进程共享文件表项)
+pread(带偏移量地原子的从文件中读取数据，可重入)
+pwrite
+int dup(int fd)
+int dup2(int fd ,int fd2)
+fsync(调用 fsync 可以保证文件的修改时间也被更新。fsync 系统调用可以使您精确的强制每次写入都被更新到磁盘中。您也可以使用同步（synchronous）I/O 操作打开一个文件，这将引起所有写数据都立刻被提交到磁盘中。通过在 open 中指定 O_SYNC 标志启用同步I/O。)
+fcntl
+ioctl
+
+
+文件描述符表是进程级别的
+文件表项表是系统级别的
+dup是改变文件描述符的
+

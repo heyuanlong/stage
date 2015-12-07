@@ -1,0 +1,141 @@
+#include <fcntl.h>
+int fcntl(int fd, int cmd, ... /* arg */ );
+struct flock {
+               ...
+               short l_type;    /* Type of lock: F_RDLCK,
+                                   F_WRLCK, F_UNLCK */
+               short l_whence;  /* How to interpret l_start:
+                                   SEEK_SET, SEEK_CUR, SEEK_END */
+               off_t l_start;   /* Starting offset for lock */
+               off_t l_len;     /* Number of bytes to lock */
+               pid_t l_pid;     /* PID of process blocking our lock
+                                   (F_GETLK only) */
+               ...
+           };
+文件记录锁可用于保证文件操作的有序性和进程同步。
+子进程不继承父进程设置的记录锁，因为每个记录锁会关联到一个进程
+
+int select(int nfds, fd_set *readfds, fd_set *writefds,fd_set *exceptfds, struct timeval *timeout);
+void FD_CLR(int fd, fd_set *set);
+int  FD_ISSET(int fd, fd_set *set);
+void FD_SET(int fd, fd_set *set);
+void FD_ZERO(fd_set *set);
+
+int poll(struct pollfd *fds, nfds_t nfds,const struct timespec *timeout, const sigset_t *sigmask);
+struct pollfd {
+int   fd;         /* file descriptor */
+short events;     /* requested events */
+short revents;    /* returned events */
+};
+
+ssize_t readv(int fd, const struct iovec *iov, int iovcnt);
+ssize_t writev(int fd, const struct iovec *iov, int iovcnt);
+ssize_t preadv(int fd, const struct iovec *iov, int iovcnt,off_t offset);
+ssize_t pwritev(int fd, const struct iovec *iov, int iovcnt,off_t offset);
+struct iovec {
+               void  *iov_base;    /* Starting address */
+               size_t iov_len;     /* Number of bytes to transfer */
+           };
+
+
+#include <sys/mman.h>
+void *mmap(void *addr, size_t length, int prot, int flags,int fd, off_t offset);
+int munmap(void *addr, size_t length);
+int msync(void *addr, size_t length, int flags);//实时冲洗到映射文件里
+
+
+
+
+
+
+
+
+// return readn number
+ssize_t readn(int fd, void* vptr, size_t n)
+{
+    size_t nleft;
+    size_t nread;
+    char*  ptr;
+
+    ptr   = vptr;
+    nleft = n;
+
+    while(nleft > 0){
+        if((nread = read(fd, vptr, nleft)) < 0){
+            if(errno == EINTR)             //由于信号中断，没读成功任何数据
+                nread = 0;
+            else
+                return -1;
+        }
+        else if(nread == 0)
+            break;                         //EOF
+        
+        nleft -= nread;
+        ptr   += nread;
+    }
+    
+    return (n - nleft);
+}
+复制代码
+writen函数：往一个描述字写n字节
+
+复制代码
+ssize_t writen(int fd, const void *vptr, size_t n)
+{
+    size_t nleft;
+    size_t nwriten;
+    const void *ptr;
+    
+    ptr = vptr;
+    nleft = n
+    
+    while(nleft > 0){
+        if((nwriten = write(fd, ptr, nleft)) <= 0){
+            if(nwriten < 0 && errno == EINTR)  //由于信号中断，没写成功任何数据
+                nwriten = 0;
+            else
+                return -1;
+        }
+        
+        nleft -= nwriten;
+        ptr   += nwriten;
+    }
+    
+    return (n);
+}
+复制代码
+readline函数：从一个描述字读文本，一次1个字节
+
+复制代码
+ssize_t readline(int fd, void *vptr, size_t maxlen)
+{
+    ssize_t n, rc;
+    char     c, *ptr;
+    
+    ptr = vptr;
+    
+    for(n = 1; n < maxlen; ++n){
+        again:
+            if((rc = read(fd, &c, 1)) == 1){
+                *ptr++ = c;
+                if(c == '\n') //以'/n'结束
+                    break;
+            }
+            else if(rc == 0){
+                *ptr = 0;
+                return n -1;
+            }
+            else{
+                if(errno == EINTR)
+                    goto again;
+                return -1;
+            }
+    }
+    
+    *ptr = 0;
+    return n;
+}
+
+
+
+
