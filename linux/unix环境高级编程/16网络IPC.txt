@@ -48,7 +48,7 @@ struct sockaddr_in
 };
 Struct in_addr
 {
-        u_int32_ts_addr;                     //IPv4地址，要用网络字节序表示
+        u_int32_t s_addr;                     //IPv4地址，要用网络字节序表示
 };
 //----------------------------------------
 Struct sockaddr_in6

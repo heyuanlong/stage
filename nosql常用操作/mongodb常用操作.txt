@@ -1,0 +1,73 @@
+增
+db.person.insert({"name":"jack","age":20})
+var single = {"name":"joe","address":{"province":"guangdong","cit":"shenzhen"},"favourite":["apple","banana"]}
+single.age=25
+db.person.insert(single)
+
+
+删
+db.person.remove()
+db.person.remove({"name":"jack"})
+
+
+改
+db.person.update({"name":"jack"},{"name":"jack","age":45})
+
+整体更新：
+var model = db.person.findOne({"name":"jack"})
+model.age =44
+db.person.update({"name":"jack"},model)
+
+局部更新： $inc修改器  $set修改器  
+db.person.update({"name":"jack"},{$inc:{"age":2}})//加2岁
+db.person.update({"name":"jack"},{$set:{"age":10}})//设置为10岁
+
+upsert操作(没找到就插入，使用起来很简单将update的第三个参数设为true即可。)
+db.person.update({"name":"jack"},{$inc:{"age":2}},true)
+
+
+
+查
+db.person.find()
+db.person.find({"name":"joe"})
+
+  >,     >=,    <,     <=,     !=,    =
+"$gt", "$gte", "$lt", "$lte", "$ne"   ""
+db.person.find({"age":{$gt:22}})
+db.person.find({"age":{$ne:22}})
+
+And， OR，   In，   NotIn
+"",  "$or", "$in"，"$nin"
+db.person.find({$or:[{"address.province":"guangdong"},{"address.province":"beijing"}]})
+db.person.find({"address.province":{$in:["guangdong","beijing"]}})
+db.person.find({"address.province":{$nin:["guangdong","beijing"]}})
+
+在mongodb中还有一个特殊的匹配，那就是“正则表达式”，这玩意威力很强的。
+//find name startwith 'j' and endwith 'e'
+db.person.find({"name":/^j/,"name":/e$/})
+
+
+查数量
+db.person.count()
+db.person.count({"age":20})
+
+//-----------------------------------------------------
+性能分析函数（explain）
+db.person.find({"name":"jack"}).explain()
+
+建立索引（ensureIndex）  唯一索引   组合索引
+db.person.ensureIndex({"name":1})
+db.person.ensureIndex({"name":1},{"unique":true})
+db.person.ensureIndex({"name":1,"age":1})
+
+查看索引 删除索引
+db.person.getIndexes()
+db.person.dropIndexes("name_1")
+db.person.dropIndexes("name_1_age_1")
+
+//-----------------------------------------------------
+
+db.person.distinct("age")//查找不重复的年龄
+group
+mapReduce
+游标
