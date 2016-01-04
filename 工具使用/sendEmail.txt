@@ -1,0 +1,129 @@
+linux sendEmail工具的安装使用
+ 
+1、sendEmail的主页http://caspian.dotconf.net/menu/Software/SendEmail/
+下载地址wget http://caspian.dotconf.net/menu/Software/SendEmail/sendEmail-v1.56.tar.gz
+ 
+2、安装：
+#tar -zxvf sendEmail-v1.56.tar.gz
+#cd sendEmail-v1.56
+#cp sendEmail /usr/local/bin
+ 
+3、然后给确认确实它具有执行权限
+ll /usr/local/bin/sendEmail
+-rwxr-xr-x 1 root root 77882 11-03 14:23 /usr/local/bin/sendEmail
+这样程序就装好了,使用也很简单.直接运行sendEmail就会显示详细的用法
+ 
+4、主要参数：
+-f 表示from，发件人地址
+-t 表示to，收件人地址
+-s mail服务器域名
+-u 主题
+-xu 用户名（@之前的）
+-xp 用户密码
+-m 纯文本信息
+-o message-file=/root/.. 发送文件中的内容
+-a 发送附件 （-m,-o,-a可以同时使用）
+ 
+5、实例：
+sendEmail -u test -f $mail_fm -t $mail_list -s $mail_smtp -xu $mail_user -xp $mail_pwd -o $mail_type message-charset=utf-8 message-file=${tmpfile}
+变量参考如下：
+export mail_list='662102@163.com,662101@163.com,662188@163.com,662111@163.com,662103@163.com'
+export mail_fm='zhoh@139.com'
+export mail_smtp='smtp.139.com'
+export mail_user='zhoh'
+export mail_pwd='iandse@139com'
+export mail_type='message-content-type=html'
+
+
+
+
+
+
+
+
+
+#!/bin/bash
+HOSTNAME="localhost"  #数据库信息
+PORT="3306"
+USERNAME="root"
+PASSWORD="sd-9898w"
+CHARACTER="--default-character-set=utf8 $*"
+
+DBNAME="ko_open"  #数据库名称
+TABLENAME="mail_validation" #数据库中表的名称
+
+#查询
+select_sql="select * from ${TABLENAME} where status=0"
+mysql -h${HOSTNAME} -P${PORT} -u${USERNAME} -p${PASSWORD}  ${CHARACTER}  ${DBNAME} -e "${select_sql}" > file.txt
+
+i=0
+j=0
+send_fail_num=0
+send_success_num=0
+
+sendto=""
+content=""
+
+
+while read line
+do
+    i=$[ $i+1 ]
+    if [ $i -eq 1 ] 
+    then
+	continue
+    fi
+    for word in $line 
+    do
+	    j=$[ $j+1 ]
+	    if [ $j -eq 1 ] 
+	    then
+		continue
+	    fi
+	    if [ $j -eq 2 ] 
+	    then
+		sendto=${word}
+		continue
+	    fi
+
+	    if [ $word = "0" ] 
+	    then
+		continue
+	    fi
+	    content=${content}" "${word}
+
+    done
+
+    #发送
+/usr/local/bin/sendEmail -xu monitor@kobox.tv -f monitor@kobox.tv -t $sendto   -s smtp.exmail.qq.com -o message-content-type=html -o message-charset=utf8 -a $attach -xp uyO8b6R -u $dt"tonji"  -m $content
+    
+    if [ $? -eq 0 ];
+    then
+	send_success_num=$[ send_success_num+1 ]
+    else
+	send_fail_num=$[ $send_fail_num+1 ]
+    fi
+    
+    #echo $sendto
+    #echo -e "\n"
+    #echo $content
+
+    #echo -e "\n\n"
+    j=0
+    content=""
+done < file.txt
+
+
+update_sql="update  ${TABLENAME} set status=1 where status=0"
+mysql -h${HOSTNAME} -P${PORT} -u${USERNAME} -p${PASSWORD}  ${CHARACTER}  ${DBNAME} -e "${update_sql}"
+
+#echo "fail nums:" $send_fail_num
+#echo "success nums:" $send_success_num
+
+
+
+
+
+加入
+crond：
+#每一分钟把ko_open.mail_validation的邮件
+*/1 * * * * /usr/local/bin/ko_open/sendemail.sh > /dev/null

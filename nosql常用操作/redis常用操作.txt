@@ -1,0 +1,73 @@
+增
+{
+SET key value
+}
+
+
+删
+{
+DEL key [key …]
+}
+
+
+
+
+改
+{
+追加：APPEND key value
+SET key value
+}
+
+
+
+查
+{
+GET key	
+获取字符串长度：STRLEN key
+
+同时获得/设置多个键值
+MGET key [key …]
+MSET key value [key value …]
+redis> MSET key1 v1 key2 v2 key3 v3
+redis> MGET key1 key3
+}
+
+
+other
+{
+递增数字:	INCR key
+增加指定的整数:	INCRBY key increment
+减少:	DECR key
+	DECRBY key decrement
+}
+
+
+
+散列
+{
+赋值与取值
+HSET key field value
+HGET key field
+HMSET key field value [field value …]
+HMGET key field [field …]
+HGETALL key
+
+redis> HSET car price 500
+(integer) 1
+redis> HSET car name BMW
+(integer) 1
+redis> HGET car name
+"BMW"
+
+
+HMSET key field1 value1 field2 value2
+redis> HMGET car price name
+
+判断字段是否存在
+HEXISTS key field
+}
+
+
+
+
+

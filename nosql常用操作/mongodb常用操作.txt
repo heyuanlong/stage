@@ -35,6 +35,8 @@ db.person.find({"name":"joe"})
 "$gt", "$gte", "$lt", "$lte", "$ne"   ""
 db.person.find({"age":{$gt:22}})
 db.person.find({"age":{$ne:22}})
+db.event.find({"reportTime":{$gt:"20151216141000"},"info":{$ne:"0"}})
+
 
 And， OR，   In，   NotIn
 "",  "$or", "$in"，"$nin"
@@ -45,6 +47,8 @@ db.person.find({"address.province":{$nin:["guangdong","beijing"]}})
 在mongodb中还有一个特殊的匹配，那就是“正则表达式”，这玩意威力很强的。
 //find name startwith 'j' and endwith 'e'
 db.person.find({"name":/^j/,"name":/e$/})
+
+
 
 
 查数量
@@ -71,3 +75,7 @@ db.person.distinct("age")//查找不重复的年龄
 group
 mapReduce
 游标
+
+
+db.event.find().limit(1).sort({"reportTime":-1})  //降序 
+db.event.find().limit(1).sort({"reportTime":1})   //升序
