@@ -1,3 +1,5 @@
+https://docs.mongodb.org/manual/contents/
+
 增
 db.person.insert({"name":"jack","age":20})
 var single = {"name":"joe","address":{"province":"guangdong","cit":"shenzhen"},"favourite":["apple","banana"]}
@@ -30,12 +32,14 @@ db.person.update({"name":"jack"},{$inc:{"age":2}},true)
 查
 db.person.find()
 db.person.find({"name":"joe"})
+db.event.find().sort({"_id":-1}).limit(1)
 
   >,     >=,    <,     <=,     !=,    =
 "$gt", "$gte", "$lt", "$lte", "$ne"   ""
 db.person.find({"age":{$gt:22}})
 db.person.find({"age":{$ne:22}})
 db.event.find({"reportTime":{$gt:"20151216141000"},"info":{$ne:"0"}})
+db.event.count({"reportTime":{$gt:1454428801,$lt:1454515141}})
 
 
 And， OR，   In，   NotIn
@@ -54,6 +58,7 @@ db.person.find({"name":/^j/,"name":/e$/})
 查数量
 db.person.count()
 db.person.count({"age":20})
+
 
 //-----------------------------------------------------
 性能分析函数（explain）

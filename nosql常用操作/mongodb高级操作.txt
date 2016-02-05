@@ -1,0 +1,27 @@
+//-- 
+1每日每个游戏中间页浏览数：
+eventID：enter_Mid_Page 这个数据是进入中间也，并获取到中间页数据的统计ID
+gameID：游戏ID
+这个事件是就是浏览游戏中间页的次数，根据gameID可以区分游戏
+./mongo event hyl.js > /tmp/hyl.json
+
+hyl.js内容：
+	print("eventID：enter_Mid_Page");
+	var cursor = db.event.aggregate(
+	   [
+	    { 
+		 $match:{eventID:"enter_Mid_Page" }
+	    },
+	    {
+	       $group:
+		 {
+		  _id: { reportTime: {$substr:["$reportTime",0,8]},gameID:"$gameID"},
+		   count: { $sum: 1 }
+		 }
+	    }   
+	   ]
+	);
+	while(cursor.hasNext()){
+	    printjsononeline(cursor.next());
+	}
+

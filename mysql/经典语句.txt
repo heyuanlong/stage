@@ -1,0 +1,9 @@
+1.on duplicate key
+	insert into audit_game(gameid,auditor,audittime,description) values(0,'1',now(),'2') on duplicate key update auditor='3',description='4';
+
+2. Á¬±í²éÑ¯
+	select d.email,b.gameid,b.editTime,b.gamename,b.icon,b.fileURL,b.type,m.slogan,b.description ,a.auditor,a.auditTime,a.description from ko_open.developer as d left join ko_open.battle_game as b  on d.openid=b.openid left join ko_open.match_game as m on b.gameid=m.gameid left join ko_open.audit_game as a on b.gameid=a.gameid where m.gameid > 0  and d.email like '%ed%'; 
+
+
+
+
