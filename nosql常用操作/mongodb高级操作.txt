@@ -25,3 +25,6 @@ hyl.jsÄÚÈÝ£º
 	    printjsononeline(cursor.next());
 	}
 
+
+db.event.find({"reportTime":{$gte:"20160130",$lt:"20160131"},$or:[{eventID:"onClick_Home_Download_Game_Btn"},{eventID:"onClick_Mid_Page_Down_Game_Btn"},{eventID:"down_Game_From_Search_Web"} ] }).count();
+db.event.find({"reportTime":{$gte:"20160130",$lt:"20160131"},"eventID":"download_Finished"}).count();
