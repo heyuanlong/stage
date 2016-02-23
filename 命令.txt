@@ -1,0 +1,7 @@
+mysql 启动 /bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --socket=/var/lib/mysql/mysql.sock --pid-file=/var/run/mysqld/mysqld.pid --basedir=/usr --user=mysql
+	   /usr/libexec/mysqld --basedir=/usr --datadir=/var/lib/mysql --user=mysql --log-error=/var/log/mysqld.log --pid-file=/var/run/mysqld/mysqld.pid --socket=/var/lib
+mongodb  启动/usr/local/mongodb/bin/mongod --dbpath=/data/mongdb_data/ --logpath=/data/mongdb_log/mongodb.log  --port 20111 --fork 
+
+nginx  启动 /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+
+discuz 启动  /opt/lampp/bin/httpd -k start -E /opt/lampp/logs/error_log -DSSL -DPHP

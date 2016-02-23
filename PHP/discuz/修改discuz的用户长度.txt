@@ -1,0 +1,104 @@
+在新发布的Discuz!X 2中，系统默认的用户名长度限制仍然是3-15字节，但有一些网站可能会因为各种原因需要将用户名长度的限制做一些修改。Discuz!X 1.5发布时已有相关教程，不过升级Discuz!X 2后程序改动较大，所以结合之前的一些经验，整理了这篇修改注册用户名长度的解决方案。详细操作如下：
+
+1、在网站/source/class/目录下的class_member.php文件中， 找到如下代码：
+if($usernamelen < 3) {     showmessage('profile_username_tooshort'); } elseif($usernamelen > 15) {     showmessage('profile_username_toolong'); }
+　　其中的数值“15”为注册用户名长度的最大值，数值“3”为注册用户名长度的最小值。将这两个值改成你需要的数值即可，例如我的网站需要将注册用户名长度的最大值增大至20，以下均以此为例。则修改上面的代码为：
+if($usernamelen < 3) {     showmessage('profile_username_tooshort'); } elseif($usernamelen > 20) {     showmessage('profile_username_toolong'); }
+
+2、在网站/source/language/目录下的lang_message.php文件中， 找到如下代码：
+'profile_username_toolong' => '抱歉，您的用户名超过 15 个字符，请输入一个较短的用户名',
+修改为：
+'profile_username_toolong' => '抱歉，您的用户名超过 20 个字符，请输入一个较短的用户名', 
+
+3、在网站/source/language/member/目录下的lang_template.php文件中， 找到如下代码：
+'register_username_tips' => '用户名必须为大于3位小于15位',
+修改为：
+'register_username_tips' => '用户名由 3 到 20 个字符组成',
+
+4、在网站/source/language/mobile/目录下的lang_template.php文件中， 找到如下代码：
+'reg_username' => '用户名必须为大于3位小于15位',
+修改为：
+'reg_username' => '用户名由 3 到 20 个字符组成',
+
+5、在网站/emplate/default/member/目录下的register.htm文件中， 找到如下代码：
+<input autocomplete="off" class="px" id="{$this->setting['reginput']['username']}" maxlength="15" name="" required="" size="25" tabindex="1" type="text" />
+修改名字输入框的限制字符数量“maxlength”，比如修改为：
+<input autocomplete="off" class="px" id="{$this->setting['reginput']['username']}" maxlength="20" name="" required="" size="25" tabindex="1" type="text" />
+
+6、在网站/uc_client/model/目录下的/user.php/文件中，找到如下代码：
+?1 if($len > 15 || $len < 3 || preg_match("/s+|^c:concon|[%,*"s<>&]|$guestexp/is", $username)) { 
+修改为：
+1 if($len > 20 || $len < 3 || preg_match("/s+|^c:concon|[%,*"s<>&]|$guestexp/is", $username)) { 
+
+
+7.
+./source/module/forum/forum_ajax.php:	} elseif($usernamelen > 15) {
+
+8、在网站/uc_server/model/目录下的/user.php/文件中，找到如下代码：
+if($len > 15 || $len < 3 || preg_match("/\
+修改为：
+if($len > 32 || $len < 3 || preg_match("/\
+
+9.修改数据库
+首先，修改UCenter库表pre_ucenter（pre_为自定义前缀，下同）：
+alter table pre_ucenter_admins change username username char(50) NOT NULL DEFAULT '';
+alter table pre_ucenter_feeds change username username varchar(50) NOT NULL DEFAULT ''; 
+alter table pre_ucenter_members change username username char(50) NOT NULL DEFAULT '';
+alter table pre_ucenter_mergemembers change username username char(50) NOT NULL DEFAULT '';
+alter table pre_ucenter_protectedmembers change username username char(50) NOT NULL DEFAULT '';
+
+然后，修改Discuz!X库表pre_ultrax：
+alter table pre_common_adminnote change admin admin varchar(50) NOT NULL DEFAULT '';
+alter table pre_common_banned change admin admin varchar(50) NOT NULL DEFAULT '';
+alter table pre_common_card_log change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_common_diy_data change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_common_failedlogin change username username char(50) NOT NULL DEFAULT '';
+alter table pre_common_grouppm change author author varchar(50) NOT NULL DEFAULT '';
+alter table pre_common_invite change fusername fusername varchar(50) NOT NULL DEFAULT '';
+alter table pre_common_member change username username char(50) NOT NULL DEFAULT '';
+alter table pre_common_member_validate change admin admin varchar(50) NOT NULL DEFAULT '';
+alter table pre_common_member_verify_info change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_common_mytask change username username char(50) NOT NULL DEFAULT '';
+alter table pre_common_report change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_common_report change opname opname varchar(50) NOT NULL DEFAULT '';
+alter table pre_common_session change username username char(50) NOT NULL DEFAULT '';
+alter table pre_common_word change admin admin varchar(50) NOT NULL DEFAULT '';
+alter table pre_forum_announcement change author author varchar(50) NOT NULL DEFAULT '';
+alter table pre_forum_forumrecommend change author author varchar(50) NOT NULL DEFAULT '';
+alter table pre_forum_groupuser change username username char(50) NOT NULL DEFAULT '';
+alter table pre_forum_order change admin admin varchar(50) NOT NULL DEFAULT '';
+alter table pre_forum_pollvoter change username username char(50) NOT NULL DEFAULT '';
+alter table pre_forum_promotion change username username char(50) NOT NULL DEFAULT '';
+alter table pre_forum_post change author author varchar(50) NOT NULL DEFAULT '';
+alter table pre_forum_postcomment change author author varchar(50) NOT NULL DEFAULT '';
+alter table pre_forum_ratelog change username username char(50) NOT NULL DEFAULT '';
+alter table pre_forum_rsscache change author author varchar(50) NOT NULL DEFAULT '';
+alter table pre_forum_thread change author author varchar(50) NOT NULL DEFAULT '';
+alter table pre_forum_threadmod change username username char(50) NOT NULL DEFAULT '';
+alter table pre_forum_trade change seller seller varchar(50) NOT NULL DEFAULT '';
+alter table pre_forum_tradecomment change rater rater varchar(50) NOT NULL DEFAULT '';
+alter table pre_forum_tradelog change seller seller varchar(50) NOT NULL DEFAULT '';
+alter table pre_forum_tradelog change buyer buyer varchar(50) NOT NULL DEFAULT '';
+alter table pre_forum_warning change operator operator varchar(50) NOT NULL DEFAULT '';
+alter table pre_forum_warning change author author varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_album change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_blog change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_clickuser change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_comment change author author varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_docomment change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_doing change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_feed change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_feed_app change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_friend change fusername fusername varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_friend_request change fusername fusername char(50) NOT NULL DEFAULT '';
+alter table pre_home_notification change author author varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_pic change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_poke change fromusername fromusername varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_share change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_show change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_specialuser change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_specialuser change opusername opusername varchar(50) NOT NULL DEFAULT '';
+alter table pre_home_visitor change vusername vusername varchar(50) NOT NULL DEFAULT '';
+alter table pre_myrepeats change username username varchar(50) NOT NULL DEFAULT '';
+alter table pre_portal_rsscache change author author varchar(50) NOT NULL DEFAULT '';
+alter table pre_portal_topic_pic change username username varchar(50) NOT NULL DEFAULT '';
