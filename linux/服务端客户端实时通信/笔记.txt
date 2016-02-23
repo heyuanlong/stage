@@ -1,6 +1,10 @@
 192.168.8.4 heyuanlong FDSA@#FDF
 
 
+主socket的事件不能是et
+ServerEpollEvent.events = EPOLLIN;
+
+
 SetSocketNonblock(STDIN_FILENO);///非阻塞读取终端数据
 SetSocketNonblock(clientsocket);//为什么放在connect之前就会出错？？？？？？？？？？？
 
@@ -53,6 +57,9 @@ signal(SIGPIPE, SIG_IGN);
 
 in et  有了后直到读完才go
 in lt  有就一直go
+
+
+
 
 
 

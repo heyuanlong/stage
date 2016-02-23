@@ -49,22 +49,7 @@ int main(int argc, char const *argv[])
 	close(clientsocket);
 	return 0;
 }
-int Restart()
-{
-	write(STDOUT_FILENO,"restart? y or n\n",strlen("restart? y or n\n"));
-	char c;
-	while(1){
-		read(STDIN_FILENO,&c,1);
-		if(c == 'y'){
-			return 1;
-		}
-		else if (c == 'n'){
-			return 0;
-		}
-		write(STDOUT_FILENO,"input y or n\n",strlen("input y or n\n"));
-	}
 
-}
 int ClientConnectServer(char const *ip,int port)
 {
 	int clientsocket = socket(AF_INET,SOCK_STREAM,0);
@@ -88,11 +73,36 @@ int ClientConnectServer(char const *ip,int port)
 		else 
 			break;//连接成功
 	}
+	printf("connect fd %d\n", clientsocket);
 
 	SetSocketNonblock(clientsocket);//为什么放在connect之前就会出错？？？？？？？？？？？
 	gfd=clientsocket;
 	write(STDOUT_FILENO,"already connect to the server\n",strlen("already connect to the server\n"));
+
+
+/*
+printf("下面是重复connect\n");
+int clientsocket11 = socket(AF_INET,SOCK_STREAM,0);;
+	while(1){
+		if ( connect(clientsocket11,(struct sockaddr*)&caddr,sizeof(struct sockaddr)) == -1 ){
+			if (errno == EISCONN)
+			{
+				printf("connect fd --------%d\n", clientsocket);
+				break;
+			}
+			
+			write(STDOUT_FILENO,"connect to server....999.....\n",strlen("connect to server....999.....\n"));
+			sleep(1);
+		}
+		else {
+			printf("connect fd -888888888888-%d\n", clientsocket);
+			break;//连接成功
+
+			}	
+	}
+	*/	
 	return clientsocket;
+
 }
 
 
@@ -152,3 +162,20 @@ void SetSocketNonblock(int fd)
 
 
 
+
+int Restart()
+{
+	write(STDOUT_FILENO,"restart? y or n\n",strlen("restart? y or n\n"));
+	char c;
+	while(1){
+		read(STDIN_FILENO,&c,1);
+		if(c == 'y'){
+			return 1;
+		}
+		else if (c == 'n'){
+			return 0;
+		}
+		write(STDOUT_FILENO,"input y or n\n",strlen("input y or n\n"));
+	}
+
+}

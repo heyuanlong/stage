@@ -6,7 +6,7 @@
 int main(int argc, char const *argv[])
 {
 	setsignal();//捕捉SIGPIPE,并忽略它。  服务端禁止出现PIPE错误
-	SetSocketNonblock(STDIN_FILENO);///非阻塞读取终端数据，如何读？
+	SetSocketNonblock(STDIN_FILENO);///非阻塞读取终端数据
 	int port = atoi(argv[1]);
 	//int port=6669;
 	int serversocket = InitServerSocket(port);
@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
 	struct epoll_event EventTemp,EventReady[EPOLL_SIZE-1];
 	struct epoll_event ServerEpollEvent;
 
-	ServerEpollEvent.events = EPOLLIN | EPOLLET;
+	ServerEpollEvent.events = EPOLLIN;
 	ServerEpollEvent.data.fd = serversocket;
 	if (epoll_ctl(epoll_fd,EPOLL_CTL_ADD,serversocket,&ServerEpollEvent) == -1){
 		close(epoll_fd);
@@ -92,7 +92,9 @@ int main(int argc, char const *argv[])
 					ssize_t sendnum = 0;				
 					char  *temp =sendbuf;
 					while(len > 0){
-						sendnum = send(EventReady[i].data.fd,temp,len,0);//服务端中断后，第一次发送时sendnum不等于0，第二次发送时就会出现sigpipe错误。
+						sendnum = send(EventReady[i].data.fd,temp,len,0);//						服务端中断后，第一次发送时sendnum不等于0，第二次发送时就会出现sigpipe错误。
+						printf("fd:%d\n",EventReady[i].data.fd);
+						write(STDOUT_FILENO,temp,len); 
 						temp +=sendnum;
 						len -=sendnum;		
 					}
@@ -102,6 +104,8 @@ int main(int argc, char const *argv[])
 
 			}
 		}
+
+
 	}
 
 	close(epoll_fd);
@@ -164,7 +168,7 @@ int ReadDate(int fd,char *buf,int num)
 	while(1){
 		if ( (nread = recv(fd,buf,num,0)) < 0 )
 		{
-			if (errno == EWOULDBLOCK || errno == EAGAIN)//被中断或没有读到数据
+			if (errno == EWOULDBLOCK || errno == EAGAIN || errno == EINTR)//被中断或没有读到数据
 			    return havenum;//刚开始这里使用continue，是不行的
 			else //
 				return -1;

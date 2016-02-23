@@ -1,0 +1,4 @@
+修改后记得  后台->工具->更新缓存。
+
+
+./template/default/member/login_simple.htm  这里可以改主页右上角的登陆和注册。
