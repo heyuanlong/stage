@@ -20,7 +20,7 @@ if($usernamelen < 3) {     showmessage('profile_username_tooshort'); } elseif($u
 修改为：
 'reg_username' => '用户名由 3 到 20 个字符组成',
 
-5、在网站/emplate/default/member/目录下的register.htm文件中， 找到如下代码：
+5、在网站/template/default/member/目录下的register.htm文件中， 找到如下代码：
 <input autocomplete="off" class="px" id="{$this->setting['reginput']['username']}" maxlength="15" name="" required="" size="25" tabindex="1" type="text" />
 修改名字输入框的限制字符数量“maxlength”，比如修改为：
 <input autocomplete="off" class="px" id="{$this->setting['reginput']['username']}" maxlength="20" name="" required="" size="25" tabindex="1" type="text" />
