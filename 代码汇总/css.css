@@ -1,0 +1,61 @@
+p,h1,h2,h3 {text-align:center; color:red;}
+
+派生选择器
+li strong {
+    font-style: italic;
+    font-weight: normal;
+  }
+
+id 选择器以 "#" 来定义。
+#iid {color:red;}
+
+id 选择器和派生选择器
+#sidebar p {
+	font-style: italic;
+	}
+  div #sidebar {
+  	border: 1px dotted #000;
+  	}
+
+类选择器以一个点号显示：
+.center {text-align: center}
+
+class 也可被用作派生选择器：
+.fancy td {
+	color: #f60;
+	background: #666;
+	}
+td.fancy {
+	color: #f60;
+	background: #666;
+	}
+
+属性选择器
+[title]{color:red;}
+[title=W3School]{border:5px solid blue;}
+input[type="text"]{  width:150px;}
+
+CSS 背景
+p {background-color: gray;}
+body {background-image: url(/i/eg_bg_04.gif);}
+text-align	对齐元素中的文本。
+text-decoration	向文本添加修饰。
+
+font-family	设置字体系列。
+font-size	设置字体的尺寸。
+
+a:link {color:#FF0000;}		/* 未被访问的链接 */
+a:visited {color:#00FF00;}	/* 已被访问的链接 */
+a:hover {color:#FF00FF;}	/* 鼠标指针移动到链接上 */
+a:active {color:#0000FF;}	/* 正在被点击的链接 */
+
+table, th, td
+  {
+  border: 1px solid blue;
+  }
+
+
+360兼容模式
+<meta name="renderer" content="webkit">
+<meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+<meta content=always name=referrer>

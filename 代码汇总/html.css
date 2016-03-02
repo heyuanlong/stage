@@ -3,3 +3,117 @@
 <img src="test.png" width="300" height="120">
 <h1 align="center">This is heading 1</h1>
 <hr />标签定义水平线
+
+外部样式表
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+内部样式表
+<style type="text/css">
+  body{background-color: :red}
+  p{margin-left: 20px}
+</style>
+内联样式
+<p style="color: red; margin-left: 20px">
+
+<a name="label">锚（显示在页面上的文本）</a>
+<a href="#tips">跳到锚点</a>
+<a href="http://www.w3school.com.cn/html/html_links.asp#tips">跳到锚点</a>
+
+<ul>
+<li>Coffee</li>
+<li>Milk</li>
+</ul>
+<ol>
+<li>Coffee</li>
+<li>Milk</li>
+</ol>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+div#container{width:500px}
+div#header {background-color:#99bbbb;}
+div#menu {background-color:#ffff99; height:200px; width:100px; float:left;}
+div#content {background-color:#EEEEEE; height:200px; width:400px; float:left;}
+div#footer {background-color:#99bbbb; clear:both; text-align:center;}
+h1 {margin-bottom:0;}
+h2 {margin-bottom:0; font-size:14px;}
+ul {margin:0;}
+li {list-style:none;}
+</style>
+</head>
+<body>
+<div id="container">
+<div id="header"><h1>Main Title of Web Page</h1></div>
+<div id="menu"><h2>Menu</h2>menu</div>
+<div id="content">Content goes here</div>
+<div id="footer">Copyright W3School.com.cn</div>
+</div>
+</body>
+</html>
+
+<input type="text" name="firstname" />
+<input type="radio" name="sex" value="male" /> Male
+<input type="checkbox" name="Fruit"value="apple" />苹果
+
+
+<html>
+<frameset cols="120,*">
+  <frame src="/example/html/html_contents.html">
+  <frame src="/example/html/frame_a.html" name="showframe">
+</frameset>
+</html>
+
+内联框架 <iframe src="demo_iframe.htm" width="200" height="200"></iframe>
+<!DOCTYPE html>
+<html>
+<body>
+<iframe src="/example/html/demo_iframe.html" name="iframe_a"></iframe>
+<p><a href="http://www.w3school.com.cn" target="iframe_a">W3School.com.cn</a></p>
+<p><b>注释：</b>由于链接的目标匹配 iframe 的名称，所以链接会在 iframe 中打开。</p>
+</body>
+</html>
+
+背景
+<body bgcolor="#000000">
+<body background="clouds.gif">
+
+HTML5
+<!DOCTYPE html>
+HTML 4.01
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+XHTML 1.0
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+
+
+<script src="./js.js"></script>
+<script type="text/javascript">
+document.write("Hello World!")
+</script>
+空格	&nbsp;
+
+
+音频
+<audio controls="controls" height="100" width="100">
+  <source src="song.mp3" type="audio/mp3" />
+  <source src="song.ogg" type="audio/ogg" />
+<embed height="100" width="100" src="song.mp3" />
+</audio>
+
+视频
+HTML 5 + <object> + <embed>
+<video width="320" height="240" controls="controls">
+  <source src="movie.mp4" type="video/mp4" />
+  <source src="movie.ogg" type="video/ogg" />
+  <source src="movie.webm" type="video/webm" />
+  <object data="movie.mp4" width="320" height="240">
+    <embed src="movie.swf" width="320" height="240" />
+  </object>
+</video>
