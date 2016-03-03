@@ -40,7 +40,7 @@ public static final int getIntParameter(HttpServletRequest request, String key, 
 }
 
 
-
+<%=errorMsg.length()>0?"block":"none" %>
 
 
 

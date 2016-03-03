@@ -89,3 +89,23 @@ a[href][title] {color:red;}
 h1 em {color:red;}
 子元素选择器
 h1 > strong {color:red;}
+相邻兄弟选择器使用了加号（+）
+h1 + p {margin-top:50px;}
+
+透明度
+img
+{
+opacity:0.4;
+filter:alpha(opacity=40); /* 针对 IE8 以及更早的版本 */
+}
+
+
+伪类
+属性	描述	CSS
+:active	向被激活的元素添加样式。	1
+:focus	向拥有键盘输入焦点的元素添加样式。	2
+:hover	当鼠标悬浮在元素上方时，向元素添加样式。	1
+:link	向未被访问的链接添加样式。	1
+:visited	向已被访问的链接添加样式。	1
+:first-child	向元素的第一个子元素添加样式。	2
+:lang	向带有指定 lang 属性的元素添加样式。	2
