@@ -10,3 +10,14 @@ var str = '{"os":"osx","engine":"H5","sdkname":"test","editby":"onizukaspm"}';
 var obj =  eval('(' + str + ')'); //由JSON字符串转换为JSON对象
 alert(obj);
 alert(obj.os);
+
+
+获取和设置select的值
+Doc_log.os =  $("#os").val();
+$("#os").val(data.os);
+
+
+document.getElementById('cba').onclick = function(){};//改变点击触发的方法
+$("#real_name").attr("readonly","readonly");//设置一些为只读模式；
+$("#Profile_picture").attr('src',"<%=operatorIDFront%>");
+$("#upload_photo_form").css('display',"none");//隐藏添加图片
