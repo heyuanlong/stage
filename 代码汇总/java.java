@@ -15,3 +15,173 @@ static {
 
 import org.json.*;
 JSONObject jsobjcet = new JSONObject();
+
+public class HelloWorld {
+    public static void main(String []args) {
+        System.out.println("Hello World"); // 打印 Hello World
+    }
+}
+
+
+枚举
+class FreshJuice {
+   enum FreshJuiceSize{ SMALL, MEDUIM, LARGE }
+   FreshJuiceSize size;
+}
+
+public class FreshJuiceTest {
+   public static void main(String []args){
+      FreshJuice juice = new FreshJuice();
+      juice.size = FreshJuice. FreshJuiceSize.MEDUIM ;
+   }
+}
+
+构造方法
+public class Puppy{
+   public Puppy(){
+   }
+
+   public Puppy(String name){
+      // 这个构造器仅有一个参数：name
+   }
+}
+
+一个源文件中只能有一个public类
+一个源文件可以有多个非public类
+
+所有包中都声明了异常类和所有错误类。Exception类是所有异常类的父类；Eror类是所有错误类的父类。这两个类同时又是Throwable的子类
+
+
+要实现对象的序列化，这个对象所属的类型必须实现Serializable接口。
+class Book implements Serializable    //创建Book类，并声明其实现Serializable接口
+{
+	int id;
+	String name;
+	String author;
+	float price;
+	public Book(int id,String name,String author,float price)
+	{
+	this.id=id;
+	this.name=name;
+	this.author=author;
+	this.price=price;
+	}
+}
+
+
+二维数组的输入输出
+for(int i=0;i<arr.length;++i)
+	for(int j=0;j<arr[i].length;++j)
+	{
+		arr[i][j]=2;
+	}
+for(int i=0;i<arr.length;++i)
+	for(int j=0;j<arr[i].length;++j)
+	{
+		System.out.print(arr[i][j]);
+	}
+for(int row[]:arr)
+	for(int col:row)
+	{
+		System.out.print(col);
+	}
+
+int nums[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+   for(int x : nums) {
+     System.out.print(x + " ");
+     x = x * 10; // no effect on nums
+   }
+
+抽象象：
+abstract class Fruit{
+    public String color;
+    public Fruit(){
+        color="red";
+    }
+    public abstract void harvest();
+}
+
+成员内部类
+public class Outer {
+    public static void main(String[] args) {
+        Outer outer = new Outer();
+        Outer.Inner inner = outer.new Inner();
+        inner.print("Outer.new");
+
+        inner = outer.getInner();
+        inner.print("Outer.get");
+    }
+    public class Inner {
+        public void print(String str) {
+            System.out.println(str);
+        }
+    }
+}
+
+
+获取某一个类所对应的Class对象可以通过如下三种途径：
+1，Object的getClass方法
+Date date1 = new Date();
+Class c1 = date1.getClass();
+System.out.println(c1.getName()); // java.util.Date
+
+2，使用.class的方式
+使用类名加“.class”的方式即会返回与该类对应的Class对象。例如：
+Class clazz = String.class;
+System.out.println(clazz.getName()); // java.lang.String
+
+3，使用Class.forName方法
+Class有一个著名的static方法forName：
+Class clazz = Class.forName("org.whatisjava.reflect.Foo");
+
+Class onwClass = Class.forName("org.test.GetClass");
+现在我们有了一个Class类的实例了。下面就是获取一个Object类的实例对象。
+Object o = onwClass.newInstance();
+现在我们已经有了一个Object对象，下一步就可以对这个Object进行强制转换了。
+
+
+java常用的集合类
+ArrayList  LinkedList
+HashSet   TreeSet
+HashMap   TreeMap
+
+java 遍历arrayList的四种方法
+//方法1
+ Iterator it1 = list.iterator();
+ while(it1.hasNext()){
+     System.out.println(it1.next());
+ }
+ //方法2
+ for(Iterator it2 = list.iterator();it2.hasNext();){
+      System.out.println(it2.next());
+ }
+ //方法3
+ for(String tmp:list){
+     System.out.println(tmp);
+ }
+ //方法4
+ for(int i = 0;i < list.size(); i ++){
+     System.out.println(list.get(i));
+ }
+
+可以使用
+try...catch
+try...catch...finally
+try...finally
+
+
+ 声明异常和抛出异常
+ public void setID(String id) throws IllegalException{
+    throw new IllegalArgumentException("参数长度应为7");
+}
+throw new Exception("抛出异常");
+
+自定义异常
+1.自定义异常: 
+class 异常类名 extends Exception
+{
+    public 异常类名(String msg)
+    {
+        super(msg);
+    }
+}

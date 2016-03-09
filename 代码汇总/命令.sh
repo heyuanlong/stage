@@ -64,3 +64,26 @@ cd rsync***
 make & make install
 传输：rsync -avzp /data/* root@123.59.43.36:P/var/
 rsync -avzp root@123.59.43.26:/var/* /data/
+
+yum 安装mysql
+1,安装mysql服务端
+yum install mysql-server
+yum install mysql-devel
+2,install mysql客户端
+yum install mysql
+3,启动mysql服务
+service mysqld start /etc/init.d/mysqld start
+停止            stop
+重启            restart
+4，创建root管理员
+mysqladmin -uroot password 123456
+5，登录
+mysql -uroot -p123456
+
+ldconfig是动态链接库管理命令
+ldd是用来查看程序运行所需要的共享库
+
+tail -f file.log
+ln -s oldfile newfile
+
+关于SCP
