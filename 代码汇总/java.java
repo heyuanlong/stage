@@ -177,7 +177,7 @@ try...finally
 throw new Exception("抛出异常");
 
 自定义异常
-1.自定义异常: 
+1.自定义异常:
 class 异常类名 extends Exception
 {
     public 异常类名(String msg)
@@ -185,3 +185,108 @@ class 异常类名 extends Exception
         super(msg);
     }
 }
+
+
+java多线程
+http://blog.csdn.net/aboy123/article/details/38307539
+
+
+
+jdbc
+package com.test.jdbc;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+/**
+ * @author Administrator
+ * 模板类DBUtils
+ */
+public final class DBUtils {
+    // 参数定义
+    private static String url = "jdbc:mysql://localhost:3306/mytest"; // 数据库地址
+    private static String username = "root"; // 数据库用户名
+    private static String password = "root"; // 数据库密码
+
+    private DBUtils() {
+
+    }
+    // 加载驱动
+    static {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println("驱动加载出错!");
+        }
+    }
+
+    // 获得连接
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(url, username, password);
+    }
+
+    // 释放连接
+    public static void free(ResultSet rs, Statement st, Connection conn) {
+        try {
+            if (rs != null) {
+                rs.close(); // 关闭结果集
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null) {
+                    st.close(); // 关闭Statement
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (conn != null) {
+                        conn.close(); // 关闭连接
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
+
+    }
+}
+
+try {
+            conn = DBUtils.getConnection();
+            st = conn.createStatement();
+            String sql = "select * from users where lastname = '" + name + "'"; // 主要注入发生地
+            System.out.println("sql: " + sql); // 打印SQL语句
+            rs = st.executeQuery(sql);
+            System.out.println("age\tlastname\tfirstname\tid");
+            while (rs.next()) {
+                System.out.println(rs.getInt(1) + "\t" + rs.getString(2)
+                        + "\t\t" + rs.getString(3) + "\t\t" + rs.getString(4));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.free(rs, st, conn);
+        }
+
+try {
+            conn = DBUtils.getConnection();
+            String sql = "select * from users where lastname = ?"; // 这里用问号
+            st = conn.prepareStatement(sql);
+            st.setString(1,name); // 这里将问号赋值
+            rs = st.executeQuery();
+            System.out.println("age\tlastname\tfirstname\tid");
+            while (rs.next()) {
+                System.out.println(rs.getInt(1) + "\t" + rs.getString(2)
+                        + "\t\t" + rs.getString(3) + "\t\t" + rs.getString(4));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.free(rs, st, conn);
+        }
