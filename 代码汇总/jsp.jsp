@@ -42,30 +42,9 @@ public static final int getIntParameter(HttpServletRequest request, String key, 
 
 <%=errorMsg.length()>0?"block":"none" %>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%>
+web.xml配置首先页面
+<welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+</welcome-file-list>

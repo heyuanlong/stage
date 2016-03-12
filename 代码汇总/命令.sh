@@ -87,3 +87,31 @@ tail -f file.log
 ln -s oldfile newfile
 
 关于SCP
+scp的命令使用和rsync一样
+区别：scp一个复制   rsync一个同步
+
+hexdump -C file.txt 输出十六进制和对应字符
+hexdump -C -n 10 file.txt 输出前10个字节
+
+dos2unix命令用来将DOS格式文本转换成unix格式的.
+DOS下文本以\r\n为断行标志，十六进制为0D0A 而unix是\n为0A
+dos2unix file.txt
+还有unix2dos命令与dos2unix相反
+
+chmod +x job.sh
+
+SendEmail 用命令或shell发送邮件（看自己的博客）
+
+less -N file.txt{
+    q 退出
+    空格  entry 下一行  pagedown 下一页
+    g： 第一页  G：最后一页
+    数字+entry  ：跳到n行
+}
+
+查找文件里的内容
+find ./ -name "*.*" | xargs grep "\"ip\""
+
+du -sh PATH 总大小
+du -h PATH 目录里所有文件的详细大小
+df 查看磁盘的使用情况
