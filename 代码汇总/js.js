@@ -21,3 +21,6 @@ document.getElementById('cba').onclick = function(){};//改变点击触发的方
 $("#real_name").attr("readonly","readonly");//设置一些为只读模式；
 $("#Profile_picture").attr('src',"<%=operatorIDFront%>");
 $("#upload_photo_form").css('display',"none");//隐藏添加图片
+
+
+js函数不介意传递进来多少个参数，也不在乎穿进来参数是什么数据类型,不足的伪undefined
