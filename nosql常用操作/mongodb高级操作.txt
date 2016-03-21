@@ -28,3 +28,10 @@ hyl.js内容：
 
 db.event.find({"reportTime":{$gte:"20160130",$lt:"20160131"},$or:[{eventID:"onClick_Home_Download_Game_Btn"},{eventID:"onClick_Mid_Page_Down_Game_Btn"},{eventID:"down_Game_From_Search_Web"} ] }).count();
 db.event.find({"reportTime":{$gte:"20160130",$lt:"20160131"},"eventID":"download_Finished"}).count();
+
+
+----迁移mongodb
+1.直接把完整的mongo整个拷贝到机子，目前版本的目录是mongo目录里有（bin,data,etc,log四个目录）
+2.启动  ./mongod --dbpath=/data/bin/mongo/data/ --logpath=/data/bin/mongo/log/mongodb.log  --fork
+
+----

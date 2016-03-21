@@ -5,3 +5,5 @@ mongodb  ∆Ù∂Ø/usr/local/mongodb/bin/mongod --dbpath=/data/mongdb_data/ --logpath
 nginx  ∆Ù∂Ø /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
 
 discuz ∆Ù∂Ø  /opt/lampp/bin/httpd -k start -E /opt/lampp/logs/error_log -DSSL -DPHP
+
+java √¸¡Ó  /usr/java/jdk1.7.0_80/bin/java -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.endorsed.dirs=/usr/local/tomcat/endorsed -classpath /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin/tomcat-juli.jar -Dcatalina.base=/usr/local/tomcat -Dcatalina.home=/usr/local/tomcat -Djava.io.tmpdir=/usr/local/tomcat/temp org.apache.catalina.startup.Bootstrap start

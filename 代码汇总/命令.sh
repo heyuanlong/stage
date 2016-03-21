@@ -115,3 +115,7 @@ find ./ -name "*.*" | xargs grep "\"ip\""
 du -sh PATH 总大小
 du -h PATH 目录里所有文件的详细大小
 df 查看磁盘的使用情况
+
+
+linux查询进程占用哪些端口
+netstat -nlap
