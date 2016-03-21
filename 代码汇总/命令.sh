@@ -55,14 +55,14 @@ service crond restart 重启crond
 用ssh-copy-id命令吧公钥复制到远程主机
 3，ssh user@remotehost 直接登录
 
-关于rsync
+关于rsync（双方都得有rsync）
 sudo apt-get install rsync
 yum install rsync
 rpm -ivh rsync
 源码包：tar xvf rsync ****
 cd rsync***
 make & make install
-传输：rsync -avzp /data/* root@123.59.43.36:P/var/
+传输：rsync -avzp /data/* root@123.59.43.36:/var/
 rsync -avzp root@123.59.43.26:/var/* /data/
 
 yum 安装mysql
