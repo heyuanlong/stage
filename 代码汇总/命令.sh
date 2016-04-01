@@ -119,3 +119,7 @@ df 查看磁盘的使用情况
 
 linux查询进程占用哪些端口
 netstat -nlap
+
+
+打包命令
+tar -zcvf nginx.conf.221.tar.gz conf/*
