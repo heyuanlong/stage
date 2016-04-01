@@ -1,0 +1,29 @@
+从MySQL 5.6开始，可以将帐户信息（host，port，user，password）保存到MySQL提供的加密文件（/root/.myLogin.cnf）中
+
+增加用户信息
+/usr/local/mysql/bin/mysql_config_editor set --login-path=remote --host=remoteHost --port=remotePort --user=root --password
+（此处密码需要手动输入，无法明文传参）
+
+增加用户新信息后，即可使用--login-path参数来指定登录的MySQL服务
+/usr/local/mysql/bin/mysql --login-path=remote
+
+如果不按照此方法，在MySQL 5.6之后，通过命令行进入MySQL时，如果输入了明文密码，将会收到如下警告
+Warning: Using a password on the command line interface can be insecure.
+ 
+连接信息会保存到/root/.myLogin.cnf中，通过命令可以查看具体内容 (其中也是不会显示明文密码的)
+/usr/local/mysql/bin/mysql_config_editor print --all
+[local]
+user = root
+password = *****
+host = localhost
+[remote227]
+user = root
+password = *****
+host = 10.10.63.227
+[remote133]
+user = root
+password = *****
+host = 115.231.9.133
+
+注意
+在使用mysqldump命令时，需要保证--login-path是第一个参数，否则会提示无法识别参数"--login-path"

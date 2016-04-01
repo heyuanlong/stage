@@ -290,3 +290,41 @@ try {
         } finally {
             DBUtils.free(rs, st, conn);
         }
+
+
+读写文件
+public static void main(String args[])
+{
+	//HashSet hset=new HashSet();
+	Set<String> hset = new HashSet<String>();
+	File file_urlr = new File("C:\\Users\\Administrator\\Desktop\\敏感词汇\\all_keywords_可能重复2.txt");
+	try{
+		FileReader fr =new FileReader(file_urlr);
+		BufferedReader br = new BufferedReader(fr);
+		try{
+			String line = br.readLine();
+			while (line != null){
+				hset.add(line);   
+				line = br.readLine();
+			}
+		}catch(IOException e){
+			System.out.println(e.getMessage());
+		}
+	}catch(IOException e){
+		System.out.println(e.getMessage());
+	}
+	StringBuffer str = new StringBuffer();
+	for (String s : hset) {  
+		str.append(s).append("\n");
+	} 
+	
+	File file_urlw = new File("C:\\Users\\Administrator\\Desktop\\敏感词汇\\all_keywords_无重复.txt");
+	try{
+	FileOutputStream fw =  new FileOutputStream(file_urlw);
+	fw.write(str.toString().getBytes("UTF-8"));
+	fw.close();
+	}catch(IOException e){
+		System.out.println(e.getMessage());
+	}
+	System.out.println("ok");
+}

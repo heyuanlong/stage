@@ -1,6 +1,6 @@
 -------------------------------------------------------
--- ²ÎÊı:´ı·Ö¸îµÄ×Ö·û´®,·Ö¸î×Ö·û
--- ·µ»Ø:×Ó´®±í.(º¬ÓĞ¿Õ´®)
+-- å‚æ•°:å¾…åˆ†å‰²çš„å­—ç¬¦ä¸²,åˆ†å‰²å­—ç¬¦
+-- è¿”å›:å­ä¸²è¡¨.(å«æœ‰ç©ºä¸²)
 function lua_string_split(str, split_char)
     local sub_str_tab = {};
     while (true) do
@@ -18,15 +18,10 @@ function lua_string_split(str, split_char)
 end
 
 
---Ê±¼ä´Á
+--æ—¶é—´æˆ³
 local currentstamp = os.time()
 local eventstamp = os.time{year=yearD, month=monthD, day=dayD,hour = hourD, min = minD, sec = secD}
 
---¸ñÊ½»¯Ê±¼ä
+--æ ¼å¼åŒ–æ—¶é—´
 local startformat = os.date("%Y-%m-%d %X",req["startDate"])
 if ( os.date("%d") ==  os.date("%d",endD) ) then
-
-
-
-
-
