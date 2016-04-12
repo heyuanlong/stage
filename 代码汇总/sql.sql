@@ -24,3 +24,35 @@ KEY `I_CLASS` (`classid`),
 KEY `I_USER` (`userid`)
 )ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 --AUTO_INCREMENT 列必须声明为 PRIMARY KEY
+
+
+
+
+
+desc information_schema.tables; --存储数据库的表信息
+mysql> desc information_schema.tables;
++-----------------+---------------------+------+-----+---------+-------+
+| Field           | Type                | Null | Key | Default | Extra |
++-----------------+---------------------+------+-----+---------+-------+
+| TABLE_CATALOG   | varchar(512)        | YES  |     | NULL    |       |
+| TABLE_SCHEMA    | varchar(64)         | NO   |     |         |       |
+| TABLE_NAME      | varchar(64)         | NO   |     |         |       |
+| TABLE_TYPE      | varchar(64)         | NO   |     |         |       |
+| ENGINE          | varchar(64)         | YES  |     | NULL    |       |
+| VERSION         | bigint(21) unsigned | YES  |     | NULL    |       |
+| ROW_FORMAT      | varchar(10)         | YES  |     | NULL    |       |
+| TABLE_ROWS      | bigint(21) unsigned | YES  |     | NULL    |       |
+| AVG_ROW_LENGTH  | bigint(21) unsigned | YES  |     | NULL    |       |
+| DATA_LENGTH     | bigint(21) unsigned | YES  |     | NULL    |       |
+| MAX_DATA_LENGTH | bigint(21) unsigned | YES  |     | NULL    |       |
+| INDEX_LENGTH    | bigint(21) unsigned | YES  |     | NULL    |       |
+| DATA_FREE       | bigint(21) unsigned | YES  |     | NULL    |       |
+| AUTO_INCREMENT  | bigint(21) unsigned | YES  |     | NULL    |       |
+| CREATE_TIME     | datetime            | YES  |     | NULL    |       |
+| UPDATE_TIME     | datetime            | YES  |     | NULL    |       |
+| CHECK_TIME      | datetime            | YES  |     | NULL    |       |
+| TABLE_COLLATION | varchar(32)         | YES  |     | NULL    |       |
+| CHECKSUM        | bigint(21) unsigned | YES  |     | NULL    |       |
+| CREATE_OPTIONS  | varchar(255)        | YES  |     | NULL    |       |
+| TABLE_COMMENT   | varchar(80)         | NO   |     |         |       |
+

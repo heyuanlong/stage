@@ -24,3 +24,6 @@ $("#upload_photo_form").css('display',"none");//隐藏添加图片
 
 
 js函数不介意传递进来多少个参数，也不在乎穿进来参数是什么数据类型,不足的伪undefined
+
+表单提交前的处理
+<input type=submit name="submit1" value="登陆" onclick="return check(this.form)">  

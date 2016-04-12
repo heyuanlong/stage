@@ -68,6 +68,9 @@ HEXISTS key field
 }
 
 
-
+//--批量执行redis命令--------------
+1.创建命令文件redis.txt，存储命令，每条命令要换行，中间有空行的意思
+2.cat redis.txt | ./redis-cli -h $host -p $port -a $password --pipe
+//---------------------------------
 
 

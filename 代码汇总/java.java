@@ -328,3 +328,7 @@ public static void main(String args[])
 	}
 	System.out.println("ok");
 }
+
+
+public String substring(int beginIndex, int endIndex)//[) 左闭右开
+比如str.substring(0,3)是第0,1,2三个字符的串

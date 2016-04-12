@@ -51,3 +51,6 @@ mysqldump -uroot -p123456 database table --where=" field1=11 and field2=0" > /ho
 2 导入所有库
  mysql命令行
  mysql>source all.sql;
+
+mysqldump -h localhost --single-transaction -urroot -pCQMYG14dss -d information_schema > learnInformation.sql;
+
