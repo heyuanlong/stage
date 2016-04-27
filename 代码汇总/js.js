@@ -1,5 +1,7 @@
 跳转页面
 window.location.href="url";
+跳转到新页面
+window.open("url");
 
 Js方法：
  escape(String) 函数可对字符串进行编码；

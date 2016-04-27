@@ -332,3 +332,10 @@ public static void main(String args[])
 
 public String substring(int beginIndex, int endIndex)//[) 左闭右开
 比如str.substring(0,3)是第0,1,2三个字符的串
+
+
+
+String detail = "dd'dd'dd'ddd";
+String oldstr = "'";
+String newstr = "''";
+detail = detail.replace(oldstr, newstr);

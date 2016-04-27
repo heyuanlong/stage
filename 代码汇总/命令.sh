@@ -123,3 +123,6 @@ netstat -nlap
 
 打包命令
 tar -zcvf nginx.conf.221.tar.gz conf/*
+
+查看这个目录的总大小
+du -h matchvs.com --max-depth=0
