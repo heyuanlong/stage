@@ -1,11 +1,13 @@
-mysql ∆Ù∂Ø /bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --socket=/var/lib/mysql/mysql.sock --pid-file=/var/run/mysqld/mysqld.pid --basedir=/usr --user=mysql
-	   /usr/libexec/mysqld --basedir=/usr --datadir=/var/lib/mysql --user=mysql --log-error=/var/log/mysqld.log --pid-file=/var/run/mysqld/mysqld.pid --socket=/var/lib
+mysql(221) ∆Ù∂Ø /usr/bin/mysqld_safe --datadir=/var/lib/mysql --socket=/var/lib/mysql/mysql.sock --pid-file=/var/run/mysqld/mysqld.pid --basedir=/usr --user=mysql 
+
 mongodb  ∆Ù∂Ø/usr/local/mongodb/bin/mongod --dbpath=/data/mongdb_data/ --logpath=/data/mongdb_log/mongodb.log  --port 20111 --fork 
 
 nginx  ∆Ù∂Ø /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
 
 discuz ∆Ù∂Ø  /opt/lampp/bin/httpd -k start -E /opt/lampp/logs/error_log -DSSL -DPHP
 
-java √¸¡Ó  /usr/java/jdk1.7.0_80/bin/java -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.endorsed.dirs=/usr/local/tomcat/endorsed -classpath /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin/tomcat-juli.jar -Dcatalina.base=/usr/local/tomcat -Dcatalina.home=/usr/local/tomcat -Djava.io.tmpdir=/usr/local/tomcat/temp org.apache.catalina.startup.Bootstrap start
+java √¸¡Ó(93)  /usr/java/jdk1.7.0_80/bin/java -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.endorsed.dirs=/usr/local/tomcat/endorsed -classpath /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin/tomcat-juli.jar -Dcatalina.base=/usr/local/tomcat -Dcatalina.home=/usr/local/tomcat -Djava.io.tmpdir=/usr/local/tomcat/temp org.apache.catalina.startup.Bootstrap start
 
+java √¸¡Ó(221)
+/usr/local/java/jdk1.8.0_65/bin/java -Djava.util.logging.config.file=/usr/local/java/tomcat7/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager  -classpath /usr/local/java/tomcat7/bin/bootstrap.jar:/usr/local/java/tomcat7/bin/tomcat-juli.jar -Dcatalina.base=/usr/local/java/tomcat7  -Dcatalina.home=/usr/local/java/tomcat7/ -Djava.io.tmpdir=/usr/local/java/tomcat7/temp org.apache.catalina.startup.Bootstrap start
 
