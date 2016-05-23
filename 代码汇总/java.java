@@ -13,6 +13,35 @@ static {
 }
 
 
+jsp加载配置
+<%@page import="java.io.InputStream"%>
+<%@page import="java.io.FileInputStream"%>
+<%@page import="java.io.IOException"%>
+
+String redis_pass = "";     
+FileInputStream ins= null;
+try {
+    String path=this.getServletContext().getRealPath("/WEB-INF/classes/redis.properties");
+    ins=new FileInputStream(path);              
+    Properties pro = new Properties();
+    pro.load(ins);
+    
+
+    redis_pass = pro.getProperty("redis.pass");                   
+} 
+catch (IOException ex) {
+} finally {
+    if (ins != null) {
+        try {
+            ins.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}         
+
+
+
 import org.json.*;
 JSONObject jsobjcet = new JSONObject();
 
