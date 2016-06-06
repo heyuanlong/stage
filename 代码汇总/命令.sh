@@ -126,3 +126,15 @@ tar -zcvf nginx.conf.221.tar.gz conf/*
 
 查看这个目录的总大小
 du -h matchvs.com --max-depth=0
+
+
+解压
+1、*.tar 用 tar –xvf 解压 
+2、*.gz 用 gzip -d或者gunzip 解压 
+3、*.tar.gz和*.tgz 用 tar –xzf 解压 
+4、*.bz2 用 bzip2 -d或者用bunzip2 解压 
+5、*.tar.bz2用tar –xjf 解压 
+6、*.Z 用 uncompress 解压 
+7、*.tar.Z 用tar –xZf 解压 
+8、*.rar 用 unrar e解压 
+9、*.zip 用 unzip 解压[喝小酒的网摘]http://blog.hehehehehe.cn/a/17148.htm
