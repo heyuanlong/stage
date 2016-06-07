@@ -1,0 +1,86 @@
+ gcc libe_signal_test.c -o libe_signal_test -I/usr/local/include -L/usr/local/lib -levent
+ gcc libe_signal_test.c -o libe_signal_test -I/usr/include -L/usr/lib -levent
+
+
+因为event_base_loop在没有event的时候就会结束，所以作为事件循环，需要加一个超时时间很长的timer event作为默认的负载，在真正结束事件循环的时候再把这个event delete掉。
+
+
+安装：
+1. 从官网下载源代码：http://libevent.org/,最新的版本已达到2.0.
+2. 先把ubuntu系统自带的libevent 1.4卸载，可通过ubuntu软件中心卸载
+3. 解压下载的libevent，我的版本是：libevent-2.0.21-stable.tar.gz. 解压命令：sudo tar -zxvf libevent-2.0.21-stable.tar.gz
+4.进入解压文件目录：cd libevent-2.0.21-stable
+5.编译步骤：
+sudo ./configure --prefix=/usr
+sudo make
+sudo make install
+
+刚加入新的动态库，可能要运行命令 ldconfig
+
+
+event_free 包含 close，del event，释放
+event_del  仅仅是 del event
+
+
+libevent大概是这样的：
+
+    默认情况下是单线程的（可以配置成多线程，如果有需要的话），每个线程有且只有一个event_base，对应一个struct event_base结构体（以及附于其上的事件管理器），用来schedule托管给它的一系列event，可以和操作系统的进程管理类比，当然，要更简单一点。当一个事件发生后，event_base会在合适的时间（不一定是立即）去调用绑定在这个事件上的函数（传入一些预定义的参数，以及在绑定时指定的一个参数），直到这个函数执行完，再返回schedule其他事件。
+//创建一个event_base
+struct event_base *base = event_base_new();
+assert(base != NULL);
+
+
+    event_base内部有一个循环，循环阻塞在epoll/kqueue等系统调用上，直到有一个/一些事件发生，然后去处理这些事件。当然，这些事件要被绑定在这个event_base上。每个事件对应一个struct event，可以是监听一个fd或者POSIX信号量之类（这里只讲fd了，其他的看manual吧）。struct event使用event_new来创建和绑定，使用event_add来启用：
+//创建并绑定一个event
+struct event *listen_event;
+//参数：event_base, 监听的fd，事件类型及属性，绑定的回调函数，给回调函数的参数
+listen_event = event_new(base, listener, EV_READ|EV_PERSIST, callback_func, (void*)base);
+//参数：event，超时时间(struct timeval *类型的，NULL表示无超时设置)
+event_add(listen_event, NULL);
+
+    注：libevent支持的事件及属性包括(使用bitfield实现，所以要用 | 来让它们合体)
+    (a) EV_TIMEOUT: 超时
+    (b) EV_READ: 只要网络缓冲中还有数据，回调函数就会被触发
+    (c) EV_WRITE: 只要塞给网络缓冲的数据被写完，回调函数就会被触发
+    (d) EV_SIGNAL: POSIX信号量，参考manual吧
+    (e) EV_PERSIST: 不指定这个属性的话，回调函数被触发后事件会被删除
+    (f) EV_ET: Edge-Trigger边缘触发，参考EPOLL_ET
+
+
+    然后需要启动event_base的循环，这样才能开始处理发生的事件。循环的启动使用event_base_dispatch，循环将一直持续，直到不再有需要关注的事件，或者是遇到event_loopbreak()/event_loopexit()函数。
+//启动事件循环
+event_base_dispatch(base);
+
+
+    接下来关注下绑定到event的回调函数callback_func：传递给它的是一个socket fd、一个event类型及属性bit_field、以及传递给event_new的最后一个参数（去上面几行回顾一下，把event_base给传进来了，实际上更多地是分配一个结构体，把相关的数据都撂进去，然后丢给event_new，在这里就能取得到了）。其原型是：
+typedef void(* event_callback_fn)(evutil_socket_t sockfd, short event_type, void *arg)
+
+
+
+
+
+
+listen_ev = event_new(base, sock, EV_READ|EV_PERSIST, connect_accept, NULL);    //创建evnet对象并初始化
+//    event_set(&listen_ev, sock, EV_READ|EV_PERSIST, connect_accept, NULL); 这是老接口
+//    event_base_set(base, &listen_ev);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

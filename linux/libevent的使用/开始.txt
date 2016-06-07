@@ -1,0 +1,45 @@
+windows使用libevent
+http://www.cnblogs.com/luxiaoxun/p/3603399.html
+
+（1）解压libevent到F:\libevent\libevent-2.0.21-stable
+（2）打开Microsoft visual studio 2010命令行工具
+
+（3）修改以下三个文件，添加宏定义：（注意 ---不一定需要，可能会出错----）
+在以下3个文件开头添加“#define _WIN32_WINNT 0x0500”
+libevent-2.0.21-stable\event_iocp.c
+libevent-2.0.21-stable\evthread_win32.c
+libevent-2.0.21-stable\listener.c
+
+
+
+（4）使用VS命令提示工具编译：
+cd/d F:\libevent\libevent-2.0.21-stable
+nmake /f Makefile.nmake
+
+（5）编译结果：
+libevent_core.lib：
+libevent_extras.lib：
+libevent.lib：
+
+（6）VS2010下使用lib
+
+环境配置：
+拷贝生成的lib。
+新建一个Include目录，将F:\libevent\libevent-2.0.21-stable下的头文件和include的头文件夹copy到该目录下，F:\libevent\libevent-2.0.21-stable\WIN32-Code下的文件copy到该目录下，2个event2目录下的文件可合并一起。
+
+
+
+
+项目属性设置：
+
+VC++目录：
+包含目录，添加：F:\Projects\LibeventTest\LibeventTest\Include;
+库目录，添加：F:\Projects\LibeventTest\LibeventTest\Lib;
+
+C/C++：
+代码生成-->运行库：多线程调试 (/MTd)（Debug下），多线程 (/MT)（Release下）
+
+连接器：
+输入：ws2_32.lib;wsock32.lib;libevent.lib;libevent_core.lib;libevent_extras.lib;
+ws2_32.lib;wsock32.lib;是用来编译Windows网络相关的程序库。
+编译，生成！

@@ -1,0 +1,251 @@
+http://blog.csdn.net/laoyi_grace/article/category/831215
+
+Libevent参考手册第一章：
+
+1  Libevent中的日志消息
+2 处理致命错误
+3 内存管理
+4 锁和线程
+5 调试锁的使用
+6 调试事件的使用
+7 检测libevent的版本
+
+
+
+
+
+libevent参考手册第二章：创建event_base
+
+使用libevent函数之前需要分配一个或者多个event_base结构体。每个event_base结构体持有一个事件集合，可以检测以确定哪个事件是激活的。
+如果设置event_base使用锁，则可以安全地在多个线程中访问它。然而，其事件循环只能运行在一个线程中。如果需要用多个线程检测IO，则需要为每个线程使用一个event_base。
+Tip: [libevent的未来版本可能有event_bases运行多个线程事件的支持。]
+每个event_base都有一种用于检测哪种事件已经就绪的“方法”，或者说后端。可以识别的方法有：
+l  select
+l  poll
+l  epoll
+l  kqueue
+l  devpoll
+l  evport
+l  win32
+用户可以用环境变量禁止某些特定的后端。比如说，要禁止kqueue后端，可以设置EVENT_NOKQUEUE环境变量。如果要用编程的方法禁止后端，请看下面关于event_config_avoid_method（）的说明。
+
+
+
+1 建立默认的event_base
+event_base_new（）函数分配并且返回一个新的具有默认设置的event_base。函数会检测环境变量，返回一个到event_base的指针。如果发生错误，则返回NULL。选择各种方法时，函数会选择OS支持的最快方法。
+接口
+struct event_base *event_base_new(void);
+
+
+
+2 创建复杂的event_base
+见有道笔记或http://blog.csdn.net/laoyi_grace/article/details/6537695
+
+struct event_config *cfg;
+struct event_base *base;
+int i;
+ 
+for (i=0; i<2; ++i) {
+    cfg = event_config_new();
+    event_config_avoid_method(cfg, "select");//避免使用select
+    if (i == 0)
+        event_config_require_features(cfg, EV_FEATURE_ET);//边缘触发
+    base = event_base_new_with_config(cfg);
+    event_config_free(cfg);
+    if (base)
+        break;
+    /*  */
+}
+
+
+
+Libevent参考手册第三章：与事件循环一起工作
+
+1 运行循环
+一旦有了一个已经注册了某些事件的event_base（关于如何创建和注册事件请看下一节），就需要让libevent等待事件并且通知事件的发生。
+接口
+int event_base_loop(struct event_base *base, int flags);
+int event_base_dispatch(struct event_base *base);
+
+
+2 停止循环	
+如果想在移除所有已注册的事件之前停止活动的事件循环，可以调用两个稍有不同的函数。
+接口
+int event_base_loopexit(struct event_base *base, const struct timeval *tv);
+int event_base_loopbreak(struct event_base *base);
+
+3 检查内部时间缓存
+
+4 转储event_base的状态
+接口
+void event_base_dump_events(struct event_base *base, FILE *f);
+
+5 废弃的事件循环函数
+
+
+
+
+
+libevent参考手册第四章：与事件一起工作
+
+
+1 构造事件对象
+
+1.1 创建事件
+使用event_new（）接口创建事件。
+ 
+typedef void (*event_callback_fn)(evutil_socket_t, short, void *);
+ 
+struct event *event_new(struct event_base *base, evutil_socket_t fd,
+    short what, event_callback_fn cb,
+    void *arg);
+ 
+void event_free(struct event *event);
+所有新创建的事件都处于已初始化和非未决状态，调用event_add（）可以使其成为未决的。
+要释放事件，调用event_free（）。对未决或者激活状态的事件调用event_free（）是安全的：在释放事件之前，函数将会使事件成为非激活和非未决的。
+ 
+1.2 事件标志
+l  EV_TIMEOUT
+这个标志表示某超时时间流逝后事件成为激活的。构造事件的时候，EV_TIMEOUT标志是被忽略的：可以在添加事件的时候设置超时，也可以不设置。超时发生时，回调函数的what参数将带有这个标志。
+l  EV_READ
+表示指定的文件描述符已经就绪，可以读取的时候，事件将成为激活的。
+l  EV_WRITE
+表示指定的文件描述符已经就绪，可以写入的时候，事件将成为激活的。
+l  EV_SIGNAL
+用于实现信号检测，请看下面的“构造信号事件”节。
+l  EV_PERSIST
+表示事件是“持久的”，请看下面的“关于事件持久性”节。
+l  EV_ET
+表示如果底层的event_base后端支持边沿触发事件，则事件应该是边沿触发的。这个标志影响EV_READ和EV_WRITE的语义。
+
+
+1.3 关于事件持久性
+默认情况下，每当未决事件成为激活的（因为fd已经准备好读取或者写入，或者因为超时），事件将在其回调被执行前成为非未决的。如果想让事件再次成为未决的，可以在回调函数中再次对其调用event_add（）。
+然而，如果设置了EV_PERSIST标志，事件就是持久的。这意味着即使其回调被激活，事件还是会保持为未决状态。如果想在回调中让事件成为非未决的，可以对其调用event_del（）。
+每次执行事件回调的时候，持久事件的超时值会被复位。因此，如果具有EV_READ|EV_PERSIST标志，以及5秒的超时值，则事件将在以下情况下成为激活的：
+l  套接字已经准备好被读取的时候
+l  从最后一次成为激活的开始，已经逝去5秒
+
+
+
+1.4 只有超时的事件
+为使用方便，libevent提供了一些以evtimer_开头的宏，用于替代event_*调用来操作纯超时事件。使用这些宏能改进代码的清晰性。
+接口
+#define evtimer_new(base, callback, arg) /
+    event_new((base), -1, 0, (callback), (arg))
+#define evtimer_add(ev, tv) /
+    event_add((ev),(tv))
+#define evtimer_del(ev) /
+    event_del(ev)
+#define evtimer_pending(ev, what, tv_out) /
+    event_pending((ev), (what), (tv_out))
+除了evtimer_new（）首次出现在2.0.1-alpha版本中之外，这些宏从0.6版本就存在了。
+1.5 构造信号事件
+libevent也可以监测POSIX风格的信号。要构造信号处理器，使用：
+接口
+#define evsignal_new(base, signum, callback, arg) /
+event_new(base, signum, EV_SIGNAL|EV_PERSIST, cb, arg)
+
+关于信号的警告
+在当前版本的libevent和大多数后端中，每个进程任何时刻只能有一个event_base可以监听信号。如果同时向两个event_base添加信号事件，即使是不同的信号，也只有一个event_base可以取得信号。
+kqueue后端没有这个限制。
+
+
+
+1.6 设置不使用堆分配的事件
+
+int event_assign(struct event *event, struct event_base *base,
+    evutil_socket_t fd, short what,
+    void (*callback)(evutil_socket_t, short, void *), void *arg);
+除了event参数必须指向一个未初始化的事件之外，event_assign（）的参数与event_new（）的参数相同。成功时函数返回0，如果发生内部错误或者使用错误的参数，函数返回-1。
+
+也可以用event_assign（）初始化栈上分配的，或者静态分配的事件。
+警告
+不要对已经在event_base中未决的事件调用event_assign（），这可能会导致难以诊断的错误。如果已经初始化和成为未决的，调用event_assign（）之前需要调用event_del（）。
+
+
+libevent提供了方便的宏将event_assign（）用于仅超时事件或者信号事件。
+接口
+#define evtimer_assign(event, base, callback, arg) /
+    event_assign(event, base, -1, 0, callback, arg)
+#define evsignal_assign(event, base, signum, callback, arg) /
+    event_assign(event, base, signum, EV_SIGNAL|EV_PERSIST, callback, arg)
+
+
+
+2 让事件未决和非未决
+
+构造事件之后，在将其添加到event_base之前实际上是不能对其做任何操作的。使用event_add（）将事件添加到event_base。
+接口
+int event_add(struct event *ev, const struct timeval *tv);
+ 
+在非未决的事件上调用event_add（）将使其在配置的event_base中成为未决的。成功时函数返回0，失败时返回-1。如果tv为NULL，添加的事件不会超时。否则，tv以秒和微秒指定超时值。
+如果对已经未决的事件调用event_add（），事件将保持未决状态，并在指定的超时时间被重新调度。
+注意：不要设置tv为希望超时事件执行的时间。如果在2010年1月1日设置“tv->tv_sec=time(NULL)+10;”，超时事件将会等待40年，而不是10秒。
+接口
+int event_del(struct event *ev);
+ 
+对已经初始化的事件调用event_del（）将使其成为非未决和非激活的。如果事件不是未决的或者激活的，调用将没有效果。成功时函数返回0，失败时返回-1。
+注意：如果在事件激活后，在回调被执行前删除事件，回调将不会执行。
+这些函数定义在<event2/event.h>中，从0.1版本就存在了。
+
+
+3 带优先级的事件
+。在初始化事件之后，但是在添加到event_base之前，可以为其设置优先级。
+接口
+int event_priority_set(struct event *event, int priority);
+ 
+事件的优先级是一个在0和event_base的优先级减去1之间的数值。成功时函数返回0，失败时返回-1。
+多个不同优先级的事件同时成为激活的时候，低优先级的事件不会运行。libevent会执行高优先级的事件，然后重新检查各个事件。只有在没有高优先级的事件是激活的时候，低优先级的事件才会运行。
+
+
+
+4 检查事件状态
+
+有时候需要了解事件是否已经添加，检查事件代表什么。
+
+
+
+5 配置一次触发事件
+
+如果不需要多次添加一个事件，或者要在添加后立即删除事件，而事件又不需要是持久的，则可以使用event_base_once（）。
+
+
+6 手动激活事件
+
+极少数情况下，需要在事件的条件没有触发的时候让事件成为激活的。
+接口
+void event_active(struct event *ev, int what, short ncalls);
+
+
+
+7 优化公用超时
+
+
+8 从已清除的内存识别事件
+libevent的提供了函数，你可以用它来识别出内存已被设置为0（比如说，通过calloc（）分配的，或者使用memset（）或者bzero（）清除了的）的初始化的事件。
+
+
+
+
+
+
+libevent参考手册第五章：辅助类型和函数
+
+1.1 evutil_socket_t
+在除Windows之外的大多数地方，套接字是个整数，操作系统按照数值次序进行处理。然而，使用Windows套接字API时，socket具有类型SOCKET，它实际上是个类似指针的句柄，收到这个句柄的次序是未定义的。在Windows中，libevent定义evutil_socket_t类型为整型指针，可以处理socket()或者accept()的输出，而没有指针截断的风险。
+定义
+#ifdef WIN32
+#define evutil_socket_t intptr_t
+#else
+#define evutil_socket_t int
+#endif
+
+
+2 定时器可移植函数
+3 套接字API兼容性
+4 可移植的字符串操作函数
+5 区域无关的字符串操作函数
+6 IPv6辅助和兼容性函数
+7 结构体可移植性函数
+8 安全随机数发生器
