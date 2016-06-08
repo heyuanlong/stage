@@ -1,0 +1,96 @@
+修改libevent（R1: Setting up the Libevent library）
+{
+	1.可修改log函数 void event_set_log_callback(event_log_cb cb);
+	2.可修改致命错误处理函数  void event_set_fatal_callback(event_fatal_cb cb);
+	3.可修改内存分配函数 void event_set_mem_functions(void *(*malloc_fn)(size_t sz),
+								 void *(*realloc_fn)(void *ptr, size_t sz),
+								 void (*free_fn)(void *ptr));
+	4.可增加线程锁
+	5.可控制debug
+}
+
+
+
+libevent的event_base初始化以及配置的设置（R2: Getting an event_base）
+{
+	struct event_base *event_base_new(void);
+	struct event_config *event_config_new(void);
+	struct event_base *event_base_new_with_config(const struct event_config *cfg);
+	void event_config_free(struct event_config *cfg);
+	void event_base_free(struct event_base *base);
+	其他设置配置的方法{
+		int event_config_avoid_method(struct event_config *cfg, const char *method);
+		int event_config_require_features(struct event_config *cfg,
+                                  enum event_method_feature feature);
+		int event_config_set_flag(struct event_config *cfg,
+								enum event_base_config_flag flag);
+		int event_config_set_num_cpus_hint(struct event_config *cfg, int cpus)			
+		int event_config_set_max_dispatch_interval(struct event_config *cfg,
+			const struct timeval *max_interval, int max_callbacks,
+			int min_priority);
+	}
+		
+	const char **event_get_supported_methods(void);//获取系统支持的事件模型
+	const char *event_base_get_method(const struct event_base *base);//获取使用的事件模型
+	enum event_method_feature event_base_get_features(const struct event_base *base);
+	
+	Reinitializing an event_base after fork()
+	int event_reinit(struct event_base *base);
+}
+
+
+
+R3: Running an event loop{
+	//开始loop
+	Once you have an event_base with some events registered , you will want Libevent to wait for events and alert you about them.
+		#define EVLOOP_ONCE             0x01	//
+		#define EVLOOP_NONBLOCK         0x02
+		#define EVLOOP_NO_EXIT_ON_EMPTY 0x04	//即使没有等待事件和active事件也不退出。
+		int event_base_loop(struct event_base *base, int flags);
+	note：By default, the event_base_loop() function runs an event_base until there are no more events registered in it.
+	note：Ordinarily, the loop will exit as soon as it has no pending or active events. You can override this behavior by passing the EVLOOP_NO_EXIT_ON_EMPTY flag---for example, if you’re going to be adding events from some other thread. If you do set EVLOOP_NO_EXIT_ON_EMPTY, the loop will keep running until somebody calls event_base_loopbreak(), or calls event_base_loopexit(), or an error occurs.
+	
+	
+	int event_base_dispatch(struct event_base *base);//没有等待事件和active事件，将退出。
+	The event_base_dispatch() call is the same as event_base_loop(), with no flags set. Thus, it keeps running until there are no more registered events or until event_base_loopbreak() or event_base_loopexit() is called.
+	
+	//停止loop
+	int event_base_loopexit(struct event_base *base,
+                        const struct timeval *tv);
+	int event_base_loopbreak(struct event_base *base);
+	
+	//检查上次loop退出的原因
+	int event_base_got_exit(struct event_base *base);
+	int event_base_got_break(struct event_base *base);
+	These two functions will return true if the loop was stopped with event_base_loopexit() or event_base_break() respectively, and false otherwise. Their values will be reset the next time you start the event loop.
+	
+	//暂停后继续loop
+	int event_base_loopcontinue(struct event_base *);
+	
+	typedef int (*event_base_foreach_event_cb)(const struct event_base *,
+    const struct event *, void *);
+	
+	//每一个事件都会调用它
+	int event_base_foreach_event(struct event_base *base,
+								 event_base_foreach_event_cb fn,
+								 void *arg);
+	You can use event_base_foreach_event() to iterate over every currently active or pending event associated with an event_base().
+	}
+
+
+R4: Working with events{
+
+
+}	
+
+	
+
+
+
+
+
+
+
+
+
+
