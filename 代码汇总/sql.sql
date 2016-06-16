@@ -59,3 +59,7 @@ mysql> desc information_schema.tables;
 
 
 GROUP BY 和 ORDER BY一起使用时，ORDER BY要在GROUP BY的后面。
+
+
+on duplicate key:
+insert into base_game(gamename,type,src,packagename) values("dddd",11,"dddd","sdfsf1") on duplicate key update gamename="eeeeeee",type=type+values(type);
