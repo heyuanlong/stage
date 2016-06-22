@@ -119,3 +119,23 @@ do
     print(i..": "..obj:getrandom(1,100))
 end
 ---------------
+
+
+
+---------nginx-lua
+
+local res = ngx.location.capture("/wc3/user_login_log.do", {
+    args = { 
+        userid      = req["userid"], 
+        mac         = req["mac"],
+        deviceid    = req["deviceid"],
+        pid         = req["pid"],
+        version     = req["version"],
+        channel     = req["channel"],
+        versionName = req["versionName"],
+        api         = ngx.var.uri
+    }
+})
+ngx.log(ngx.ERR, "user_login_log : ", res.body)
+
+---------nginx-lua
