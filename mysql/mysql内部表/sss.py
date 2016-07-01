@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import MySQLdb
-import time, os, sched 
+import time, os, sched ,sys
 
 
 ##全局定义
@@ -86,7 +86,7 @@ def work_generate(schema,table,list):
 	generate_delete(schema,table,list)
 	print "\n"
 
-	print list
+	#print list
 
 def work_str(schema,table):
 	column_list = []
@@ -100,9 +100,13 @@ def work_str(schema,table):
 	work_generate(schema,table,column_list)
 
 
-
-
-work_str("ko_open","battle_game_match")
+if sys.argv[1] is None or sys.argv[2] is None :
+	print "2 arg"
+else:
+	schema = sys.argv[1]
+	table = sys.argv[2]
+	print ""
+	work_str(schema,table)
 
 cursor.close()
 sql_connect.close()
