@@ -119,6 +119,13 @@ do
     print(i..": "..obj:getrandom(1,100))
 end
 ---------------
+function fwrite(fmt,...)
+    io.write( string.format(fmt,...) )
+end
+fwrite("test:%s,test:%d","test",999)
+
+
+
 
 
 
@@ -139,3 +146,5 @@ local res = ngx.location.capture("/wc3/user_login_log.do", {
 ngx.log(ngx.ERR, "user_login_log : ", res.body)
 
 ---------nginx-lua
+
+
