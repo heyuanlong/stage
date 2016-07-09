@@ -125,6 +125,20 @@ end
 fwrite("test:%s,test:%d","test",999)
 
 
+local T2009_EndTime = { year=2013, month=2, day=17, hour=23, min=59, sec=59 }
+print (os.time(T2009_EndTime))
+
+
+gameID = 4564565
+userID = 121
+local param = {
+    gameID = gameID,
+    userID = userID,
+    }
+for k,v in pairs(param) do                         --遍历table
+    print (k..":"..v)
+end
+
 
 
 

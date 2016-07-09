@@ -96,4 +96,8 @@ c = ClassName()
 print c.get("ggggggggg")
 
 
+for i in range(len(list)):
+	print list[i]
 
+if "char" in "aacharaa":
+	print "char in aacharaa"
