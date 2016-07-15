@@ -65,6 +65,14 @@ make & make install
 传输：rsync -avzp /data/* root@123.59.43.36:/var/
 rsync -avzp root@123.59.43.26:/var/* /data/
 
+通过下列命令改变它的端口：
+rsync --port 8730 otherhost::
+或者
+rsync -e 'ssh -p 2002' otherhost:
+
+
+
+
 yum 安装mysql
 1,安装mysql服务端
 yum install mysql-server
@@ -138,3 +146,15 @@ du -h matchvs.com --max-depth=0
 7、*.tar.Z 用tar –xZf 解压 
 8、*.rar 用 unrar e解压 
 9、*.zip 用 unzip 解压[喝小酒的网摘]http://blog.hehehehehe.cn/a/17148.htm
+
+
+
+
+chown [选项]... [拥有者][:[组]] 文件...
+chown mail:mail log2012.log
+-R 处理指定目录以及其子目录下的所有文件
+chown -R -v root:mail test6
+
+rm -rf  mulu  ---会把这个目录名也删除
+
+mkdir -p  目录路劲     ---可以递归创建目录
