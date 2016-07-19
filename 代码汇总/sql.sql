@@ -1,5 +1,5 @@
 create table if not exists t2 select * from t1;
-create table t3 like t1
+create table if not exists t3 like t1
 数据库的字符串一定得加上引号
 
 on duplicate key update只是mysql特有的语法
@@ -63,3 +63,6 @@ GROUP BY 和 ORDER BY一起使用时，ORDER BY要在GROUP BY的后面。
 
 on duplicate key:
 insert into base_game(gamename,type,src,packagename) values("dddd",11,"dddd","sdfsf1") on duplicate key update gamename="eeeeeee",type=type+values(type);
+
+
+硬件允许的话：每一个数据库表都应该有一个唯一的自增id字段

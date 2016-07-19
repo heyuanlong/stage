@@ -70,6 +70,8 @@ rsync --port 8730 otherhost::
 或者
 rsync -e 'ssh -p 2002' otherhost:
 
+rsync -avzp /data/matchvs.com/cms/htdocs/CMS.MatchVS/webroot/jsp/* /data/matchvs.com/cms/htdocs/superCMS.MatchVS/webroot/jsp/
+
 
 
 
