@@ -158,5 +158,8 @@ chown mail:mail log2012.log
 chown -R -v root:mail test6
 
 rm -rf  mulu  ---会把这个目录名也删除
-
 mkdir -p  目录路劲     ---可以递归创建目录
+
+
+tee指令会从标准输入设备读取数据，将其内容输出到标准输出设备，同时保存成文件。
+pwd | tee -a who.out

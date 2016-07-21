@@ -32,3 +32,28 @@ js函数不介意传递进来多少个参数，也不在乎穿进来参数是什
 
 
 JS中NaN值用isNaN()函数判断
+
+
+生成天数的下落列表
+function getdays(){
+		monthsarray = [31,30,31,30,31,30,31,31,30,31,30,31];
+		month = $("#month").val();
+		month = parseInt(month)
+		
+		var obj = document.getElementById('day');
+		obj.options.length = 0;	
+		obj.options.add(new Option("00","00")); 
+		for(i=1;i<=monthsarray[month-1];++i){
+			var j = ""+i
+			if(j.length == 1)
+				j="0"+j
+			obj.options.add(new Option(j,j));
+		}
+}
+
+分隔字符串
+productmsg = $("#product").val();
+var strs= new Array(); //定义一数组 
+strs=productmsg.split("_"); //字符分割         	
+Login_subsidy.productid =  strs[0];
+Login_subsidy.type =   strs[1];

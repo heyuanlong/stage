@@ -64,6 +64,47 @@ info["gameID"]   =  res.insert_id;
 
 
 
+local garg  = req.get_uri_args()
+local parg = req.get_post_args()
+上面两个函数会默认对值进行urldecode。而ngx.var.arg_value 则不会进行urldecode
+
+
+
+local http              = require "resty.http"
+local hc                = http:new()
+local hurl  = "http://t.matchvs.com/s?gameID="..req["gameID"].."&src="..kolib.urlencode(rsp).."&sign="..str
+local ok, code, headers, status, body  = hc:request {
+                url     = hurl,
+                proxy   = "http://10.10.20.81:80",
+                scheme  = 'http',
+                method  = "GET", 
+            }
+ngx.log(ngx.ERR,"---"..hurl.."----")
+if not ok then
+        respJson, err   = kolib.get_err_response(
+                                errcode.other_fault, 
+                                "生成短链失败!")
+        operateConn.releaseConn(nil, nil, mysql.operate)
+        kolib.saygoodbye(callback, respJson)
+end
+local data = JSON:decode(body)
+
+
+重定向
+ngx.redirect("http://www.google.com",302)
+
+
+nginx_lua缓存
+lua_shared_dict mapIndex 1m;
+local mapIndexDICT = ngx.shared.mapIndex
+local mapIndex, err = mapIndexDICT:incr("mapIndex", 1)
+if mapIndex == nil or mapIndex > 9999 then
+    ngx.shared.mapIndex:set("mapIndex", 1)
+    mapIndex = 1
+end
+
+
+
 
 
 

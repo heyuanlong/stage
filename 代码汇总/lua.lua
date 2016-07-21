@@ -140,5 +140,12 @@ for k,v in pairs(param) do                         --遍历table
 end
 
 
+local IP = ngx.var.remote_addr
+local nums= 0
+local str = IP
+for i=1,#str do
+    nums = nums + string.byte(str,i)
+end
 
-
+math.randomseed(nums)
+index1 = math.random(1,57)

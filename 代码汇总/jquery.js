@@ -37,3 +37,7 @@ $(function() {
 				alert("您选择了" + txt + "，值为：" + id0);
 	});
 });
+
+
+<span id="s_goodsID"></span>
+$("#s_goodsID").text(goodsid);	

@@ -65,4 +65,4 @@ on duplicate key:
 insert into base_game(gamename,type,src,packagename) values("dddd",11,"dddd","sdfsf1") on duplicate key update gamename="eeeeeee",type=type+values(type);
 
 
-硬件允许的话：每一个数据库表都应该有一个唯一的自增id字段
+硬件允许的话：每一个数据库表都应该有一个唯一的自增seqid字段

@@ -101,3 +101,34 @@ for i in range(len(list)):
 
 if "char" in "aacharaa":
 	print "char in aacharaa"
+
+
+字符串转数字
+import string
+num = string.atoi(str)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
