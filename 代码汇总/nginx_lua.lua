@@ -88,7 +88,9 @@ info["gameID"]   =  res.insert_id;
 
 
 local garg  = req.get_uri_args()
-local parg = req.get_post_args()
+
+ngx.req.read_body()
+local args = ngx.req.get_post_args()
 上面两个函数会默认对值进行urldecode。而ngx.var.arg_value 则不会进行urldecode
 
 
@@ -223,6 +225,73 @@ local h = ngx.resp.get_headers()
      ...
  end
 }
+ngx.say("Host: ", ngx.req.get_headers()["Host"])
+
+
+
+
+
+
+
+ngx.req.set_uri_args({a = 3})
+ngx.req.set_uri("/foo", true)
+
+ngx.exec("/foo", { a = 3, b = "hello world" })
+
+return ngx.redirect("/foo", 301)
+return ngx.redirect("http://www.google.com")
+return ngx.redirect('/foo?a=3&b=4')
+
+ok, err = ngx.print(...)
+ok, err = ngx.say(...)
+Just as ngx.print but also emit a trailing newline.
+ngx.log(log_level, ...)
+ngx.exit(status)
+
+
+ngx.sleep(seconds)
+
+newstr = ngx.escape_uri(str)    正编
+newstr = ngx.unescape_uri(str)	反编
+
+
+
+
+str = ngx.encode_args(table)
+For example,
+ngx.encode_args({foo = 3, ["b r"] = "hello world"})
+--foo=3&b%20r=hello%20world
+ngx.encode_args({baz = {32, "hello"}})
+--baz=32&baz=hello
+
+ngx.decode_args
+
+
+
+newstr = ngx.encode_base64(str, no_padding?)
+newstr = ngx.decode_base64(str)
+
+intval = ngx.crc32_short(str)
+intval = ngx.crc32_long(str)
+digest = ngx.hmac_sha1(secret_key, str)
+digest = ngx.md5(str)
+digest = ngx.md5_bin(str)
+digest = ngx.sha1_bin(str)
+quoted_value = ngx.quote_sql_str(raw_value)  ---------数据库语句
+
+
+str = ngx.today() --Returns current date (in the format yyyy-mm-dd)
+secs = ngx.time() --时间戳
+secs = ngx.now()  --返回含有毫秒的时间戳
+str = ngx.localtime() --Returns the current time stamp (in the format yyyy-mm-dd hh:mm:ss)
+sr = ngx.utctime()    --Returns the current time stamp (in the format yyyy-mm-dd hh:mm:ss) 
+
+
+captures, err = ngx.re.match(subject, regex, options?, ctx?, res_table?) 
+from, to, err = ngx.re.find(subject, regex, options?, ctx?, nth?)
+iterator, err = ngx.re.gmatch(subject, regex, options?)
+newstr, n, err = ngx.re.sub(subject, regex, replace, options?)
+newstr, n, err = ngx.re.gsub(subject, regex, replace, options?)
 
 
 
