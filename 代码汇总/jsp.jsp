@@ -59,7 +59,7 @@ jsp页面禁止缓存设置
     或  
     <meta http-equiv="pragma" content="no-cache"> 
     <meta http-equiv="cache-control" content="no-cache"> 
-    <meta http-equiv="expires" content="0">      
+    <meta http-equiv="expires" content="0">    
 
     2.在服务器的动态网页中禁止缓存，要加入类似如下脚本 
     response.setHeader("Pragma","No-cache"); 
@@ -88,3 +88,30 @@ jsp页面禁止缓存设置
     long timestamp=new Date().getTime();
     URL+"&timestamp="+timestamp;
     这样的话，你的URL始终都在变化，自然浏览器就得老老实实的进行更新了，它也无缓冲可拿了。
+
+<%
+java_session 
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+    public void setGameid(int gameid){
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpServletRequest request = attr.getRequest();
+        request.getSession(true).setAttribute("gameID", gameid);
+    }
+    
+    public int getGameid() {
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpServletRequest request = attr.getRequest();
+        Object ob = request.getSession(true).getAttribute("gameID");
+        if(ob == null){
+            return 0;
+        }
+        else {
+            return (int)ob;
+        }
+    }
+
+
+

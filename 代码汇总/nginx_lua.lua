@@ -145,6 +145,20 @@ nginx_lua缓存
 	 log_dict:incr("upstream_time-nb", 1)
 	end
 
+
+The resulting object dict has the following methods:
+get
+get_stale
+set
+safe_set
+add
+safe_add
+replace
+delete
+incr
+flush_all
+flush_expired
+get_keys
 }
 
 
