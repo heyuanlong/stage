@@ -368,3 +368,13 @@ String detail = "dd'dd'dd'ddd";
 String oldstr = "'";
 String newstr = "''";
 detail = detail.replace(oldstr, newstr);
+
+
+statement.executeUpdate(insertBase.toString());
+rs = statement.getGeneratedKeys();
+int new_gameid = -1;
+if (rs.next()) {
+new_gameid = rs.getInt(1);
+} else {
+throw  new Exception("生成gameid失败");
+}

@@ -57,3 +57,7 @@ var strs= new Array(); //定义一数组
 strs=productmsg.split("_"); //字符分割         	
 Login_subsidy.productid =  strs[0];
 Login_subsidy.type =   strs[1];
+
+
+js设置frame的页面
+window.parent.document.getElementById("browserframe").src="../blank.jsp";

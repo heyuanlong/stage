@@ -100,8 +100,13 @@ ln -s oldfile newfile
 scp的命令使用和rsync一样
 区别：scp一个复制   rsync一个同步
 
+
 hexdump -C file.txt 输出十六进制和对应字符
 hexdump -C -n 10 file.txt 输出前10个字节
+
+在 vi 或 vim 的命令状态下
+:%!xxd              ——将当前文本转换为16进制格式。
+:%!xxd -r          ——将当前文件转换回文本格式。
 
 dos2unix命令用来将DOS格式文本转换成unix格式的.
 DOS下文本以\r\n为断行标志，十六进制为0D0A 而unix是\n为0A
