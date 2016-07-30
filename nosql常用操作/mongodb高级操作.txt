@@ -33,5 +33,16 @@ db.event.find({"reportTime":{$gte:"20160130",$lt:"20160131"},"eventID":"download
 ----迁移mongodb
 1.直接把完整的mongo整个拷贝到机子，目前版本的目录是mongo目录里有（bin,data,etc,log四个目录）
 2.启动  ./mongod --dbpath=/data/bin/mongo/data/ --logpath=/data/bin/mongo/log/mongodb.log  --fork
-
+3.启动  ./mongod -f mongodb.conf 
+mongodb.conf文件内容
+[
+mongodb.conf
+[root@localhost etc]# cat mongodb.conf 
+port=27017
+dbpath=data/
+logpath=log/mongodb.log  
+logappend=true
+fork=true
+]
+4.
 ----

@@ -1,5 +1,12 @@
 https://docs.mongodb.org/manual/contents/
 
+
+注意：/data/db 是 MongoDB 默认的启动的数据库路径(--dbpath)。
+mkdir -p /data/db
+注意：如果你的数据库目录不是/data/db，可以通过 --dbpath 来指定。
+
+
+
 增
 db.person.insert({"name":"jack","age":20})
 var single = {"name":"joe","address":{"province":"guangdong","cit":"shenzhen"},"favourite":["apple","banana"]}
