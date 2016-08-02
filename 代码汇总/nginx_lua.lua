@@ -183,14 +183,6 @@ Cosocket API functions (e.g., ngx.socket.tcp and ngx.req.socket)
 
 
 
-模块基本架构
-local say = ngx.say
-local _M = {}
-function _M.foo(a)
-     say(a)
-end
-return _M
-
 
 ngx.var.VARIABLE和ngx.var.arg_value有何区别？
 

@@ -149,3 +149,37 @@ end
 
 math.randomseed(nums)
 index1 = math.random(1,57)
+
+
+
+
+模块基本架构
+{
+1.
+    module("common.koconf", package.seeall)
+    function _M.getEnv()
+         return 3
+    end
+    _M.Env=4
+    return _M
+
+2.
+    module("common.koconf", package.seeall)
+    Env=3
+    function getEnv()
+        return 3
+    end
+
+3.
+    _M={}
+    function _M.getEnv()
+        return 88888883
+    end
+    _M.Env=4
+    return _M
+
+
+}
+
+
+
