@@ -127,7 +127,7 @@ fwrite("test:%s,test:%d","test",999)
 
 local T2009_EndTime = { year=2013, month=2, day=17, hour=23, min=59, sec=59 }
 print (os.time(T2009_EndTime))
-
+print(os.date("%Y-%m-%d %H:%M:%S", os.time()))
 
 gameID = 4564565
 userID = 121
