@@ -39,6 +39,7 @@ exit 5
 查看退出状态码
 echo $?
 
+nowDay=`date +%Y%m%d`
 
 放在``里的命令不会影响$?的值{
 	dateaaa
@@ -118,6 +119,18 @@ if结构{
 	if [[ $USER == r* ]]
 	then
 		echo ""
+	fi
+	
+	pid=`ps aux | grep  /data/scripts/rank2/MainHistoryRank.py | awk '{if($11=="python"){print $2}}'`
+	if [[ ${pid} != "" ]];then
+		kill -9 ${pid}
+	fi
+
+	mysql=""
+	if [ -f "/usr/bin/mysql" ];then
+		mysql="/usr/bin/mysql"
+	else
+		mysql="/usr/bin/mysql/bin/mysql"
 	fi
 }
 

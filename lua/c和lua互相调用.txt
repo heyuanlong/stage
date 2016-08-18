@@ -1,0 +1,49 @@
+ÍêÕûÀý×Ó(http://www.jb51.net/article/64482.htm)
+cb.c
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include "lua.h"
+ #include "lualib.h"
+ #include "lauxlib.h"
+static int lua_callback = LUA_REFNIL;
+static int setnotify(lua_State *L)
+ {
+   lua_callback = luaL_ref(L, LUA_REGISTRYINDEX);
+   return 0;
+ }
+static int testnotify(lua_State *L)
+ {
+   lua_rawgeti(L, LUA_REGISTRYINDEX, lua_callback);
+   lua_call(L, 0, 0);
+ }
+static int testenv(lua_State *L)
+ {
+   lua_getglobal(L, "defcallback");
+   lua_call(L, 0, 0);
+ }
+static const luaL_Reg cblib[] = {
+   {"setnotify", setnotify},
+   {"testnotify", testnotify},
+   {"testenv", testenv},
+   {NULL, NULL}
+ };
+int luaopen_cb(lua_State *L)
+ {
+   luaL_register(L, "cb", cblib);
+   return 1;
+ }
+
+gcc -fPIC -shared cb.c -o cb.so
+
+test.lua:
+require("cb")
+function callback(  )
+   print "Callback"
+ end
+function defcallback()
+   print "Predef callback"
+ end
+cb.setnotify(callback)
+cb.testnotify()
+print "Done"
+cb.testenv()
