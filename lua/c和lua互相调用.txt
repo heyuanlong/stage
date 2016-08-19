@@ -1,49 +1,142 @@
 ÍêÕûÀý×Ó(http://www.jb51.net/article/64482.htm)
 cb.c
- #include <stdio.h>
- #include <stdlib.h>
- #include "lua.h"
- #include "lualib.h"
- #include "lauxlib.h"
-static int lua_callback = LUA_REFNIL;
-static int setnotify(lua_State *L)
- {
-   lua_callback = luaL_ref(L, LUA_REGISTRYINDEX);
-   return 0;
- }
-static int testnotify(lua_State *L)
- {
-   lua_rawgeti(L, LUA_REGISTRYINDEX, lua_callback);
-   lua_call(L, 0, 0);
- }
-static int testenv(lua_State *L)
- {
-   lua_getglobal(L, "defcallback");
-   lua_call(L, 0, 0);
- }
-static const luaL_Reg cblib[] = {
-   {"setnotify", setnotify},
-   {"testnotify", testnotify},
-   {"testenv", testenv},
-   {NULL, NULL}
- };
-int luaopen_cb(lua_State *L)
- {
-   luaL_register(L, "cb", cblib);
-   return 1;
- }
+		 #include <stdio.h>
+		 #include <stdlib.h>
+		 #include "lua.h"
+		 #include "lualib.h"
+		 #include "lauxlib.h"
+		static int lua_callback = LUA_REFNIL;
+		static int setnotify(lua_State *L)
+		 {
+		   lua_callback = luaL_ref(L, LUA_REGISTRYINDEX);
+		   return 0;
+		 }
+		static int testnotify(lua_State *L)
+		 {
+		   lua_rawgeti(L, LUA_REGISTRYINDEX, lua_callback);
+		   lua_call(L, 0, 0);
+		 }
+		static int testenv(lua_State *L)
+		 {
+		   lua_getglobal(L, "defcallback");
+		   lua_call(L, 0, 0);
+		 }
+		static const luaL_Reg cblib[] = {
+		   {"setnotify", setnotify},
+		   {"testnotify", testnotify},
+		   {"testenv", testenv},
+		   {NULL, NULL}
+		 };
+		int luaopen_cb(lua_State *L)
+		 {
+		   luaL_register(L, "cb", cblib);
+		   return 1;
+		 }
 
 gcc -fPIC -shared cb.c -o cb.so
 
 test.lua:
-require("cb")
-function callback(  )
-   print "Callback"
- end
-function defcallback()
-   print "Predef callback"
- end
-cb.setnotify(callback)
-cb.testnotify()
-print "Done"
-cb.testenv()
+		require("cb")
+		function callback(  )
+		   print "Callback"
+		 end
+		function defcallback()
+		   print "Predef callback"
+		 end
+		cb.setnotify(callback)
+		cb.testnotify()
+		print "Done"
+		cb.testenv()
+
+		
+	
+
+	
+local x = {1,2,3,4}
+lualib.matchvs_lua_send_msg(101,1,2,"buf",x)
+
+void matchvs_lua_send_msg(lua_State* L){
+ 	int room_id = lua_tointeger(L,1);
+	int src_id = lua_tointeger(L,2);
+    int event_id=lua_tointeger(L,3);
+	const char * buf = lua_tostring(L,4);
+    char temp_buf[1024] = {0};
+    int buf_size  = strlen(buf) >= 1024 ? 1024:strlen(buf);
+	memcpy(temp_buf,buf,buf_size );
+
+	int size=lua_objlen(L,5);
+	int *users = (int *)malloc(sizeof(int) * size);
+	int i=1;
+	for ( i=1;i<=size;i++)
+	{
+	 lua_pushnumber(L,i);
+	 lua_gettable(L,-2);
+	 users[i-1] = lua_tointeger(L,-1);
+	 lua_pop(L,1);
+	}
+
+	printf("matchvs_lua_send_msg:%d,%d,%d,%s\n", room_id,src_id,event_id,temp_buf);
+	for ( i=1;i<=size;i++)
+	{
+		printf("%d\n", users[i-1]);
+	}
+	
+	//matchvs_send_msg(room_id, src_id, size, users,  event_id,  buf_size, temp_buf);
+	free(users);
+}
+
+
+
+local t = {}
+t.a=10;
+t.b=20;
+t.c=30;
+t.extend_num=5;
+t.extend={5,6,7,8,9}
+lualib.matchvs_lua_send_game_score(t)
+
+void matchvs_lua_send_game_score(lua_State* L){
+	matchvs_score_t score;
+	int room_id = lua_tointeger(L,1);
+	int user_id = lua_tointeger(L,2);
+
+	lua_pushstring(L, "a");
+    lua_gettable(L, -2);
+    score.a = lua_tointeger(L,-1);
+    lua_pop(L, 1);
+    lua_pushstring(L, "b");
+    lua_gettable(L, -2);
+    score.b = lua_tointeger(L,-1);
+    lua_pop(L, 1);
+    lua_pushstring(L, "c");
+    lua_gettable(L, -2);
+    score.c = lua_tointeger(L,-1);
+    lua_pop(L, 1);
+    lua_pushstring(L, "extend_num");
+    lua_gettable(L, -2);
+    score.extend_num = lua_tointeger(L,-1);
+    lua_pop(L, 1);
+    if (score.extend_num > 10)
+    {
+    	score.extend_num = 10;
+    }
+
+    lua_pushstring(L, "extend");
+    lua_gettable(L, -2);
+    int i=1;
+	for ( i=1;i<=score.extend_num;i++)
+	{
+	 lua_pushnumber(L,i);
+	 lua_gettable(L,-2);
+	 score.extend[i-1] = lua_tointeger(L,-1);
+	 lua_pop(L,1);
+	}
+
+	printf("matchvs_lua_send_game_score:%d,%d,%d,%d\n", score.a,score.b,score.c,score.extend_num);
+	for ( i=1;i<=score.extend_num;i++)
+	{
+		printf("%d\n", score.extend[i-1]);
+	}
+	//matchvs_send_game_score(&score);
+}
+		
