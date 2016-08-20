@@ -175,9 +175,88 @@ for结构{
 	IFS=$'\N:;'
 }
 
-while{
+while结构{
+	while expression
+	do
+	command
+	command
+	```
+	done
 
-
-
-	
+	int=1
+	while(( $int<=5 ))
+	do
+	 echo $int
+	let "int++"
+	done
 }
+
+until 循环格式为：until 循环执行一系列命令直至条件为 true 时停止。
+until command
+do
+   Statement(s) to be executed until command is true
+done
+
+
+break 命令可以带一个参数，一个不带参数的break 循环只能退出最内层的循环，而break N可以退出N 层循环。
+continue 命令也可以带一个参数，一个不带参数的continue 命令只去掉本次循环的剩余代码，而continue N 将会把N 层循环剩余的代码都去掉，但是循环的次数不变。
+
+#!/bin/bash
+for var1 in 1 2 3
+do
+   for var2 in 0 5
+   do
+      if [ $var1 -eq 2 -a $var2 -eq 0 ]
+      then
+         break 2
+      else
+         echo "$var1 $var2"
+      fi
+   done
+done
+
+#!/bin/bash
+while :
+do
+    echo -n "Input a number between 1 to 5: "
+    read aNum
+    case $aNum in
+        1|2|3|4|5) echo "Your number is $aNum!"
+        ;;
+        *) echo "You do not select a number between 1 to 5!"
+            continue
+            echo "Game is over!"
+        ;;
+    esac
+done
+
+
+处理脚本参数{
+	1.运行带参数的程序
+	$0表示程序名，$1表示第一个参数，$2表示第二个参数，一次类推，直到第九个参数$9
+	注意：如果有多个参数，每个参数必须有个空格，如果一个参数里面带空格，必须用单引号或双引号括起来。
+}
+
+
+echo string
+功能：
+\c：不换行
+\f：进纸
+\t：跳格
+\n：换行
+[Linux系统功能]
+-n：禁止echo命令输出后换行
+-e：使转义符生效
+
+read varible1 varible2 …
+
+exec
+可以用来替代当前shell
+格式：exec command
+
+
+
+
+
+
+
