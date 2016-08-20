@@ -365,3 +365,38 @@ if [[ -f ../style.css ]] && [[ ! -f main.css ]]; then
 elif [[ ! -f main.css ]]; then
     echo 'body' > main.css
 fi
+
+
+数学计算
+((iTrayLeft = iLeft + 2))
+
+
+Linux Shell 脚本中字符串的连接方法
+$value1=home
+$value2=${value1}"="
+s=$s`DrawCurBox 1`
+
+for ((j = 0, i = (${offsetBox[$iBoxCurType]} + $iTestRotate) * 8; j < 8; j++, i++))
+do
+	boxTest[$j]=${boxCur[$j]}
+	boxCur[$j]=${box[$i]}
+done
+
+
+
+#游戏主程序在这儿开始.
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+	Usage
+elif [[ "$1" == "--version" ]]; then
+	echo "$APP_NAME $APP_VERSION"
+elif [[ "$1" == "--show" ]]; then
+	#当发现具有参数--show时，运行显示函数
+	RunAsDisplayer
+else
+	bash $0 --show&	#以参数--show将本程序再运行一遍
+	RunAsKeyReceiver $!	#以上一行产生的进程的进程号作为参数
+fi
+
+
+当脚本执行的某条命令要花费不少时间时，下一行可以叫上睡眠命令
+sleep 10
