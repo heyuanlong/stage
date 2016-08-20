@@ -132,6 +132,10 @@ if结构{
 	else
 		mysql="/usr/bin/mysql/bin/mysql"
 	fi
+
+	双括号命令允许将高级数学表达式放入比较中
+	双中括号提供了对字符串的高级特性
+
 }
 
 case结构{
@@ -216,7 +220,7 @@ do
 done
 
 #!/bin/bash
-while :
+while
 do
     echo -n "Input a number between 1 to 5: "
     read aNum
@@ -255,8 +259,109 @@ exec
 格式：exec command
 
 
+创建函数有两种方式
+function fun1{
+
+}
+fun1(){
+	
+}
+
+
+fun1(){
+        echo "test func"
+        echo $#
+        echo $@
+        echo $0
+        echo $1
+        echo $2
+}
+fun1 9 7 5 4
+
+给你个全的，你在Linux环境下多试下就明白了：
+$0 这个程式的执行名字
+$n 这个程式的第n个参数值，n=1..9
+$* 这个程式的所有参数,此选项参数可超过9个。
+$# 这个程式的参数个数
+$$ 这个程式的PID(脚本运行的当前进程ID号)
+$! 执行上一个背景指令的PID(后台运行的最后一个进程的进程ID号)
+$? 执行上一个指令的返回值 (显示最后命令的退出状态。0表示没有错误，其他任何值表明有错误)
+$- 显示shell使用的当前选项，与set命令功能相同
+$@ 跟$*类似，但是可以当作数组用
 
 
 
+数组{
+	array_name=(value0 value1 value2 value3)
+
+	array_name[0]=value0
+	array_name[1]=value1
+	array_name[n]=valuen
+	可以不使用连续的下标，而且下标的范围没有限制。
+
+	${数组名[下标]}
+
+	for item in "${array_name[@]}"; do
+                echo -n "$item"
+    done
+
+	# 取得数组元素的个数
+	length=${#array_name[@]}
+	 # 或者
+	length=${#array_name[*]}
+	 # 取得数组单个元素的长度
+	lengthn=${#array_name[n]}
+}
 
 
+var="
+sdfsdfs
+dfsdfsf
+sdfsdfsf
+123123
+22222222
+"
+while IFS='' read -r line; do
+        echo $line
+done < "$var"
+
+while read  line; do
+        echo $line
+done << EOF
+sdfsd
+sdfsf
+1213
+12312
+EOF
+
+
+if (($# < 2)); then fi
+(($# < 1)) && return
+(( ${#css_include[@]} > 0 )) && return || css_include=('main.css' 'blog.css')
+[[ $1 == rebuild ]] && rebuild_all_entries && rebuild_tags
+[[ $1 == delete ]] && rm "$2" &> /dev/null && rebuild_tags
+ rm .*.html ./*.html ./*.css ./*.rss &> /dev/null
+
+#列出文件
+list_posts() {
+    ls ./*.html &> /dev/null
+    (($? != 0)) && echo "No posts yet. Use 'bb.sh post' to create one" && return
+
+    lines=""
+    n=1
+    while IFS='' read -r i; do
+        echo $i
+    done < <(ls ./*.html)
+}
+
+#列出文件
+v=a
+for i in ${a}*.html; do
+     echo $i
+done
+
+if [[ -f ../style.css ]] && [[ ! -f main.css ]]; then
+    ln -s "../style.css" "main.css" 
+elif [[ ! -f main.css ]]; then
+    echo 'body' > main.css
+fi
