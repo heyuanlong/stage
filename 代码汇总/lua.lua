@@ -183,3 +183,32 @@ index1 = math.random(1,57)
 
 
 
+--table.insert(table, pos, value)
+--table.insert()函数在table的数组部分指定位置(pos)插入值为value的一个元素. pos参数可选, 默认为数组部分末尾
+
+--table.concat(table, sep,  start, end)
+--table.concat()函数列出参数中指定table的数组部分从start位置到end位置的所有元素,
+--元素间以指定的分隔符(sep)隔开
+
+if reqinfo["headimgurl"] then
+    sqlavatar = "avatar='"..reqinfo["headimgurl"].."'"
+    table.insert(sqlt, sqlavatar)
+end
+if reqinfo["sex"] then
+    sqlsex = "sex="..reqinfo["sex"]..""
+    table.insert(sqlt, sqlsex)
+end
+local sql = "update user set "..table.concat(sqlt,",").." where userID="..req["userid"] 
+
+
+
+
+local ret = io.popen("gcc temp.c -o temp 2>&1") 
+ngx.say(ret:read("*all")) 
+ret:close() 
+ 
+os.execute("mkdir ".. filePath)
+
+
+
+
