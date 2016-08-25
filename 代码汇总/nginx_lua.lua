@@ -353,7 +353,10 @@ $server_protocol 请求使用的协议，通常是HTTP/1.0或HTTP/1.1。
 $uri 请求中的当前URI(不带请求参数，参数位于$args)，可以不同于浏览器传递的$request_uri的值，它可以通过内部重定向，或者使用index指令进行修改。
 
 
-
+ngx.var ： nginx变量，如果要赋值如ngx.var.b = 2，此变量必须提前声明；另外对于nginx location中使用正则捕获的捕获组可以使用ngx.var[捕获组数字]获取；
+ngx.req.get_headers：获取请求头，默认只获取前100，如果想要获取所以可以调用ngx.req.get_headers(0)；获取带中划线的请求头时请使用如headers.user_agent这种方式；如果一个请求头有多个值，则返回的是table；
+ngx.req.get_uri_args：获取url请求参数，其用法和get_headers类似；
+ngx.req.get_post_args：获取post请求内容体，其用法和get_headers类似，但是必须提前调用
 
 
 

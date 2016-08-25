@@ -204,9 +204,14 @@ local sql = "update user set "..table.concat(sqlt,",").." where userID="..req["u
 
 
 local ret = io.popen("gcc temp.c -o temp 2>&1") 
-ngx.say(ret:read("*all")) 
+ngx.say(ret:read("*all")) --读取管道返回数据
 ret:close() 
- 
+
+local x = "curl '" .. url .. "' -d '" .. data .. "'"
+local handle = io.popen(x)
+local result = handle:read("*all")--读取管道返回数据
+handle:close()
+
 os.execute("mkdir ".. filePath)
 
 

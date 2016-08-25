@@ -66,3 +66,19 @@ Login_subsidy.type =   strs[1];
 
 js设置frame的页面
 window.parent.document.getElementById("browserframe").src="../blank.jsp";
+
+
+
+使用JavaScript的XMLHttpRequest发送POST、GET请求以及接收返回值
+	var xhr = new XMLHttpRequest();
+	url = encodeURIComponent(url);
+	xhr.open("post", "/jump?url="+url, true);  
+	xhr.onreadystatechange  = function () {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+		    document.getElementById("response").innerHTML = xhr.responseText;
+		}
+	}
+	data = escape(data);
+	xhr.send('data='+data);
+
+
