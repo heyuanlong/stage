@@ -216,4 +216,33 @@ os.execute("mkdir ".. filePath)
 
 
 
+http://blog.csdn.net/booirror/article/details/39831869
 
+filePath  = "/data/matchvs.com/files/upload/201609Avatar/1472701065144.png"
+dir, dirsub,file = filePath:match'(.*/)(.*/)(.*)'
+print (dir)
+print (dirsub)
+print (file)
+--   /data/matchvs.com/files/upload/
+--   201609Avatar/
+--   1472701065144.png
+filePathaa  = "600600"
+dir, dirsub = filePathaa:match'(%d+)*(%d+)'
+print (dir)
+print (dirsub)
+--600
+--600
+
+
+生成随机字符串
+local str = {}
+local tlow="qwertyuiopasdfghjklzxcvbnm"
+local tup ="QWERTYUIOPASDFGHJKLZXCVBNM"
+local tnum="0123456789"
+local tother="_"
+local templete = tlow..tup..tnum..tother
+local len = string.len(templete)  
+for i=1,5,1 do
+    local index = math.random(1,len)
+    str[i] = string.sub(templete,index,index)
+end

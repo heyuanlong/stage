@@ -44,8 +44,19 @@ service crond restart 重启crond
 永久修改环境变量
 1，vi /etc/profile  (对所有用户)
 2，vi /etc/bashrc (对所有用户)
-3， vi ~/.bash-profile (当前用户)
+3，vi ~/.bash-profile (当前用户)
 4, vi ~/.bashrc (当前用户)
+source /etc/profile
+{
+	例子：
+	GOROOT=/usr/local/go
+	PATH=$PATH:$GOROOT/bin
+	GOARCH=amd64
+	GOOS=linux
+	GOPATH=/data/gowork
+	export GOROOT PATH GOARCH GOOS GOPATH
+}
+
 
 关于SSH
 登录其他主机  ssh root@123.59.43.35

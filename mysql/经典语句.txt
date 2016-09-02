@@ -6,5 +6,73 @@
 
 3. insert into person(name,age,city,salary) select name ,20,city,salary from person where age=21;
 
+4.
+select 
+a.productID, 
+a.gameID, 
+if(b.count is null, 0, b.count) count, 
+if(b.countDecimal is null, 0, b.countDecimal) countDecimal, 
+if(b.lastBuyTime is null, '1970-01-01 00:00:00', b.lastBuyTime) lastBuyTime, 
+if(b.lockCount is null, 0, b.lockCount) lockCount,
+if(b.count is null, 0, FLOOR(if(a.price > 0, (b.count * 100 + b.countDecimal)/100 * a.price, (b.count * 100 + b.countDecimal)/100/a.rate))) diamondCent, 
+if(b.userID is null, 23, b.userID) userID 
+from ko_currency.product_price a 
+left join ( 
+    select upr.userID,upr.productID, upr.count, upr.countDecimal, upr.lastBuyTime, upr.lockCount 
+    from ko_currency.user_product upr
+    where upr.userID =23 and ( ((upr.gameID = 102000) )) 
+) b on a.productID = b.productID 
+where 1=1 and ( ((a.gameID = 102000) )) 
+order by a.gameID, a.productID;
+
+
+
+select * from ko_currency.user_product 
+where gameid=200211 
+and count < 800 
+and userid in (select a.userid from ko_user.auto_user a  left join ko_user.auto_user_batch f on a.inputid=f.seqid where f.fieldid=100 and f.gameid=200211 );
+
+
+update  ko_currency.user_product set count=count+1000 
+where gameid=200211 
+and count < 800 
+and userid in (select a.userid from ko_user.auto_user a  left join ko_user.auto_user_batch f on a.inputid=f.seqid where f.fieldid=100 and f.gameid=200211 );
+
+
+
+
+"set @seqid:=0, @userID:=0, @nickname:='', @avatar:=''; \
+update ko_history.user_history set \
+seqid = (@seqid:=seqid), \
+userid = (@userID:=userid), \
+nickname = (@nickname:=if(nickname <> '', nickname, '"..nickname.."')), \
+avatar = (@avatar:=avatar), \
+binded = 1 \
+where mac = '"..req["mac"].."' \
+and type = 0 and binded = 0 \
+and productID = "..req["pid"].."; \
+update user set nickname = @nickname, avatar = @avatar, \
+olduserID = @userID where userid = "..userid.." and @seqid > 0; \
+insert into ko_battle.battle_score \
+(userID,gameID,totalRound,disconnectRound,scoreA,scoreB,scoreC,extend_0,editTime) \
+select "..userid..",gameID,totalRound,disconnectRound,scoreA,scoreB,scoreC,extend_0,now() \
+from ko_history.battle_score_history \
+where userid = @userID and @seqid > 0 and productID = "..req["pid"].."; \
+select @seqid seqid, @userID oldUserID, @nickname nickname, @avatar avatar;"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -115,6 +115,8 @@ end
 local data = JSON:decode(body)
 
 
+
+
 重定向
 ngx.redirect("http://www.google.com",302)
 
