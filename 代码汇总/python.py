@@ -11,9 +11,12 @@
 
 
 dic = {'a':[5,8,6], 'bc':[8,5,4], 'c':[1,5,6], 'asd':[3,7,6], 'aa':[2,3,9], 'd':[2,3,8],'asdd':[3,7,5],}
-dict= sorted(dic.iteritems(), key=lambda d:d[1])
-print dict
-
+list= sorted(dic.iteritems(), key=lambda d:d[1])
+list= sorted(dic.iteritems(), key=lambda d:d[1],reverse=True)
+print list
+for i in range(len(list)):
+	pass
+	
 import random
 print random.randint(12, 14)
 
@@ -56,8 +59,7 @@ time_str = g_last_date_time[11:]
 数字转字符串
 str(gameid)
 
-for i in range(len(sorted_list)):
-	pass
+
 
 
 
@@ -78,9 +80,17 @@ print t.get()
 
 dic.has_key(gameid)
 dict.keys()
+keys_list =  dict.keys()
+print  keys_list
+print keys_list.__contains__("gag")
+keys_list.remove("gag")
 
 
 
+ttt = time.time()
+tl = time.localtime(ttt)
+print tl
+time.struct_time(tm_year=2016, tm_mon=9, tm_mday=21, tm_hour=13, tm_min=58, tm_sec=43, tm_wday=2, tm_yday=265, tm_isdst=0)
 
 class ClassName(object):
 	static_a = "222"

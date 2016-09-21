@@ -28,9 +28,9 @@ order by a.gameID, a.productID;
 
 
 select * from ko_currency.user_product 
-where gameid=200211 
-and count < 800 
-and userid in (select a.userid from ko_user.auto_user a  left join ko_user.auto_user_batch f on a.inputid=f.seqid where f.fieldid=100 and f.gameid=200211 );
+where gameid=200556
+and count < 8000000 
+and userid in (select a.userid from ko_user.auto_user a  left join ko_user.auto_user_batch f on a.inputid=f.seqid where f.fieldid=1000 and f.gameid=200556 );
 
 
 update  ko_currency.user_product set count=count+1000 
@@ -63,6 +63,7 @@ select @seqid seqid, @userID oldUserID, @nickname nickname, @avatar avatar;"
 
 
 
+select date_format(now(),'%Y-%m-%d %H:%i:%s');
 
 
 

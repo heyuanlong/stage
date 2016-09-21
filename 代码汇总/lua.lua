@@ -26,7 +26,9 @@ for i=10,1,-1
 do 
    print(i) 
 end
-
+for i=11,31 do
+   print (i)
+end
 
 string.gsub(s, pattern, replace [, n])
 string.gsub("Hello banana", "banana", "Lua user")
