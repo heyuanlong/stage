@@ -10,10 +10,14 @@ GOPATH和PATH环境变量一样，也可以接受多个路径，并且路径和�
 	直接生产可执行文件
 	cd bin
 	go build main（注意如果GOPATH有多个路径的话，只会编译第一个路径的包）
+	会把可执行文件生成到当前目录下
+	只会生成可执行文件
 }
 编译方式2{
-	直接go install ***  （注意如果GOPATH有多个路径的话，只会编译第一个路径的包）
+	直接go install main  （注意如果GOPATH有多个路径的话，只会编译第一个路径的包）
+	会生成所以依赖的包，并把可可执行文件放到bin目录里
 }
+
 设置了GOPATH，所以可以在任意目录下执行以下命令：
 go test simplemath
 
@@ -154,3 +158,194 @@ for {
 	}
 	values = append(values, value)
 }
+
+
+http.Redirect(w, r, "/view?id="+filename,http.StatusFound)
+func viewHandler(w http.ResponseWriter, r *http.Request) {
+	imageId = r.FormValue("id")
+	imagePath = UPLOAD_DIR + "/" + imageId
+	if exists := isExists(imagePath);!exists {
+		http.NotFound(w, r)
+		return
+	}
+	w.Header().Set("Content-Type", "image")
+	http.ServeFile(w, r, imagePath)
+}
+func isExists(path string) bool {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true
+	}
+	return os.IsExist(err)
+}
+
+
+fileInfoArr, err := ioutil.ReadDir("./uploads") 读取uploads目录下的文件
+
+
+
+Md5Inst:=md5.New()
+Md5Inst.Write([]byte(TestString))
+Result:=Md5Inst.Sum([]byte(""))
+fmt.Printf("%x\n\n",Result)
+
+Sha1Inst:=sha1.New()
+Sha1Inst.Write([]byte(TestString))
+Result=Sha1Inst.Sum([]byte(""))
+fmt.Printf("%x\n\n",Result)
+
+package main
+import (
+"io"
+"fmt"
+"os"
+"crypto/md5"
+"crypto/sha1"
+)
+func main() {
+	TestFile := "123.txt"
+	infile, inerr := os.Open(TestFile)
+	if inerr == nil {
+		md5h := md5.New()
+		io.Copy(md5h, infile)
+		fmt.Printf("%x %s\n",md5h.Sum([]byte("")), TestFile)
+		sha1h := sha1.New()
+		io.Copy(sha1h, infile)
+		fmt.Printf("%x %s\n",sha1h.Sum([]byte("")), TestFile)
+	} else {
+		fmt.Println(inerr)
+		os.Exit(1)
+	}
+}
+
+
+
+
+
+一个文件服务器
+package main
+import (
+	"net/http"
+)
+func main() {
+	h := http.FileServer(http.Dir("."))
+	http.ListenAndServe(":8003", h)
+}
+
+
+软件开发行业最流行的两种命名法分别为骆驼命名法（类似于DoSomething和doSomething）
+和下划线法（对应为do_something），而Go语言明确宣告了拥护骆驼命名法而排斥下划线法。骆
+驼命名法在Java和C#中得到官方的支持和推荐，而下划线命名法则主要用在C语言的世界里，比
+如Linux内核和驱动开发上。在开始Go语言编程时，还是忘记下划线法吧，避免写出不伦不类的
+名字。
+
+
+不带任何参数直接运行go fmt的话，可以直接格式化当前目录下的所有*.go文件
+
+
+
+假如你希望这个包的路径带有一个命名空间，比如在使用时希望以这样的方式导入：
+import "myns/simplemath"
+
+
+godoc -http=:8010    				直接看go的离线文档
+godoc -http=:8010 -goroot="."   	直接看自己的项目代码，这酷了。。。。。。
+
+
+类型查询
+func MyPrintf(args ...interface{}) {
+	for _, arg := range args {
+		switch arg.(type) {
+			case int:。。。
+			case string:。。。
+			default:
+			。。。
+		}
+	}
+}
+
+接口查询
+var file1 Writer = ...
+if file5, ok := file1.(two.IStream); ok {
+	...
+}
+
+
+对结构的反射操作
+tt12 := T{203, "mh203"}
+s := reflect.ValueOf(&tt12).Elem()
+typeOfT := s.Type()
+for i := 0; i < s.NumField(); i++ {
+	f := s.Field(i)
+	fmt.Printf("%s %s = %v\n", typeOfT.Field(i).Name, f.Type(), f.Interface())
+}
+/*
+123123A int = 203
+B string = mh203
+*/
+
+
+
+调用c函数
+package main
+import "fmt"
+/*
+#include <stdlib.h>
+*/
+import "C"
+func Random() int {
+	return int(C.random())
+}
+func Seed(i int) {
+	C.srandom(C.uint(i))
+}
+func main() {
+	Seed(100)
+	fmt.Println("Random:", Random())
+}
+
+
+
+输入输出。有bufio、fmt、io、log和flag等，其中flag用于处理命令行参数。
+文本处理。有encoding、bytes、strings、strconv、text、mime、unicode、regexp、index和path等。其中path用于处理路径字符串。
+网络。有：net、http和expvar等。
+系统。有os、syscall、sync、time和unsafe等。
+数据结构与算法。有math、sort、container、crypto、hash、archive、compress和image等。因为image包里提供的图像编解码都是算法，所以也归入此类。
+运行时。有：runtime、reflect和go等。
+
+
+new(File) 和&File{} 是等价的。
+
+
+// Mutex 数据类型有两个方法，Lock 和Unlock。
+type Mutex s t r u c t { /* Mutex 字段*/ }
+func (m *Mutex) Lock() { /* Lock 实现*/ }
+func (m *Mutex) Unlock() { /* Unlock 实现*/ }
+现在用两种不同的风格创建了两个数据类型。
+• type NewMutex Mutex;
+• type PrintableMutex struct {Mutex }.
+现在NewMutux 等同于Mutex，但是它没有任何Mutex 的方法。换句话说，它的方法
+是空的。
+但是PrintableMutex 已经从Mutex 继承了方法集合。如同[10] 所说：
+*PrintableMutex 的方法集合包含了Lock 和Unlock 方法，被绑定到其
+匿名字段Mutex。
+
+
+
+
+mystring := "hello this is string"
+byteslice := []byte(mystring)
+转换到byte slice，每个byte 保存字符串对应字节的整数值。注意Go 的字符串
+是UTF-8 编码的，一些字符可能是1、2、3 或者4 个字节结尾。
+runeslice := []rune(mystring)
+转换到rune slice，每个rune 保存Unicode 编码的指针。字符串中的每个字符
+对应一个整数。
+
+从字节或者整形的slice 到string。
+b := []byte {'h','e','l','l','o'} // 复合声明
+s := s t r i n g (b)
+i := []rune {257,1024,65}
+r := s t r i n g (i)
+
+
+别名也不能随意转换。

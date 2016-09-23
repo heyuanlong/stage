@@ -221,4 +221,5 @@ else:
 try-finally 语句无论是否发生异常都将执行最后的代码。
 
 
-
+返回一年的第几周
+datetime.date.today().isocalendar()[1]
