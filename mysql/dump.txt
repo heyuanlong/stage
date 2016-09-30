@@ -54,3 +54,16 @@ mysqldump -uroot -p123456 database table --where=" field1=11 and field2=0" > /ho
 
 mysqldump -h localhost --single-transaction -urroot -pCQMYG14dss -d information_schema > learnInformation.sql;
 
+
+
+/data/DB/mysql/bin/mysqldump \
+--login-path=remote107 \
+--skip-lock-tables \
+--skip-add-drop-table \
+--default-character-set=UTF8 \
+--set-charset \
+--replace \
+ko_user \
+user_continuous_login \
+--where="lastLoginDate = curdate()" \
+--result-file=user_continuous_login.2016.09.28.sql
