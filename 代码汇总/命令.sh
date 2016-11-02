@@ -6,9 +6,10 @@ service iptables off
 service iptables on
 
 修改防火墙
-vi /etc/sysconfig/iptables
-service iptables restart
-/etc/rc.d/init.d/iptables save
+第一步：vi /etc/sysconfig/iptables
+第二步：service iptables restart
+第三步: /etc/rc.d/init.d/iptables save
+
 
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT
@@ -42,7 +43,7 @@ crontab -l 列出任务
 service crond restart 重启crond
 
 永久修改环境变量
-1，vi /etc/profile  (对所有用户)
+1，vi /etc/profile  (对所有用户)  不要忘记了 export
 2，vi /etc/bashrc (对所有用户)
 3，vi ~/.bash-profile (当前用户)
 4, vi ~/.bashrc (当前用户)
@@ -144,7 +145,7 @@ df 查看磁盘的使用情况
 
 
 linux查询进程占用哪些端口
-netstat -nlap
+netstat -anp
 
 
 打包命令
@@ -179,3 +180,15 @@ mkdir -p  目录路劲     ---可以递归创建目录
 
 tee指令会从标准输入设备读取数据，将其内容输出到标准输出设备，同时保存成文件。
 pwd | tee -a who.out
+
+
+查看内存情况
+top  [-u user | -U user] -p pid [,pid ...]
+
+
+查看机子类型：
+uname -a
+lsb_release -a
+
+
+

@@ -65,7 +65,11 @@ select @seqid seqid, @userID oldUserID, @nickname nickname, @avatar avatar;"
 
 select date_format(now(),'%Y-%m-%d %H:%i:%s');
 
-
+delete from ko_user_own.user_property 
+where edittime in
+	( select edittime  from 
+		(select count(*) as x,edittime from ko_user_own.user_property group by  edittime) as bb
+	where x >1000);
 
 
 
