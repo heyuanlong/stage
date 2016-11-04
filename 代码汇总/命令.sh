@@ -189,6 +189,6 @@ top  [-u user | -U user] -p pid [,pid ...]
 查看机子类型：
 uname -a
 lsb_release -a
-
+cat /etc/redhat-release
 
 
