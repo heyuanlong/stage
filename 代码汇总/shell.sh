@@ -235,6 +235,21 @@ do
 done
 
 
+
+case $1 in
+re )
+    command1
+    command2
+    command3
+    ;;
+make )
+    command3
+    ;;
+*)
+    command1
+    ;;
+esac
+
 处理脚本参数{
 	1.运行带参数的程序
 	$0表示程序名，$1表示第一个参数，$2表示第二个参数，一次类推，直到第九个参数$9
