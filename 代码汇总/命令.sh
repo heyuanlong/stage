@@ -194,3 +194,9 @@ cat /etc/redhat-release
 
 vim -b txt.txt 能看到^M （-b Binary mode）
 要将a.txt里的^M去掉并写入b.txt，则使用如下指令cat a.txt | tr -d "^M" > b.txt
+
+
+查看tcp连接的所有连接的状态
+netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+查看time_wait状态的数量
+netstat -n | grep TIME_WAIT | wc -l
