@@ -200,3 +200,17 @@ vim -b txt.txt 能看到^M （-b Binary mode）
 netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
 查看time_wait状态的数量
 netstat -n | grep TIME_WAIT | wc -l
+
+
+-------------------tcpdump-------------------------
+tcpdump tcp port 23
+tcpdump udp port 123
+- 源端口
+# tcpdump -i eth1 src port 25
+- 目的端口
+# tcpdump -i eth1 dst port 25
+http://blog.csdn.net/nanyun2010/article/details/23445223
+
+
+--------------------------------------------------
+
