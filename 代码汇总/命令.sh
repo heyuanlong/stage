@@ -67,7 +67,7 @@ source /etc/profile
 用ssh-copy-id命令吧公钥复制到远程主机
 3，ssh user@remotehost 直接登录
 
-关于rsync（双方都得有rsync）
+关于 rsync （双方都得有rsync）
 sudo apt-get install rsync
 yum install rsync
 rpm -ivh rsync
@@ -212,5 +212,14 @@ tcpdump udp port 123
 http://blog.csdn.net/nanyun2010/article/details/23445223
 
 
---------------------------------------------------
+----------------------nc----------------------------
+-l 使用监听模式.
+-u 使用UDP协议.
 
+在192.168.1.2上： nc -l 1234
+在192.168.1.3上： nc 192.168.1.2 1234
+
+在192.168.1.2上： nc -l -u 1234
+在192.168.1.3上： nc -u 192.168.1.2 1234
+
+--------------------------------------------------

@@ -1,7 +1,7 @@
 1.on duplicate key
 	insert into audit_game(gameid,auditor,audittime,description) values(0,'1',now(),'2') on duplicate key update auditor='3',description='4';
 
-2. ������ѯ
+2. Á¬±í²éÑ¯
 	select d.email,b.gameid,b.editTime,b.gamename,b.icon,b.fileURL,b.type,m.slogan,b.description ,a.auditor,a.auditTime,a.description from ko_open.developer as d left join ko_open.battle_game as b  on d.openid=b.openid left join ko_open.match_game as m on b.gameid=m.gameid left join ko_open.audit_game as a on b.gameid=a.gameid where m.gameid > 0  and d.email like '%ed%'; 
 
 3. insert into person(name,age,city,salary) select name ,20,city,salary from person where age=21;
@@ -24,6 +24,20 @@ left join (
 ) b on a.productID = b.productID 
 where 1=1 and ( ((a.gameID = 102000) )) 
 order by a.gameID, a.productID;
+
+
+insert into ko_battle.battle_score( 
+    userID,gameID,totalRound, disconnectRound,
+    editTime,scoreA,scoreB,scoreC, 
+    extend_0,extend_1,extend_2,extend_3,extend_4, 
+    extend_5,extend_6,extend_7,extend_8,extend_9) 
+    values(0,102000,1,0,now(),0,0,0,0,0,0,0,0,0,0,0,0,0) 
+    on duplicate key update 
+    totalRound = totalRound + 1,
+    editTime = now(),
+    scoreA=if(scoreA<values(scoreA),scoreA,values(scoreA)),
+    scoreB=if(scoreB<values(scoreB),scoreB,values(scoreB)),
+    scoreC=if(scoreC<values(scoreC),scoreC,values(scoreC));
 
 
 
@@ -72,12 +86,27 @@ where edittime in
 	where x >1000);
 
 
+sprintf(szMsg, "insert into ko_user_own.user_property(propertyID,gameID,userID,value,inputTime,editTime) values(%d, %d, %d, %d, NOW(), NOW()) ON DUPLICATE KEY UPDATE value=VALUES(value), inputTime=NOW(), editTime=NOW();", 		objPenalties[i].elementID, gameid, userID, value);
 
 
 
 
 
+防止因插入不能重复的字段出现的错误
+1.insert ignore into
+INSERT IGNORE INTO books (name) VALUES ('MySQL Manual')
+
+2.on duplicate key update
+INSERT INTO books (name) VALUES ('MySQL Manual') ON duplicate KEY UPDATE id = id
 
 
-
+-- 新昵称库获取昵称
+local sql = "\
+set @seqid:=0, @nickName:=''; \
+update ko_user.nick_name_box_number set \
+seqid = (@seqid:=seqid), \
+nickName = (@nickName:=nickName), \
+status = 1 \
+where status = 0 limit 1; \
+select @seqid seqid, @nickName nickName;"
 
