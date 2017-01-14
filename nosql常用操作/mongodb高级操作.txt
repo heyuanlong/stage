@@ -16,7 +16,7 @@ hyl.jsÄÚÈİ£º
 	       $group:
 		 {
 		  _id: { reportTime: {$substr:["$reportTime",0,8]},gameID:"$gameID"},
-		   count: { $sum: 1 }
+		  count: { $sum: 1 }
 		 }
 	    }   
 	   ]

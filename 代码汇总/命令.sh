@@ -146,6 +146,7 @@ df 查看磁盘的使用情况
 
 linux查询进程占用哪些端口
 netstat -anp
+netstat -pan | grep 9031
 
 
 打包命令
@@ -205,6 +206,7 @@ netstat -n | grep TIME_WAIT | wc -l
 -------------------tcpdump-------------------------
 tcpdump tcp port 23
 tcpdump udp port 123
+tcpdump -xx tcp port 9041
 - 源端口
 # tcpdump -i eth1 src port 25
 - 目的端口
@@ -222,4 +224,25 @@ http://blog.csdn.net/nanyun2010/article/details/23445223
 在192.168.1.2上： nc -l -u 1234
 在192.168.1.3上： nc -u 192.168.1.2 1234
 
---------------------------------------------------
+------------y----------ab 网络压测----------------------------
+安装  yum install httpd-tools
+
+ab -c 50 -n 5000 https://www.baidu.com/
+-c 50 表示并发用户数为 50
+-n 5000 表示请求总数为 5000
+
+-----------------------wireshark-抓包------------------------------------
+http://blog.csdn.net/ffggnfgf/article/details/51056018
+
+-----------------------查看端口被哪个pid占用-------------------------------------
+lsof -Pnl +M -i4    | grep 9005
+
+------------------------------------------------------------
+------------------------------------------------------------
+------------------------------------------------------------
+
+
+ps -ef|grep MainDayRank|grep -v grep |awk '{print $2}' | xargs kill
+ls | xargs cat
+
+

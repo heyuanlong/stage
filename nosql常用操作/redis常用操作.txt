@@ -1,5 +1,9 @@
 Redis支持五种数据类型：string（字符串），hash（哈希），list（列表），set（集合）及zset(sorted set：有序集合)。
 
+
+redis需要主动  save一下 或者配置好
+Redis配置文件详解    http://blog.csdn.net/h1023417614/article/details/54407465
+
 在远程服务上执行命令
 $ redis-cli -h host -p port -a password
 

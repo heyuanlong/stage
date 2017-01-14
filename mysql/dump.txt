@@ -8,13 +8,13 @@ mysqldump -h localhost -uroot -p123456 ko_base base_game --where="src='baidu_mat
 所以：
 
 导入数据库
-shell> mysqladmin –u root –p create target_db_name
+shell> mysqladmin –u root –p create target_db_name        先创建数据库
 shell> mysql –u root –p target_db_name < backup-file.sql
 就是:shell> mysql 数据库名 < 文件名
  
+
 或者使用source 命令
 进入mysql数据库控制台，mysql -u root –p
-
 mysql>use 数据库
 然后使用source命令，后面参数为脚本文件（.sql文件）
 mysql>source d:student.sql
@@ -52,7 +52,7 @@ mysqldump -uroot -p123456 database table --where=" field1=11 and field2=0" > /ho
  mysql命令行
  mysql>source all.sql;
 
-mysqldump -h localhost --single-transaction -urroot -pCQMYG14dss -d information_schema > learnInformation.sql;
+mysqldump -h localhost --single-transaction -uroot -pCQMYG14dss -d information_schema > learnInformation.sql;
 
 
 
