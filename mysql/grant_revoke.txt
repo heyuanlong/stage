@@ -23,7 +23,7 @@ revoke all on *.* from dba@localhost;
 	flush privileges;
 
 删除账户及权限
-	drop user 用户名@主机;
+	drop user 用户名@主机;;
 	flush privileges;
 
 修改指定用户密码
