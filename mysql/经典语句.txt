@@ -110,3 +110,11 @@ status = 1 \
 where status = 0 limit 1; \
 select @seqid seqid, @nickName nickName;"
 
+
+
+desc tablename;
+//唯一值
+select distinct productID from ko_currency.user_product;
+//group by 和  having 的组合
+select userid ,count(*) from ko_currency.user_product group by userid having count(*) >14;
+

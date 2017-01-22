@@ -16,3 +16,19 @@ grant all on *.* to dba@localhost;
 revoke all on *.* from dba@localhost;
  
 
+
+
+创建用户并授权
+ 	grant select,insert on test1.* to 'u1'@'localhost' identified by '123';     //创建一个数据库用户u1，设置其对test1数据库中的所有表具有select、insert权限，密码是123
+	flush privileges;
+
+删除账户及权限
+	drop user 用户名@主机;
+	flush privileges;
+
+修改指定用户密码
+	1.  update mysql.user set password=password('新密码') where User="test" and Host="localhost";
+		flush privileges;
+	2. grant select on test.* to 'u1'@'localhost' identified by '新密码';
+	
+	
