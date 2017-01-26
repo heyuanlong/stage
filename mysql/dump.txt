@@ -67,3 +67,11 @@ ko_user \
 user_continuous_login \
 --where="lastLoginDate = curdate()" \
 --result-file=user_continuous_login.2016.09.28.sql
+
+
+
+
+sudo /usr/local/mysql/bin/mysqldump -h localhost -uroot -psd-9898w --default-character-set=utf8    lewan >  /home/heyuanlong/lewan.sql
+create database lewan CHARACTER SET utf8;
+mysql -h localhost -uroot -psd-9898w lewan 	   <  /home/heyuanlong/lewan.sql
+

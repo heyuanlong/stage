@@ -52,3 +52,25 @@ name varchar(10) not null,
 这里跟SQLSERVER是不一样，SQLSERVER允许一张表有多个自增列，并且不需要在自增列上创建索引
 
 一般系统定义的全局变量都是以@@开头，用户自定义变量以@开头。
+
+
+
+MyISAM
+	*.frm
+	*.MYD
+	*.MYI
+InnoDB
+	*.frm
+	*.ibd
+
+
+财务方面的带小数数据应该用定点数。
+
+
+mysql流程函数
+IF(expr1,expr2,expr3)										如果expr1是真, 返回expr2, 否则返回expr3
+IFNULL(expr1,expr2)											如果expr1不是NULL,返回expr1,否则返回expr2
+CASE WHEN [value1] THEN[result1]… ELSE[default] END			如果value是真, 返回result1,否则返回default
+CASE [expr] WHEN [value1] THEN[result1]… ELSE[default] END	如果expr等于value1, 返回result1,否则返回default
+
+
