@@ -1,0 +1,76 @@
+存储过程
+   -- 计算两个数之和
+   DELIMITER $$   
+   create procedure pr_add( a int,b int)
+   begin
+      declare c int;
+      if a is null then
+         set a = 0;
+      end if;
+      if b is null then
+         set b = 0;
+      end if;
+      set c = a + b;
+      select c as sum;
+   end $$   
+   DELIMITER ; 
+
+   调用存储过程
+   call pr_add(1,2)
+
+
+
+
+函数
+   DELIMITER $$
+   CREATE FUNCTION addTwoNumber(x SMALLINT UNSIGNED, Y SMALLINT UNSIGNED) 
+   RETURNS SMALLINT
+   BEGIN
+   DECLARE a, b SMALLINT UNSIGNED DEFAULT 10;
+   SET  a = x, b = y;
+   RETURN a+b;
+   END $$
+
+   调用函数
+   SELECT function_name(parameter_value,...)
+
+
+
+
+
+触发器
+   触发器在INSERT、UPDATE或DELETE等DML语句修改数据库表时触发
+
+   DELIMITER $$   
+   DROP TRIGGER sales_trigger$$   
+
+   CREATE TRIGGER sales_trigger   
+       BEFORE INSERT ON sales   
+       FOR EACH ROW   
+   BEGIN   
+       IF NEW.sale_value > 500 THEN   
+           SET NEW.free_shipping = 'Y';   
+       ELSE   
+           SET NEW.free_shipping = 'N';   
+       END IF;   
+     
+       IF NEW.sale_value > 1000 THEN   
+           SET NEW.discount = NEW.sale_value * .15;   
+       ELSE   
+           SET NEW.discount = 0;   
+       END IF;   
+   END $$   
+   DELIMITER ;  
+
+
+
+事件调度器
+   自MySQL5.1.0起，增加了一个非常有特色的功能–事件调度器(Event Scheduler),可以用做定时执行某些特定任务，可以看作基于时间的触发器。
+
+
+
+
+
+
+
+
