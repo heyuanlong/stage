@@ -66,3 +66,10 @@ insert into base_game(gamename,type,src,packagename) values("dddd",11,"dddd","sd
 
 
 硬件允许的话：每一个数据库表都应该有一个唯一的自增seqid字段
+
+
+show variables  like '%slow_query_log%';
+show status like 'Slow_queries%';
+show processlist;    #可以查看当前Mysql在进行的线程。
+
+
