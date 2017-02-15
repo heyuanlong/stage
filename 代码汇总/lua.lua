@@ -209,11 +209,6 @@ local ret = io.popen("gcc temp.c -o temp 2>&1")
 ngx.say(ret:read("*all")) --读取管道返回数据
 ret:close() 
 
-local x = "curl '" .. url .. "' -d '" .. data .. "'"
-local handle = io.popen(x)
-local result = handle:read("*all")--读取管道返回数据
-handle:close()
-
 os.execute("mkdir ".. filePath)
 
 
@@ -247,4 +242,13 @@ local len = string.len(templete)
 for i=1,5,1 do
     local index = math.random(1,len)
     str[i] = string.sub(templete,index,index)
+end
+
+
+function post (url, data)
+    local handle = io.popen("curl '" .. url .. "' -d '" .. data .. "'")
+    local result = handle:read("*all")
+    --ngx.say("curl '" .. url .. "' -d '" .. data .. "'")
+    handle:close()
+    return result
 end

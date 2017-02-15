@@ -238,6 +238,13 @@ http://blog.csdn.net/ffggnfgf/article/details/51056018
 lsof -Pnl +M -i4    | grep 9005
 
 ------------------------------------------------------------
+
+fdisk -l
+df -h
+mount -l
+umount /dev/vdb
+mkdir /apps
+mount -t ext3 /dev/vdb /apps
 ------------------------------------------------------------
 ------------------------------------------------------------
 
