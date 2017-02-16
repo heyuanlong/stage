@@ -7,7 +7,9 @@ Redis配置文件详解    http://blog.csdn.net/h1023417614/article/details/54407465
 在远程服务上执行命令
 $ redis-cli -h host -p port -a password
 
-
+获取配置信息
+config get requirepass
+config get bind
 
 string{
 	SET key value 

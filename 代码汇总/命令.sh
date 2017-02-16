@@ -116,9 +116,7 @@ scp的命令使用和rsync一样
 hexdump -C file.txt 输出十六进制和对应字符
 hexdump -C -n 10 file.txt 输出前10个字节
 
-在 vi 或 vim 的命令状态下
-:%!xxd              ——将当前文本转换为16进制格式。
-:%!xxd -r          ——将当前文件转换回文本格式。
+
 
 dos2unix命令用来将DOS格式文本转换成unix格式的.
 DOS下文本以\r\n为断行标志，十六进制为0D0A 而unix是\n为0A
@@ -193,8 +191,7 @@ lsb_release -a
 cat /etc/redhat-release
 
 
-vim -b txt.txt 能看到^M （-b Binary mode）
-要将a.txt里的^M去掉并写入b.txt，则使用如下指令cat a.txt | tr -d "^M" > b.txt
+
 
 
 查看tcp连接的所有连接的状态
@@ -237,7 +234,7 @@ http://blog.csdn.net/ffggnfgf/article/details/51056018
 -----------------------查看端口被哪个pid占用-------------------------------------
 lsof -Pnl +M -i4    | grep 9005
 
-------------------------------------------------------------
+-------------------------磁盘相关-----------------------------------
 
 fdisk -l
 df -h
@@ -245,7 +242,17 @@ mount -l
 umount /dev/vdb
 mkdir /apps
 mount -t ext3 /dev/vdb /apps
-------------------------------------------------------------
+---------------------------vim---------------------------------
+在 vi 或 vim 的命令状态下
+:%!xxd              ——将当前文本转换为16进制格式。
+:%!xxd -r          ——将当前文件转换回文本格式。
+
+vim -b txt.txt 能看到^M （-b Binary mode）
+要将a.txt里的^M去掉并写入b.txt，则使用如下指令cat a.txt | tr -d "^M" > b.txt
+
+替换
+:s/from/to/g 		将当前行中的所有from都替换成to
+:%s/from/to/g 		对所有行的内容进行替换
 ------------------------------------------------------------
 
 
