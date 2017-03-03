@@ -11,6 +11,10 @@ $ redis-cli -h host -p port -a password
 config get requirepass
 config get bind
 
+keys test**k  Ä£ºý²éÑ¯¼ü
+
+
+
 string{
 	SET key value 
 	GET key 

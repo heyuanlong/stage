@@ -85,7 +85,7 @@ rsync -e 'ssh -p 2002' otherhost:
 rsync -avzp /data/matchvs.com/cms/htdocs/CMS.MatchVS/webroot/jsp/* /data/matchvs.com/cms/htdocs/superCMS.MatchVS/webroot/jsp/
 
 
-
+rsync -e 'ssh -p 3879' client heyuanlong@115.231.9.76:/home/heyuanlong/mygomatchvs/
 
 yum 安装mysql
 1,安装mysql服务端
@@ -102,8 +102,8 @@ mysqladmin -uroot password 123456
 5，登录
 mysql -uroot -p123456
 
-ldconfig是动态链接库管理命令
-ldd是用来查看程序运行所需要的共享库
+ldconfig 是动态链接库管理命令
+ldd 是用来查看程序运行所需要的共享库
 
 tail -f file.log
 ln -s oldfile newfile
@@ -238,10 +238,11 @@ lsof -Pnl +M -i4    | grep 9005
 
 fdisk -l
 df -h
-mount -l
-umount /dev/vdb
-mkdir /apps
-mount -t ext3 /dev/vdb /apps
+mount -l  				查看
+mkfs -t ext3 /dev/vdb  格式化硬盘
+umount /dev/vdb		 	卸载
+mkdir /apps 
+mount -t ext3 /dev/vdb /apps   挂载
 ---------------------------vim---------------------------------
 在 vi 或 vim 的命令状态下
 :%!xxd              ——将当前文本转换为16进制格式。
@@ -253,6 +254,10 @@ vim -b txt.txt 能看到^M （-b Binary mode）
 替换
 :s/from/to/g 		将当前行中的所有from都替换成to
 :%s/from/to/g 		对所有行的内容进行替换
+
+---------------------------iptables 端口转发---------------------------------
+http://www.cnblogs.com/apexchu/p/4255551.html
+
 ------------------------------------------------------------
 
 
@@ -260,3 +265,7 @@ ps -ef|grep MainDayRank|grep -v grep |awk '{print $2}' | xargs kill
 ls | xargs cat
 
 
+linux下查看一个进程的启动时间和运行时间
+使用 ps命令 ：#ps -A -opid,stime,etime,args
+
+981199720
