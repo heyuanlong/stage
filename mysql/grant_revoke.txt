@@ -19,7 +19,10 @@ revoke all on *.* from dba@localhost;
 
 
 创建用户并授权
- 	grant select,insert on test1.* to 'u1'@'localhost' identified by '123';     //创建一个数据库用户u1，设置其对test1数据库中的所有表具有select、insert权限，密码是123
+ 	grant select,insert on test1.* to 'u1'@'localhost' identified by '123'; 
+ 	grant all privileges on wordpress.* to 'wduser'@'localhost' identified by 'hylhyl4811';
+
+ 	    //创建一个数据库用户u1，设置其对test1数据库中的所有表具有select、insert权限，密码是123
 	flush privileges;
 
 删除账户及权限

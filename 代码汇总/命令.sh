@@ -258,14 +258,15 @@ vim -b txt.txt 能看到^M （-b Binary mode）
 ---------------------------iptables 端口转发---------------------------------
 http://www.cnblogs.com/apexchu/p/4255551.html
 
-------------------------------------------------------------
-
+----------------------ps--------------------------------------
 
 ps -ef|grep MainDayRank|grep -v grep |awk '{print $2}' | xargs kill
 ls | xargs cat
 
-
 linux下查看一个进程的启动时间和运行时间
 使用 ps命令 ：#ps -A -opid,stime,etime,args
 
-981199720
+ ps ax  -o pid,ppid,tty,stat,args,wchan
+
+
+----------------------ps--------------------------------------
