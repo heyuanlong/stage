@@ -249,7 +249,12 @@ mount -t ext3 /dev/vdb /apps   挂载
 :%!xxd -r          ——将当前文件转换回文本格式。
 
 vim -b txt.txt 能看到^M （-b Binary mode）
-要将a.txt里的^M去掉并写入b.txt，则使用如下指令cat a.txt | tr -d "^M" > b.txt
+要将a.txt里的^M去掉并写入b.txt，则使用如下指令
+sed -i 's/\r//g' filename
+或者
+dos2unix filename 
+或者
+cat a.txt | tr -d "^M" > b.txt
 
 替换
 :s/from/to/g 		将当前行中的所有from都替换成to
