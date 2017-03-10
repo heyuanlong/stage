@@ -73,3 +73,7 @@ show status like 'Slow_queries%';
 show processlist;    #可以查看当前Mysql在进行的线程。
 
 
+show variables like 'max_connections';  设置最大连接数  可设 5000
+set global max_connections=5000
+show variables like 'key_buffer_size'; 单位是字节，key_buffer_size 对MyISAM表性能影响很大.
+set global key_buffer_size=1073741824
