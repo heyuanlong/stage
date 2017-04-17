@@ -1,3 +1,6 @@
+查看存储过程  show procedure status
+查看事件     show events;
+
 存储过程
    -- 计算两个数之和
    DELIMITER $$   
@@ -61,6 +64,13 @@
        END IF;   
    END $$   
    DELIMITER ;  
+
+事件
+DELIMITER $$  
+   CREATE EVENT `StatTimer` ON SCHEDULE EVERY 5 MINUTE STARTS '2017-02-12 08:01:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+   call Stat();
+   END &&
+DELIMITER ; 
 
 
 
