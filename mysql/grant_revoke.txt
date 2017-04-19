@@ -42,3 +42,10 @@ mysqladmin -uroot -p shutdown
 启动mysql
 	/opt/lampp/bin/mysqld_safe --datadir=/opt/lampp/var/mysql --pid-file=/opt/lampp/var/mysql/iZwz91lsoerlt7qwbcl6saZ.pid
 	#mysqld_safe 后面不定要加参数，（一般情况不用就加）
+
+
+修改mysql的my.cnf 的[mysqld]datadir=/mnt/mysql  可以改变数据存放的目录。
+
+
+
+
