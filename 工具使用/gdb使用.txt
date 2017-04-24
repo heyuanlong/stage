@@ -1,0 +1,43 @@
+https://gitlore.com/subject/15
+
+被调试的可执行文件编译时应该带上-g
+
+gdb 可执行文件
+gdb -p 可执行文件pid
+
+r	Run的简写，运行被调试的程序。
+c	Continue的简写
+
+
+b <行号>
+b <函数名称>
+也可以显式指定文件 
+b file.c:6
+b a/file.c:6
+
+
+s 相当于其它调试器中的“Step Into (单步跟踪进入)”；
+n 相当于其它调试器中的“Step Over (单步跟踪)”。
+
+p <变量名称>
+
+
+backtrace（或bt）	查看各级函数调用及参数
+
+info（或i） locals	查看当前栈帧局部变量的值
+list（或l）	列出源代码，接着上次的位置往下列，每次列10行
+
+set var	修改变量的值
+
+
+gdb可以设置条件断点，也就是只有在条件满足时，断点才会被触发，命令是“break … if cond”。以上面程序为例  b 10 if i==101
+
+
+
+gdb可以使用“watch”命令设置观察点，也就是当一个变量值发生变化时，程序会停下来。
+watch var
+列出当前所设置了的所有观察点：
+info watchpoints
+gdb可以使用“awatch”命令设置读写观察点，也就是当发生读取变量或改变变量值的行为时，程序就会暂停住。
+awatch var
+
