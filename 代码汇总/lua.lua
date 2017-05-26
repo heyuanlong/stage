@@ -252,3 +252,42 @@ function post (url, data)
     handle:close()
     return result
 end
+
+
+
+
+语法
+pcall( f , arg1,···)
+返回值
+函数执行状态 (boolean)
+    没有错误返回 true
+    有错误返回 false
+    发生错误返回错误信息，否则返回函数调用返回值
+pcall 示例
+    function square(a)
+      return a * "a"
+    end
+    local status, retval = pcall(square,10);
+    print ("Status: ", status)        -- 打印 "false" 
+    print ("Return Value: ", retval)  -- 打印 "input:2: attempt to perform arithmetic on a string value"
+
+
+xpcall
+xpcall (f, msgh [, arg1, ···])
+返回值
+函数执行状态 (boolean)
+    没有错误返回 true
+    有错误返回 false
+    发生错误返回错误信息，否则返回函数调用返回值
+xpcall 类似 pcall xpcall接受两个参数：调用函数、错误处理函数
+
+比如使用 debug.traceback 获取栈信息
+status, err, ret = xpcall(square, debug.traceback, 10)
+
+
+
+
+
+
+
+
