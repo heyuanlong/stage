@@ -48,11 +48,21 @@ $newstr = filter_var($str, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
 echo $newstr;
 */
 
+include 和 require 处理错误的方式不同，
+    require 生成一个致命错误（E_COMPILE_ERROR），在错误发生后脚本会停止执行。
+    include 生成一个警告（E_WARNING），在错误发生后脚本会继续执行。
+include 有返回值，而 require 没有。
 
 
+if (!@include_once 'config.inc.php') {
+    //抑制错误提示，并判断文件不存在
+}
 
+file_exists() 函数检查文件或目录是否存在。如果指定的文件或目录存在则返回 true，否则返回 false。
 
-
-
-
+header() 用于发送原生的 HTTP 头
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+header("Cache-Control: no-cache");
+header("Pragma: no-cache");
+header('Location: http://www.example.com/'); exit; //页面跳转
 >

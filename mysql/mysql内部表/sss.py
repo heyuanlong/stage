@@ -9,7 +9,7 @@ import time, os, sched ,sys
 MYSQL_HOST		='localhost'
 MYSQL_PORT		=3306
 MYSQL_USER		='root'
-MYSQL_PASSWORD	='CQMYG14dss'
+MYSQL_PASSWORD	='****'
 TOP_N 			=10
 
 
