@@ -29,6 +29,7 @@ time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time() + 5))
 数据库
 import MySQLdb
 sql_connect=MySQLdb.connect(host=MYSQL_HOST,port=MYSQL_PORT,user=MYSQL_USER,passwd=MYSQL_PASSWORD) 
+sql_connect.autocommit(1)
 cursor = sql_connect.cursor() 
 sql_str = "select gameid,userid,scoreA,scoreB,scoreC from ko_battle.battle_score_log where inputTime>'2016-05-27 14:20:34'"
 cursor.execute(sql_str)

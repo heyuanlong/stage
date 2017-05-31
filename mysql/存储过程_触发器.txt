@@ -33,6 +33,7 @@
    SET  a = x, b = y;
    RETURN a+b;
    END $$
+   DELIMITER ;
 
    调用函数
    SELECT function_name(parameter_value,...)

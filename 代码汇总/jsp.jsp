@@ -113,5 +113,125 @@ import org.springframework.web.context.request.ServletRequestAttributes;
         }
     }
 
+%>
+<%@page language="java" contentType="text/html;charset=UTF-8"%>
+<%@page import="com.matchvs.portal.vo.Developer"%>
+<%@page import="com.matchvs.portal.vo.*"%>
+
+将当前jsp页面设置为错误处理页面
+<%@ page isErrorPage="true"%>
+设置处理jsp页面错误处理的页面
+<%@ page errorPage="error/ErrorPage.jsp"%>
+把另一个文件直接包含到代码里
+<%@ include file="page"%>
 
 
+<%
+    response.setHeader("Cache-Control", "no-cache"); //HTTP 1.1    
+    response.setHeader("Pragma", "no-cache"); //HTTP 1.0    
+    String contextPath = request.getContextPath();
+%>
+<link href="<%=contextPath%>/css/styles.css" type="text/css" rel="stylesheet" charset="utf-8" />
+<script src="<%=contextPath%>/js/SetValue.js"  type="text/javascript"></script>
+
+
+动作标识
+编译完再包含进来
+<jsp:include page="header.html" flush="true"/><!--动态包含--> 
+把请求转发到其他的web资源
+<jsp:forward page="login.jsp" /><!--动态包含--> 
+
+<%
+String value = request.getParameter("key");
+
+//在进行请求转发时，需要把一些数据传递到转发后的页面进行处理。这时，就需要使用request对象的setAttribute()方法将数据保存到request范围内的变量中。
+request.setAttribute(String name ,Object object);
+//<jsp:forward page="test1/forward.jsp" />
+request.getAttribute(String name);
+//<%= request.getAttribute("testname").toString() %>
+
+
+重定向
+response.sendRedirect(String path);
+
+禁用缓存
+response.setHeader("Cache-Control","no-cache"); //HTTP 1.1    
+response.setHeader("Pragma","no-cache"); //HTTP 1.0    
+response.setDateHeader ("Expires", 0); //prevents caching at the proxy server   
+
+自动跳转
+response.setHeader("refresh" ,"5");
+定时跳转
+response.setHeader("refresh" ,"5;URL=login.jsp");
+
+
+//使用request对象的getSession()获取session，如果session不存在则创建一个
+HttpSession session = request.getSession();
+//将数据存储到session中
+session.setAttribute("data", "孤傲苍狼");
+//获取session的Id
+String sessionId = session.getId();
+String value = session.getAttribute("data").toString();
+session.removeAttribute("data");
+session.setMaxInactiveInterval(100);
+
+
+
+//application 对象用于保存所有应用程序中的公有数据。它在服务器启动时自动创建。
+String value = application.getAttribute("name");
+application.setAttribute("name","value");
+application.removeAttribute("name");
+
+%>
+
+//out对象最基本的应用就是向客户端浏览器输出信息
+<% out.println("aaaaa") %>
+<%="aaaaa"%>
+
+
+<%
+//jsp还提供了pageContext ， config，page，exception对象。
+//Servlet是JavaWeb三大组件之一（Servlet、Filter、Listener）
+
+//servlet是运行在web服务器端的java应用程序，它使用java语言编写，具有java语言的优点。与java程序的区别是，servlet对象主要封装了对HTTP请求的处理。
+
+
+
+右键项目名称-》Java EE Tools-》Generate Deployment descriptor stub
+即可生成web.xml文件。
+
+String value=sre.getServletRequest().getParameter("key");//获取request中的参数
+String value=sce.getServletContext().getInitParameter("属性名");
+
+
+ 这就是HttpSessionBindingListener和HttpSessionListener之间的最大区别
+ HttpSessionListener只需要设置到web.xml中就可以监听整个应用中的所有session。
+ HttpSessionBindingListener必须实例化后放入某一个session中，才可以进行监听。
+
+<listener>  
+  <listener-class>com.test3.SecondListener</listener-class>  
+</listener>  
+
+
+@WebServlet(urlPatterns = {"/simple"}, asyncSupported = true, 
+loadOnStartup = -1, name = "SimpleServlet", displayName = "ss", 
+initParams = {@WebInitParam(name = "username", value = "tom")} 
+) 
+
+@WebFilter(urlPatterns={"/*"}, filterName="my3Filter", asyncSupported=true)  
+@WebInitParam(name="a", value="valuea")  
+
+
+
+insert      executeUpdate
+select      executeQuery
+update      executeUpdate
+delete      executeUpdate
+
+
+HttpServletRequest request
+HttpServletResponse response
+request.getRequestDispatcher("book_list.jsp").forward(request, response);//请求转发到..
+response.sendRedirect("FindServlet")//重定向到FindServlet
+
+%>
