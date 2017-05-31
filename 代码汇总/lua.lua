@@ -286,8 +286,11 @@ status, err, ret = xpcall(square, debug.traceback, 10)
 
 
 
-
-
+next (table [, index])
+功能：允许程序遍历表中的每一个字段，返回下一索引和该索引的值。
+参数：table：要遍历的表
+　　　index：要返回的索引的前一索中的号，当index为nil[]时，将返回第一个索引的值，当索引号为最后一个索引或表为空时将返回nil
+注：可以用next(t)来检测表是否为空(此函数只能用于以数字索引的表与ipairs相类似)
 
 
 
