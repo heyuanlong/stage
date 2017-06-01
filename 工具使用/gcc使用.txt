@@ -1,3 +1,11 @@
+
+例子：
+1.  cc -g -O2 -Wall -I3rd/lua  -fPIC --shared lualib-src/lua-clientsocket.c -o luaclib/clientsocket.so -lpthread
+
+
+
+
+
 一步到位的编译指令是:
 gcc test.c -o test
 
