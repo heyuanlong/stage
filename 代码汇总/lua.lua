@@ -294,3 +294,5 @@ next (table [, index])
 
 
 
+pairs 和 ipairs区别
+http://blog.csdn.net/witch_soya/article/details/7556595
