@@ -296,3 +296,25 @@ next (table [, index])
 
 pairs 和 ipairs区别
 http://blog.csdn.net/witch_soya/article/details/7556595
+
+
+
+Lua认为false和nil为"假"，其他任何值都是"真"。注意，跟其他语言不同的是，Lua认为0和空字符串为"真"。
+print (3 and 1 )				--1
+print (false and 0) 			--false
+print (true and 3 or 1)			--3
+print (false and 3 or 1)		--1
+print (3 and false or 0)		--0
+print (3 and false or false )	--false
+print (3 and true)				--true
+print (0 and true or 1)			--true
+
+
+
+
+
+
+
+
+
+
