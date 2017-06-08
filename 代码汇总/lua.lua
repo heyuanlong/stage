@@ -150,7 +150,9 @@ for i=1,#str do
 end
 
 math.randomseed(nums)
-index1 = math.random(1,57)
+math.random()  返回区间[0,1) 内的实数
+math.random(n)  返回区间[1,n]
+math.random(n,m)  返回区间[n,m]
 
 
 
