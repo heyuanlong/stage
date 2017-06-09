@@ -313,9 +313,16 @@ print (0 and true or 1)			--true
 
 
 
+local num = 65134
+local str = string.char(num / 256) .. string.char(num % 256)
+print("#str:"..#str)
+local s = str:byte(1) * 256 + str:byte(2)				--65134
+local s = string.byte(str) * 256 + string.byte(str,2)	--65134
 
 
-
+string.sub(s, 2, -2)返回去除第一个和最后一个字符后的子串.
+string.char(number)	 返回字符
+string.byte(string)	 返回数字
 
 
 
