@@ -1,0 +1,36 @@
+linux 环境
+{
+	http://blog.csdn.net/dahuzix/article/details/49050869
+	SVN多项目多仓库管理
+	
+	
+	# 在home/www目录下建立多个仓库
+	svnadmin create home/www/svn1
+	svnadmin create home/www/svn2
+	svnadmin create home/www/svn3
+	 
+	#建立后每个仓库下都有conf目录，可分别配置账户、权限等
+	 
+	#只需要启动home/www目录
+	svnserve -d -r home/www
+	 
+	#svn的url分别是
+	svn://127.0.0.1/svn1
+	svn://127.0.0.1/svn2
+	svn://127.0.0.1/svn3
+
+}
+
+
+{
+添加认证
+	vim ****/conf/svnserve.conf
+	##password-db = passwd  ->  assword-db = passwd
+	
+	vim ****/conf/passwd
+	[users]
+	user1=mima
+}
+
+linux 下停止所有的svn服务
+killall svnserve
