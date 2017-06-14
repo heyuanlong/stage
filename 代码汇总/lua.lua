@@ -325,5 +325,12 @@ string.char(number)	 返回字符
 string.byte(string)	 返回数字
 
 
-
+前向声明
+local  f,g
+function g()
+	f()
+end
+function f()
+	g()
+end
 
