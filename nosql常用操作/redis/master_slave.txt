@@ -1,0 +1,29 @@
+修改slave的redis配置文件：
+
+1.slaveof 192.168.0.100 6379  (映射到主服务器上)
+2.如果master设置了验证密码，还需配置masterauth。楼主的master设置了验证密码为admin，所以配置masterauth admin。
+
+
+# slaveof <masterip> <masterport>
+# masterauth <master-password>
+
+
+
+
+在master和slave分别执行info命令，查看结果如下：
+master{
+	# Replication
+	role:master
+	connected_slaves:2
+	slave0:ip=127.0.0.1,port=63792,state=online,offset=393,lag=0
+	slave1:ip=127.0.0.1,port=63793,state=online,offset=393,lag=1
+
+}
+slave{
+	# Replication
+	role:slave
+	master_host:127.0.0.1
+	master_port:63791
+	master_link_status:up
+
+}
