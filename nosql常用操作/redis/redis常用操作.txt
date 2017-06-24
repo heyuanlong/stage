@@ -121,3 +121,5 @@ other
 	在客户端执行save命令即会生成dump.rdb备份文件，该文件存储的路径可以通过命令CONFIG GET dir查看
 }
 
+(echo "AUTH 123456"; echo "dbsize") |  ./redis-cli -p 6501			获取key数量
+(echo "AUTH 123456"; echo "SHUTDOWN SAVE") |   ./redis-cli -p 6501  保存并关闭
