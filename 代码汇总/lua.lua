@@ -337,4 +337,7 @@ end
 一般是在xpcall的第二个参数（一个错误处理函数）里才会调用debug.traceback()，因为此时的栈还没被销毁。
 lua不同版本对load,loadstring,loadfile有不同的用法。
 
+lua 的协程函数resume 和 yield都是阻塞的。
+
+
 
