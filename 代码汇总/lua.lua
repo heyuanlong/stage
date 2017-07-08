@@ -325,6 +325,30 @@ string.char(number)	 返回字符
 string.byte(string)	 返回数字
 
 
+如果一个函数调用不是一系列表达式的最后一个元素，那么将值产生一个值
+function foo2() return "a","b" end
+x,y = foo2(),20         -- x="a",y=20
+x,y = (foo2())          -- x="a",y=nil
+print(foo2(),1)         -- a  1
+print(foo2().."x")      -- ax
+
+
+一个closure就是一个函数加上该函数所需访问的所有“非局部的变量”。
+重定义io.open{
+    local oldOpen = io.open
+    local accessOk = function ( filename ,mode )
+        -- body
+    end
+    io.open = function ( filename ,mode )
+        if accessOk(filename,mode) then
+            return oldOpen(filename,mode)
+        else
+            return nil,"access denied"
+        end
+    end
+}
+
+
 前向声明
 local  f,g
 function g()
