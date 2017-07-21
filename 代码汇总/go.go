@@ -408,22 +408,34 @@ https://github.com/Unknwon/the-way-to-go_ZH_CN/blob/master/eBook/07.6.md#768-切
 
 
 
+在接口上调用方法时，必须有和方法定义时相同的接收者类型或者是可以从具体类型 P 直接可以辨识的：
+指针方法可以通过指针调用
+值方法可以通过值调用
+接收者是值的方法可以通过指针调用，因为指针会首先被解引用
+接收者是指针的方法不可以通过值调用，因为存储在接口中的值没有地址
 
 
 
+io 包里的 Readers 和 Writers 都是不带缓冲的，bufio 包里提供了对应的带缓冲的操作
+
+将整个文件的内容读到一个字符串里：可以使用 io/ioutil 包里的 ioutil.ReadFile() 方法，该方法第一个返回值的类型是 []byte
+buf, err := ioutil.ReadFile(inputFile)
+if err != nil {
+	fmt.Fprintf(os.Stderr, "File Error: %s\n", err)
+	// panic(err.Error())
+	}
+fmt.Printf("%s\n", string(buf))
 
 
 
+在很多情况下，文件的内容是不按行划分的，或者干脆就是一个二进制文件。在这种情况下，ReadString()就无法使用了，我们可以使用 bufio.Reader 的 Read()，它只接收一个参数：
+buf := make([]byte, 1024)
+...
+n, err := inputReader.Read(buf)
+if (n == 0) { break}
 
 
-
-
-
-
-
-
-
-
+在缓冲写入的最后千万不要忘了使用 Flush()，否则最后的输出不会被写入。
 
 
 
