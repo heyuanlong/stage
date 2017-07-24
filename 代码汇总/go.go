@@ -446,21 +446,52 @@ Channel，复杂类型和函数类型不能被编码
 指针可以被编码，实际上是对指针指向的值进行编码（或者指针是 nil）
 
 
+给已经关闭的通道发送或者再次关闭都会导致运行时的 panic。
+if v, ok := <-ch; ok {
+  process(v)
+}
+使用 for-range 语句来读取通道是更好的办法，因为这会自动检测通道是否关闭：
+for input := range ch {
+  	process(input)
+}
 
 
+defer仅在函数返回时才会执行，在循环的结尾或其他一些有限范围的代码内不会执行。
+- 切片、映射和通道，使用make
+- 数组、结构体和所有的值类型，使用new 
+永远不要使用一个指针指向一个接口类型，因为它已经是一个指针。
 
 
+var values = [5]int{10, 11, 12, 13, 14}
+for ix := range values { // ix是索引值
+	fmt.Println(ix)
+	var ix int 
+	ix = 10
+	fmt.Println(ix)
+}
+上面这段代码没毛病，因为第一行和下面的块不在同一个域里。
 
 
-
-
-
-
-
-
-
-
-
+经典案例 	https://github.com/Unknwon/the-way-to-go_ZH_CN/blob/master/eBook/16.9.md
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 。
