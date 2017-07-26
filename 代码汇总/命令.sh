@@ -42,6 +42,9 @@ crontab -e 编辑计划任务
 crontab -l 列出任务
 service crond restart 重启crond
 
+
+nohup ./beegoblog > blog.log 2>&1 &
+
 永久修改环境变量
 1，vi /etc/profile  (对所有用户)  不要忘记了 export
 2，vi /etc/bashrc (对所有用户)

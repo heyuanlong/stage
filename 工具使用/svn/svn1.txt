@@ -34,3 +34,9 @@ linux 环境
 
 linux 下停止所有的svn服务
 killall svnserve
+
+
+svn客户端使用
+svn co svn://192.168.10.100/394 ./   拉取项目到当前目录
+svn help获取帮助
+svn info获取信息
