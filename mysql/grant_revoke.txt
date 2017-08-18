@@ -46,6 +46,5 @@ mysqladmin -uroot -p shutdown
 
 修改mysql的my.cnf 的[mysqld]datadir=/mnt/mysql  可以改变数据存放的目录。
 
-
-
-
+grant all privileges on goklmmx.* to 'goklmmxuser'@'%' identified by 'hylhyl4811';
+flush privileges;

@@ -12,3 +12,8 @@ doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 git rm -r --cached .
 git add .
 git commit -m 'update .gitignore'
+
+
+git rm --cached readme1.txt    删除readme1.txt的跟踪，并保留在本地。
+git rm --f readme1.txt    删除readme1.txt的跟踪，并且删除本地文件。
+git add .gitignore
