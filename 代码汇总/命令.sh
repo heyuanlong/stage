@@ -282,3 +282,60 @@ linux下查看一个进程的启动时间和运行时间
 
 echo 'xxxx' >> /etc/rc.d/rc.local
 ----------------------ps--------------------------------------
+
+
+date -s "2017-08-27 15:33:25"   //这样可以设置全部时间
+
+
+-------------------------------------------------------------------
+
+ffmpeg -i dx.mp4 -ss 00:00:40 -to 00:01:34  dx_11.mp4
+ffmpeg -i bd1.mkv -ss 01:02:13 -to 01:05:37  bd1_11.mp4
+ffmpeg -i g.mp4 -y -ab 32 -ar 22050 -qscale 10 -s 640*480 -r 15 g.flv   mp4转flv
+
+
+
+
+
+ffmpeg -i 2ddd.mp4 -y -ab 32 -ar 22050 -qscale 10 -s 640*480 -r 15 db_jj.flv
+ffmpeg -i db_jj.flv -f avi -vcodec mpeg4 o.mp4
+
+
+合并视频文件
+FFmpeg concat 分离器
+这种方法成功率很高，也是最好的，但是需要 FFmpeg 1.1 以上版本。先创建一个文本文件filelist.txt：
+file 'input1.mkv'
+file 'input2.mkv'
+file 'input3.mkv'
+然后：
+ffmpeg -f concat -i filelist.txt -c copy dddddd.mp4
+
+
+-------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+
+
