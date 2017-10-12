@@ -284,12 +284,12 @@ echo 'xxxx' >> /etc/rc.d/rc.local
 ----------------------ps--------------------------------------
 
 
-date -s "2017-08-27 15:33:25"   //这样可以设置全部时间
 
+   //这样可以设置全部时间
 
 -------------------------------------------------------------------
 
-ffmpeg -i dx.mp4 -ss 00:00:40 -to 00:01:34  dx_11.mp4
+ffmpeg -i dxx.mp4 -ss 00:00:20 -to 00:01:18  dxx_11.mp4
 ffmpeg -i bd1.mkv -ss 01:02:13 -to 01:05:37  bd1_11.mp4
 ffmpeg -i g.mp4 -y -ab 32 -ar 22050 -qscale 10 -s 640*480 -r 15 g.flv   mp4转flv
 
@@ -312,6 +312,27 @@ ffmpeg -f concat -i filelist.txt -c copy dddddd.mp4
 
 
 -------------------------------------------------------------------
+
+select * from log.table where logtime>1505966397 into outfile 'xxx.xls'; 
+mysql -uroot -h127.0.0.1  -pxxxxxx -e "select * from log.table  where logtime>1505966397;" > xxx1.xls
+
+
+-------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

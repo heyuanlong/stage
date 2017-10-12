@@ -75,3 +75,8 @@ sudo /usr/local/mysql/bin/mysqldump -h localhost -uroot -psd-9898w --default-cha
 create database lewan CHARACTER SET utf8;
 mysql -h localhost -uroot -psd-9898w lewan 	   <  /home/heyuanlong/lewan.sql
 
+
+
+mysql -uhwxxlgamedb -h127.0.0.1  -p3B4D0ACC5CD3 -e "select  *,from_unixtime(logtime) from pets_klmmx_log.log_buy_item" > xxx8.xls
+
+
