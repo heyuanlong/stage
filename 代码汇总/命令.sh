@@ -312,12 +312,22 @@ ffmpeg -f concat -i filelist.txt -c copy dddddd.mp4
 
 
 -------------------------------------------------------------------
-
-select * from log.table where logtime>1505966397 into outfile 'xxx.xls'; 
-mysql -uroot -h127.0.0.1  -pxxxxxx -e "select * from log.table  where logtime>1505966397;" > xxx1.xls
+lsof(list open files)是一个列出当前系统打开文件的工具。通过lsof工具能够查看这个列表对系统检测及排错，常见的用法：
+查看文件系统阻塞  lsof /boot
+查看端口号被哪个进程占用   lsof  -i : 3306
+查看用户打开哪些文件   lsof –u username
+查看进程打开哪些文件   lsof –p  4838
+查看远程已打开的网络链接  lsof –i @192.168.34.128
 
 
 -------------------------------------------------------------------
+
+SHOW TABLE STATUS; 查看各个表的信息及其状态。
+
+-------------------------------------------------------------------
+
+
+
 
 
 

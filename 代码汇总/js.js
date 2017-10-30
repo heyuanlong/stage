@@ -25,7 +25,7 @@ $("#Profile_picture").attr('src',"<%=operatorIDFront%>");
 $("#upload_photo_form").css('display',"none");//隐藏添加图片
 
 
-js函数不介意传递进来多少个参数，也不在乎穿进来参数是什么数据类型,不足的伪undefined
+js函数不介意传递进来多少个参数，也不在乎穿进来参数是什么数据类型,不足的伪 undefined
 js判断undefined类型
 if (typeof(reValue) == "undefined") { 
    alert("undefined"); 

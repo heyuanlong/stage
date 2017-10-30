@@ -365,3 +365,36 @@ lua 的协程函数resume 和 yield都是阻塞的。
 
 
 
+
+local system_cell = assert(package.searchpath("hive.system", package.path),"system cell was not found")
+print(system_cell)  --  ./hive/system.lua
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--

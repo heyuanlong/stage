@@ -118,3 +118,18 @@ select distinct productID from ko_currency.user_product;
 //group by 和  having 的组合
 select userid ,count(*) from ko_currency.user_product group by userid having count(*) >14;
 
+
+
+select * from log.table where logtime>1505966397 into outfile 'xxx.xls'; 
+select count(*) from log.table where logtime>(UNIX_TIMESTAMP(adddate(now(),-1))+0);
+
+
+mysql -uroot -h127.0.0.1  -pxxxxxx -e "select * from log.table  where logtime>1505966397;" > xxx1.xls
+select accountid ,count(*)  cc ,sum(money) from pets_klmmx_public_log.log_pay_info where logtime >1506787201 group by accountid having cc>10;
+
+
+select UNIX_TIMESTAMP(adddate(now(),-3));	#当前时间减3天
+select UNIX_TIMESTAMP(adddate(date_format(now(),'%y-%m-%d'),-3));  #当前日期减3天
+
+
+
