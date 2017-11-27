@@ -475,8 +475,14 @@ for ix := range values { // ix是索引值
 经典案例 	https://github.com/Unknwon/the-way-to-go_ZH_CN/blob/master/eBook/16.9.md
 	
 	
+在接口调用上：
+Methods Receivers 		Values
+(t T)					T and *T
+(t *T) 					*T
+(因为编译器并不是总能自动获得一个值的地址，go语言实战5.4.3有描述)
 
-	
+
+
 	
 	
 	
