@@ -204,10 +204,11 @@ netstat -n | grep TIME_WAIT | wc -l
 
 
 -------------------tcpdump-------------------------
+tcpdump -vv -i lo -nn -X tcp port 9069 
+tcpdump -xx tcp port 9041
 tcpdump tcp port 23
 tcpdump udp port 123
-tcpdump -xx tcp port 9041
-tcpdump -vv -i lo -nn -X tcp port 9069
+
 - 源端口
 # tcpdump -i eth1 src port 25
 - 目的端口

@@ -1,0 +1,22 @@
+yum install https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm
+ 
+yum install postgresql96-server postgresql96-contrib
+
+su heyuanlong
+mdkir /home/heyuanlong/pgsql-data
+cd /usr/pgsql-9.6/bin
+
+./initdb -D /home/heyuanlong/pgsql-data
+./createdb
+{
+	paste the following code in this file (/etc/sysctl.conf)
+	net.ipv6.conf.all.disable_ipv6 = 1
+
+	In postgresql.conf file change the listen address to 0.0.0.0
+	listen_address ='0.0.0.0'
+}
+
+./pg_ctl -D /home/heyuanlong/pgsql-data  start
+
+psql -h127.0.0.1 -Uheyuanlong
+
