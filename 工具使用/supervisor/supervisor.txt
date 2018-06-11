@@ -45,3 +45,19 @@ logfile_maxbytes=100MB        ; max # logfile bytes b4 rotation (default 50MB)
 类似
 nginx需要在配置文件里加上：		daemon off;
 redis需要在把配置文件的：		daemonize no
+
+
+//----------------------------------------------------------------------------------
+
+https://www.jianshu.com/p/3658c963d28b
+
+https://pypi.python.org/pypi/supervisor
+
+cd /usr/local/src
+wget https://pypi.python.org/packages/7b/17/88adf8cb25f80e2bc0d18e094fcd7ab300632ea00b601cbbbb84c2419eae/supervisor-3.3.2.tar.gz
+tar -zxvf supervisor-3.3.2.tar.gz
+cd supervisor-3.3.2
+python setup.py install #本地python版本为python2.7
+# python2.7 setup.py install #本地python版本为python3以上
+
+echo_supervisord_conf > /etc/supervisord.conf
