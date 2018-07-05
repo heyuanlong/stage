@@ -488,17 +488,89 @@ go的atomic包含一些原子操作函数，用来保证数据的原子性加减
 
 
 
-	
-	
 
+:= 结构不能在函数外使用。
+byte // uint8 的别名
+rune // int32 的别名 ,表示一个 Unicode 码点
 	
+i := 42           // int
+f := 3.142        // float64
+g := 0.867 + 0.5i // complex128
 	
-	
-	
-	
-	
-	
-	
+for 是 Go 中的 “while”
+switch的case可以是普通的表达式
 
 
-。
+没有条件的 switch，没有条件的 switch 同 switch true 一样。这种形式能将一长串 if-then-else 写得更加清晰。
+
+
+切片的零值是 nil。
+nil 切片的长度和容量为 0 且没有底层数组。
+映射的零值为 nil 。nil 映射既没有键，也不能添加键。
+
+a := make([]int, 5)  // len(a)=5
+b := make([]int, 0, 5) // len(b)=0, cap(b)=5
+
+
+函数也是值。它们可以像其它值一样传递。
+func compute(fn func(float64, float64) float64) float64 {
+	return fn(3, 4)
+}
+func main() {
+	hypot := func(x, y float64) float64 {
+		return math.Sqrt(x*x + y*y)
+	}
+	fmt.Println(hypot(5, 12))
+}
+
+
+而以指针为接收者的方法被调用时，接收者既能为值又能为指针
+而以值为接收者的方法被调用时，接收者既能为值又能为指针
+
+
+底层值为 nil 的接口值
+即便接口内的具体值为 nil，方法仍然会被 nil 接收者调用。
+在一些语言中，这会触发一个空指针异常，但在 Go 中通常会写一些方法来优雅地处理它（如本例中的 M 方法）。
+
+空接口可保存任何类型的值。（因为每个类型都至少实现了零个方法。）
+
+
+
+类型断言： 提供了访问接口值底层具体值的方式。
+t := i.(T)   //出错则恐慌
+t, ok := i.(T) //出错则ok=false
+
+类型选择： 是一种按顺序从几个类型断言中选择分支的结构。
+switch v := i.(type) {
+case T:
+    // v 的类型为 T
+case S:
+    // v 的类型为 S
+default:
+    // 没有匹配，v 与 i 的类型相同
+}
+
+
+v, ok := <-ch  //如果ch已经关闭并且没有数据了，ok才等于false
+for i := range ch  // 会不断从信道接收值，直到它被关闭并且没有数据了
+
+select 语句使一个 Go 程可以等待多个通信操作。
+当 select 中的其它分支都没有准备好时，default 分支就会执行。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.

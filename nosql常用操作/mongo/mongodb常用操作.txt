@@ -91,3 +91,12 @@ mapReduce
 
 db.event.find().limit(1).sort({"reportTime":-1})  //½µÐò 
 db.event.find().limit(1).sort({"reportTime":1})   //ÉýÐò
+
+
+//-------------------------------------------------
+use admin
+db.createUser({user:"nodebb",pwd:"999VqlvCXbrQE4awstC",roles :[ { role: "userAdminAnyDatabase", db: "admin" } ]})
+
+
+
+
