@@ -61,3 +61,22 @@ python setup.py install #本地python版本为python2.7
 # python2.7 setup.py install #本地python版本为python3以上
 
 echo_supervisord_conf > /etc/supervisord.conf
+
+
+
+
+
+
+supervisor> reread
+openfomo_api: available
+openfomo_settle: available
+supervisor> 
+supervisor> help update
+update			Reload config and add/remove as necessary, and will restart affected programs
+update all		Reload config and add/remove as necessary, and will restart affected programs
+update <gname> [...]	Update specific groups
+supervisor> update
+openfomo_api: added process group
+openfomo_settle: added process group
+
+

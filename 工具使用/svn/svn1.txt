@@ -40,3 +40,58 @@ svn客户端使用
 svn co svn://192.168.10.100/394 ./   拉取项目到当前目录
 svn help获取帮助
 svn info获取信息
+
+
+
+组管理和用户管理
+在启动目录下添加 authz 和 passwd 文件（看参考具体repository下的conf目录里的的authz 和 passwd）
+启动目录下的 authz 和 passwd是对所有仓库的设置
+repository下的conf目录里的的authz 和 passwd 是对本仓库的设置
+authz：
+分组
+	[groups]
+	# harry_and_sally = harry,sally
+	# harry_sally_and_joe = harry,sally,&joe
+
+	admin = kenc,jimcry
+	pg_ios = michael
+	pg_c = yuanlong
+	designer = cola,zhoujiang,tenghui
+
+设置仓库对组的读写权限
+	# [repository:/baz/fuz]
+	# @harry_and_sally = rw
+	# * = r
+
+	[Admin:/]
+	@admin = rw
+	@pg_ios = r
+	@pg_android = r
+	@pg_reactnative = r
+	@designer = r
+	@pm = r
+	@pg_support = rw
+	@pg_c = r
+	@test = r
+
+	[Android:/]
+	@admin = rw
+	@pg_ios = rw
+	@pg_android = rw
+	@pg_reactnative = r
+	@designer = r
+	@pm = r
+	@pg_support = r
+	@pg_c = rw
+	@test = r
+
+passwd：
+	[users]
+	# harry = harryssecret
+	# sally = sallyssecret
+	kenc    = mixboomkenc
+	will    = mixboomwill
+	michael = mixboommichael
+	yuanlong    = mixboomyuanlong
+
+	

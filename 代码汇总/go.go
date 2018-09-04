@@ -557,9 +557,44 @@ for i := range ch  // 会不断从信道接收值，直到它被关闭并且没�
 select 语句使一个 Go 程可以等待多个通信操作。
 当 select 中的其它分支都没有准备好时，default 分支就会执行。
 
+fmt.Errorf("session: unknown provide %q (forgotten import?)", provideName)
 
 
+// Log implement the log.Logger
+type Log struct {
+	*log.Logger
+}
+// NewSessionLog set io.Writer to create a Logger for session.
+func NewSessionLog(out io.Writer) *Log {
+	sl := new(Log)
+	sl.Logger = log.New(out, "[SESSION]", 1e9)
+	return sl
+}
 
+
+可以用 copy 和 append 组合可以避免创建中间的临时切片，同样是完成添加元素的操作：
+a = append(a, 0) // 切片扩展1个空间
+copy(a[i+1:], a[i:]) // a[i:]向后移动1个位置
+a[i] = x // 设置新添加的元素
+
+用 copy 和 append 组合也可以实现在中间位置插入多个元素(也就是插入一个切片):
+a = append(a, x...) // 为x切片扩展足够的空间
+copy(a[i+len(x):], a[i:]) // a[i:]向后移动len(x)个位置
+copy(a[i:], x) // 复制新添加的切片
+
+复制切片的方式：newB := append([]byte{}, b...)
+
+假设切片里存放的是指针对象，那么
+下面删除末尾的元素后，被删除的元素依然被切片底层数组引用，从而导致不能及时被自动垃圾回收器回收，应该设置为nil
+当然，如果切片存在的周期很短的话，可以不用刻意处理这个问题。因为如果切片本身已经可以被GC回收的话，切片对应的每个元素自然也就是可以被回收的了。
+
+我们不能直接对一个未加锁状态的 sync.Mutex 进行解锁，这会导致运行时异常。
+
+
+// Ctrl+C 退出
+sig := make(chan os.Signal, 1)
+signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
+fmt.Printf("quit (%v)\n", <-sig)
 
 
 

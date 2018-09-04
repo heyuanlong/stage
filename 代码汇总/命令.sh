@@ -139,6 +139,7 @@ less -N file.txt{
 
 查找文件里的内容
 find ./ -name "*.*" | xargs grep "\"ip\""
+find ./ -name "*.php" | xargs grep "人民币和星币兑换比例"
 
 du -sh PATH 总大小
 du -h PATH 目录里所有文件的详细大小
@@ -366,7 +367,21 @@ adduser tmp_3452
 passwd tmp_3452
 userdel tmp_3452
 
+
+
 vim /etc/sudoers
+
+
+
+curl -X POST 'localhost:9200/accounts/person' -d '
+{
+  "user": "李四",
+  "title": "工程师",
+  "desc": "系统管理"
+}'
+
+curl -H 'Host: app.xlx9.com' -H 'Accept: */*' -H 'User-Agent: FanweApp/6.0 (iPhone; iOS 11.3.1; Scale/2.00)' -H 'Accept-Language: zh-Hans-CN;q=1' --data "act=pay&ctl=pay&i_type=1&sdk_version_name=2.5.0" --compressed 'http://app.xlx9.com/mapi/index.php'
+
 
 
 
