@@ -53,9 +53,9 @@ authz：
 	# harry_and_sally = harry,sally
 	# harry_sally_and_joe = harry,sally,&joe
 
-	admin = kenc,jimcry
+	admin = kencccc,jimcry
 	pg_ios = michael
-	pg_c = yuanlong
+	pg_c = long
 	designer = cola,zhoujiang,tenghui
 
 设置仓库对组的读写权限
@@ -89,9 +89,9 @@ passwd：
 	[users]
 	# harry = harryssecret
 	# sally = sallyssecret
-	kenc    = mixboomkenc
-	will    = mixboomwill
-	michael = mixboommichael
-	yuanlong    = mixboomyuanlong
+	kencccc    = xxxxxx
+	will    = xxxxxxxx
+	michael = xxxxx
+	long    = xxxxxxxx
 
 	
