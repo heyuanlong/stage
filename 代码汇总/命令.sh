@@ -431,7 +431,7 @@ nohup ./bitcoind -conf=/btc/btc/btc.conf &
 btc.conf{
 rpcuser=test
 rpcpassword=123456
-rpcallowip=172.31.35.148
+rpcallowip=172.xx.xx.xxx
 rpcport=8932
 datadir=/btc/btc/blockchain
 }
@@ -439,7 +439,7 @@ datadir=/btc/btc/blockchain
 ./bitcoin-cli -conf=/btc/btc/btc.conf get_info
 ./bitcoin-cli -conf=/btc/btc/btc.conf getinfo
 ./bitcoin-cli -conf=/btc/btc/btc.conf getnetworkinfo
-./bitcoin-cli -conf=/btc/btc/btc.conf getbalance encryptwallet "of2018payment"
+./bitcoin-cli -conf=/btc/btc/btc.conf getbalance encryptwallet "xxxxxxxxxment"
 ./bitcoin-cli -conf=/btc/btc/btc.conf encryptwallet "of2018payment"
 
 
@@ -449,7 +449,7 @@ bitcoin.conf{
 server=1
 rpcuser=ofAdmin
 rpcpassword=of2018
-rpcallowip=172.31.35.148
+rpcallowip=172.xx.xx.xx
 rpcport=8332
 port=8334
 txindex=1
@@ -460,11 +460,12 @@ omnidebug=packets
 omnidebug=pending
 }
 ./omnicore-cli -rpcuser=ofAdmin -rpcpassword=of2018 getinfo
-./omnicore-cli -rpcuser=ofAdmin -rpcpassword=of2018 encryptwallet "of2018payment"
+./omnicore-cli -rpcuser=ofAdmin -rpcpassword=of2018 encryptwallet "xxxxxxxxment"
 ./omnicore-cli -rpcuser=ofAdmin -rpcpassword=of2018 getbalance
 ./omnicore-cli -conf=/btc/usdt/conf/bitcoin.conf getbalance
 
 
+//-----------------------------------------------------
 
 
 
