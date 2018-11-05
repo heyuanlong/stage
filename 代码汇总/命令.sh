@@ -43,6 +43,11 @@ crontab -l 列出任务
 service crond restart 重启crond
 
 
+*/5 * * * * . /etc/profile;ntpdate asia.pool.ntp.org;clock -w
+
+
+
+
 nohup ./beegoblog > blog.log 2>&1 &
 
 永久修改环境变量
@@ -86,7 +91,7 @@ rsync --port 8730 otherhost::
 rsync -e 'ssh -p 2002' otherhost:
 
 rsync -avzp /data/matchvs.com/cms/htdocs/CMS.MatchVS/webroot/jsp/* /data/matchvs.com/cms/htdocs/superCMS.MatchVS/webroot/jsp/
-
+rsync -avzp -e 'ssh -i "/data/golang/xxxxxxx.pem"' /home/centos/test/ root@xxx.xxx.xx.69:/home/bak/
 
 rsync -e 'ssh -p 3879' client heyuanlong@115.231.9.76:/home/heyuanlong/mygomatchvs/
 
@@ -139,7 +144,7 @@ less -N file.txt{
 
 查找文件里的内容
 find ./ -name "*.*" | xargs grep "\"ip\""
-find ./ -name "*.php" | xargs grep "人民币和星币兑换比例"
+find ./ -name "*.php" | xargs grep "yisuofs"
 
 du -sh PATH 总大小
 du -h PATH 目录里所有文件的详细大小
@@ -245,6 +250,7 @@ lsof -Pnl +M -i4    | grep 9005
 fdisk -l
 df -h
 mount -l  				查看
+lsblk
 mkfs -t ext3 /dev/vdb  格式化硬盘
 umount /dev/vdb		 	卸载
 mkdir /apps 
@@ -385,14 +391,83 @@ curl -H 'Host: app.xlx9.com' -H 'Accept: */*' -H 'User-Agent: FanweApp/6.0 (iPho
 
 
 
-
-
-
-
-
-
-
 ---
+
+npm install -g @vue/cli
+npm install -g @vue/cli-init
+
+
+vue init webpack my-project
+npm install
+npm run dev
+npm run build
+
+//-----------------------------------------------------
+
+systemctl start firewalld 
+systemctl status firewalld
+systemctl stop firewalld
+
+firewall-cmd --add-port=80/tcp --permanent
+firewall-cmd --add-port=8332/tcp --permanent
+firewall-cmd --add-port=1234/tcp --permanent
+firewall-cmd --add-port=11911/tcp --permanent
+firewall-cmd --add-port=8932/tcp --permanent
+
+
+重新载入 firewall-cmd --reload
+
+
+
+//-----------------------------------------------------
+
+
+
+
+
+./geth --rpc --rpcapi admin,miner,eth,web3,personal,net --rpcaddr 0.0.0.0 --rpcport 11911 --datadir=/ssd/blockchain/data
+
+nohup ./bitcoind -conf=/btc/btc/btc.conf &
+btc.conf{
+rpcuser=test
+rpcpassword=123456
+rpcallowip=172.31.35.148
+rpcport=8932
+datadir=/btc/btc/blockchain
+}
+./bitcoin-cli -conf=/btc/btc/btc.conf getbalance
+./bitcoin-cli -conf=/btc/btc/btc.conf get_info
+./bitcoin-cli -conf=/btc/btc/btc.conf getinfo
+./bitcoin-cli -conf=/btc/btc/btc.conf getnetworkinfo
+./bitcoin-cli -conf=/btc/btc/btc.conf getbalance encryptwallet "of2018payment"
+./bitcoin-cli -conf=/btc/btc/btc.conf encryptwallet "of2018payment"
+
+
+
+nohup ./omnicored -conf=/btc/usdt/conf/bitcoin.conf &
+bitcoin.conf{
+server=1
+rpcuser=ofAdmin
+rpcpassword=of2018
+rpcallowip=172.31.35.148
+rpcport=8332
+port=8334
+txindex=1
+datadir=/btc/usdt/data/
+logtimestamps=1
+omnidebug=tally
+omnidebug=packets
+omnidebug=pending
+}
+./omnicore-cli -rpcuser=ofAdmin -rpcpassword=of2018 getinfo
+./omnicore-cli -rpcuser=ofAdmin -rpcpassword=of2018 encryptwallet "of2018payment"
+./omnicore-cli -rpcuser=ofAdmin -rpcpassword=of2018 getbalance
+./omnicore-cli -conf=/btc/usdt/conf/bitcoin.conf getbalance
+
+
+
+
+
 
 
 
