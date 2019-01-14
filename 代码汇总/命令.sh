@@ -7,8 +7,8 @@ service iptables on
 
 修改防火墙
 第一步：vi /etc/sysconfig/iptables
-第二步：service iptables restart
-第三步: /etc/rc.d/init.d/iptables save
+service iptables restart
+/etc/rc.d/init.d/iptables save
 
 
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
@@ -251,10 +251,11 @@ fdisk -l
 df -h
 mount -l  				查看
 lsblk
-mkfs -t ext3 /dev/vdb  格式化硬盘
+mkfs -t xfs /dev/vdb  格式化硬盘
 umount /dev/vdb		 	卸载
 mkdir /apps 
-mount -t ext3 /dev/vdb /apps   挂载
+mount -t ext4 /dev/sda /data   挂载
+磁盘被手动挂载之后都必须把挂载信息写入/etc/fstab这个文件中，否则下次开机启动时仍然需要重新挂载。
 ---------------------------vim---------------------------------
 在 vi 或 vim 的命令状态下
 :%!xxd              ——将当前文本转换为16进制格式。
@@ -408,13 +409,13 @@ systemctl start firewalld
 systemctl status firewalld
 systemctl stop firewalld
 
+
+//-----------------------------------------------------
 firewall-cmd --add-port=80/tcp --permanent
 firewall-cmd --add-port=8332/tcp --permanent
-firewall-cmd --add-port=1234/tcp --permanent
-firewall-cmd --add-port=11911/tcp --permanent
-firewall-cmd --add-port=8932/tcp --permanent
+firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="10.0.2.4/32" port protocol="tcp" port="8332" accept"
 
-
+firewall-cmd --list-all
 重新载入 firewall-cmd --reload
 
 
@@ -465,7 +466,17 @@ omnidebug=pending
 ./omnicore-cli -conf=/btc/usdt/conf/bitcoin.conf getbalance
 
 
+./bitcoind -conf=/btc/bch/bch.conf -datadir=/btc/bch/data/ -reindex -reindex-chainstate
 //-----------------------------------------------------
+
+常用screen参数
+screen -S yourname -> 新建一个叫yourname的session
+screen -ls -> 列出当前所有的session
+screen -r yourname -> 回到yourname这个session
+screen -d yourname -> 远程detach某个session
+screen -d -r yourname -> 结束当前session并回到yourname这个session
+//-----------------------------------------------------
+
 
 
 

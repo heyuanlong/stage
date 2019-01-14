@@ -49,9 +49,10 @@ mysqladmin -uroot -p shutdown
 修改mysql的my.cnf 的[mysqld]datadir=/mnt/mysql  可以改变数据存放的目录。
 
 grant all privileges on you.* to 'youuser'@'localhost' identified by '123456';
-grant all privileges on you.* to 'youuser'@'127.0.0.1' identified by '123456';
+grant all privileges on lian.* to 'lianuser'@'%' identified by 'hylhyl4811';
 flush privileges;
 drop user 'youuser'@'%';
+
 
 
 

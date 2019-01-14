@@ -1,0 +1,46 @@
+#!/bin/bash
+db_user="backup_user"
+db_password="o7Yjp1ltVDIXclXA"
+db_name="prediction"
+
+#Move Backup Files to Records Dir
+cd /data/backup/prediction/current
+
+echo "You Are Now in Backup Directory Not"
+mv prediction* /data/backup/prediction/old
+
+echo "Old Backups are Moved to Old Directory"
+
+#Backup Dir
+backup_dir="/data/backup/prediction/current"
+
+#Time Format
+time=$(date +"%Y%m%d%H%M%S")
+
+#Execute Backup
+mysqldump -u$db_user -p$db_password $db_name | gzip > "$backup_dir/$db_name"-"$time.sql.gz"
+echo "Backup Completed"
+
+#Delete Files Before 7 Days
+seven_days=$(date -d -7day +"%Y%m%d")
+
+remove_files="/data/backup/prediction/old/$db_name-$seven_days*.sql.gz"
+exist_files=$(ls $remove_files 2> /dev/null | wc -l)
+
+if [ "$exist_files" != "0" ]
+then
+rm -rf /data/backup/prediction/old/$db_name-$seven_days*
+echo "Files Before 7 Days Ago are Deleted"
+else
+echo "Files Before 7 Days are Not Exist"
+fi
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------

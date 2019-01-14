@@ -55,14 +55,22 @@ https://pypi.python.org/pypi/supervisor
 
 cd /usr/local/src
 wget https://files.pythonhosted.org/packages/44/60/698e54b4a4a9b956b2d709b4b7b676119c833d811d53ee2500f1b5e96dc3/supervisor-3.3.4.tar.gz
-tar -zxvf supervisor-3.3.2.tar.gz
-cd supervisor-3.3.2
+tar -zxvf supervisor-3.3.4.tar.gz
+cd supervisor-3.3.4
 python setup.py install #本地python版本为python2.7
 # python2.7 setup.py install #本地python版本为python3以上
 
 echo_supervisord_conf > /etc/supervisord.conf
 
-
+可能要{
+	sudo wget https://pypi.python.org/packages/45/a0/317c6422b26c12fe0161e936fc35f36552069ba8e6f7ecbd99bbffe32a5f/meld3-1.0.2.tar.gz#md5=3ccc78cd79cffd63a751ad7684c02c91
+	sudo tar zxvf meld3-1.0.2.tar.gz
+	cd meld3-1.0.2
+	sudo python setup.py install
+	sudo ldconfig
+	#再次执行生成配置文件成功：
+	echo_supervisord_conf > /etc/supervisord.conf
+}
 
 
 
