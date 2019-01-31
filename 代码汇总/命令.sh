@@ -413,7 +413,7 @@ systemctl stop firewalld
 //-----------------------------------------------------
 firewall-cmd --add-port=80/tcp --permanent
 firewall-cmd --add-port=8332/tcp --permanent
-firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="10.0.2.4/32" port protocol="tcp" port="8332" accept"
+firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="10.0.2.3/32" port protocol="tcp" port="3306" accept"
 
 firewall-cmd --list-all
 重新载入 firewall-cmd --reload
@@ -421,8 +421,6 @@ firewall-cmd --list-all
 
 
 //-----------------------------------------------------
-
-
 
 
 
@@ -486,8 +484,17 @@ cat /etc/fstab 查看当前系统已经存在的挂载信息
 blkid 命令查看磁盘 UUID
 
 //-----------------------------------------------------
+nginx 简单验证方式
+server
+{
+	....
+	....
+	auth_basic "请验证登录信息";
+	auth_basic_user_file /usr/local/nginx/mysqlpasswd;
+	....
+	....
+}
 
-
-
+//-----------------------------------------------------
 
 

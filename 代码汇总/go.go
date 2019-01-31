@@ -597,7 +597,7 @@ signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
 fmt.Printf("quit (%v)\n", <-sig)
 
 
-
+golang gorm update的时候如何主键id为默认值0的话，会更新整个表。注意咯
 
 
 
