@@ -1,0 +1,94 @@
+./configure --prefix=/usr/local/php --enable-fpm   # --disable-fileinfo 后面这句在内存低时使用
+make && make install 
+加入path
+
+
+cp php.ini-production /usr/local/php/etc/php.ini
+cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
+vi /usr/local/php/etc/php-fpm.conf{
+	[global]
+	pid = /usr/local/php/var/run/php-fpm.pid
+	error_log = /usr/local/php/var/log/php-fpm.log
+	log_level = notice
+
+	[www-zu]
+	listen = /tmp/php-cgi.sock
+	listen.backlog = -1
+	listen.allowed_clients = 127.0.0.1
+	listen.owner = www
+	listen.group = www
+	listen.mode = 0666
+	user = www
+	group = www
+	pm = dynamic
+	pm.max_children = 80
+	pm.start_servers = 40
+	pm.min_spare_servers = 40
+	pm.max_spare_servers = 80
+	request_terminate_timeout = 100
+	request_slowlog_timeout = 0
+	slowlog = /usr/local/php/var/log/slow.log
+}
+
+/usr/local/php/sbin/php-fpm --fpm-config /usr/local/php/etc/php-fpm.conf
+
+ps aux | grep php-fpm | grep -v grep |  awk {'print $2'} | xargs kill -9
+
+
+
+
+
+vi enable-php.conf文件{
+		location ~ [^/]\.php(/|$)
+        {
+            try_files $uri =404;
+            fastcgi_pass  unix:/tmp/php-cgi.sock;
+            fastcgi_index index.php;
+            include fastcgi.conf;
+        }
+}
+
+vi testphp7.goingcoding.cn文件{
+	server
+    {
+        listen 80;
+        #listen [::]:80;
+        server_name testphp7.goingcoding.cn;
+
+        index index.html index.htm index.php default.html default.htm default.php;
+        root  /home/www2;
+
+        #include rewrite/thinkphp.conf;
+        #error_page   404   /404.html;
+
+
+        include enable-php.conf;
+
+        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+        {
+            expires      30d;
+        }
+
+        location ~ .*\.(js|css)?$
+        {
+            expires      12h;
+        }
+
+        location ~ /.well-known {
+            allow all;
+        }
+
+        location ~ /\.
+        {
+            deny all;
+        }
+
+        access_log  /home/wwwlog/testphp7.goingcoding.cn.log;
+    }
+}
+
+
+
+
+
+
