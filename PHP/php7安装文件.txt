@@ -1,3 +1,8 @@
+/usr/local/php/sbin/php-fpm --fpm-config /usr/local/php/etc/php-fpm.conf
+ps aux | grep php-fpm | grep -v grep |  awk {'print $2'} | xargs kill -9
+
+下面的安装方法可以不用了，直接用lnmp
+
 ./configure --prefix=/usr/local/php --enable-fpm   # --disable-fileinfo 后面这句在内存低时使用
 make && make install 
 加入path
@@ -29,12 +34,6 @@ vi /usr/local/php/etc/php-fpm.conf{
 	request_slowlog_timeout = 0
 	slowlog = /usr/local/php/var/log/slow.log
 }
-
-/usr/local/php/sbin/php-fpm --fpm-config /usr/local/php/etc/php-fpm.conf
-
-ps aux | grep php-fpm | grep -v grep |  awk {'print $2'} | xargs kill -9
-
-
 
 
 

@@ -411,6 +411,7 @@ systemctl stop firewalld
 
 
 //-----------------------------------------------------
+firewall-cmd --add-port=22/tcp --permanent
 firewall-cmd --add-port=80/tcp --permanent
 firewall-cmd --add-port=8332/tcp --permanent
 firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="10.0.2.3/32" port protocol="tcp" port="3306" accept"

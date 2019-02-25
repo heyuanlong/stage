@@ -45,8 +45,8 @@ svn info获取信息
 
 组管理和用户管理
 在启动目录下添加 authz 和 passwd 文件（看参考具体repository下的conf目录里的的authz 和 passwd）
-启动目录下的 authz 和 passwd是对所有仓库的设置
-repository下的conf目录里的的authz 和 passwd 是对本仓库的设置
+启动目录下的 authz 和 passwd是对所有仓库的公共设置
+repository下的conf目录里的的authz 和 passwd 是对本仓库的默认设置，可以在svnserve.conf修改authz 和 passwd的文件，比如使用公共设置
 authz：
 分组
 	[groups]

@@ -63,6 +63,11 @@ python setup.py install #本地python版本为python2.7
 echo_supervisord_conf > /etc/supervisord.conf
 
 可能要{
+	wget https://files.pythonhosted.org/packages/c2/f7/c7b501b783e5a74cf1768bc174ee4fb0a8a6ee5af6afa92274ff964703e0/setuptools-40.8.0.zip
+	unzip setuptools-40.8.0.zip
+	cd setuptools-40.8.0
+	python setup.py install
+
 	sudo wget https://pypi.python.org/packages/45/a0/317c6422b26c12fe0161e936fc35f36552069ba8e6f7ecbd99bbffe32a5f/meld3-1.0.2.tar.gz#md5=3ccc78cd79cffd63a751ad7684c02c91
 	sudo tar zxvf meld3-1.0.2.tar.gz
 	cd meld3-1.0.2
