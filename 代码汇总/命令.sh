@@ -251,10 +251,10 @@ fdisk -l
 df -h
 mount -l  				查看
 lsblk
-mkfs -t xfs /dev/vdb  格式化硬盘
+mkfs -t ext4 /dev/vdb  格式化硬盘
 umount /dev/vdb		 	卸载
 mkdir /apps 
-mount -t ext4 /dev/sda /data   挂载
+mount -t ext4 /dev/vdb /data   挂载
 磁盘被手动挂载之后都必须把挂载信息写入/etc/fstab这个文件中，否则下次开机启动时仍然需要重新挂载。
 ---------------------------vim---------------------------------
 在 vi 或 vim 的命令状态下
@@ -374,7 +374,7 @@ adduser tmp_3452
 passwd tmp_3452
 userdel tmp_3452
 
-
+sdfksdudhee567
 
 vim /etc/sudoers
 
@@ -413,7 +413,7 @@ systemctl stop firewalld
 //-----------------------------------------------------
 firewall-cmd --add-port=22/tcp --permanent
 firewall-cmd --add-port=80/tcp --permanent
-firewall-cmd --add-port=8332/tcp --permanent
+firewall-cmd --add-port=8080/tcp --permanent
 firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="10.0.2.3/32" port protocol="tcp" port="3306" accept"
 
 firewall-cmd --list-all

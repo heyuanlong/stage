@@ -55,8 +55,8 @@ https://pypi.python.org/pypi/supervisor
 
 cd /usr/local/src
 wget https://files.pythonhosted.org/packages/44/60/698e54b4a4a9b956b2d709b4b7b676119c833d811d53ee2500f1b5e96dc3/supervisor-3.3.4.tar.gz
-tar -zxvf supervisor-3.3.4.tar.gz
-cd supervisor-3.3.4
+tar -zxvf supervisor-3.3.4.tar.gz  && cd supervisor-3.3.4
+
 python setup.py install #本地python版本为python2.7
 # python2.7 setup.py install #本地python版本为python3以上
 
