@@ -1,0 +1,44 @@
+-t:在新容器内指定一个伪终端或终端。
+-i:允许你对容器内的标准输入 (STDIN) 进行交互。
+-d:让容器在后台运行。
+-P:将容器内部使用的网络端口映射到我们使用的主机上。
+-f: 让 docker logs 像使用 tail -f 一样来输出容器内部的标准输出。
+--name 指定容器的名称
+
+先指定外部端口，再指定内部端口
+docker run -d -p 8081:80 nginx 
+
+启动前台Ubuntu容器
+docker run  -i -t ubuntu:15.10 /bin/bash
+
+启动后台Ubuntu容器
+docker run  -i -d ubuntu:15.10
+
+进入Ubuntu系统
+winpty docker container exec -it awesome_antonelli bash
+
+看交互日志
+docker logs -tf 容器
+
+在运行中的容器内启动新进程
+docker exec [-d][-i][-t] 容器名 [command][arg...]
+
+查看容器内的进程
+docker top 容器名
+
+yum install -y yum-utils device-mapper-persistent-data lvm2
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum makecache fast
+yum -y install docker-ce
+systemctl start docker
+docker run hello-world
+
+
+
+docker run -p 6369:6379 -v $PWD/data:/data  -d redis:3.2 redis-server --appendonly yes
+docker exec -it 43f7a65ec7f8 redis-cli
+docker run -v /myredis/conf/redis.conf:/usr/local/etc/redis/redis.conf --name myredis redis redis-server /usr/local/etc/redis/redis.conf
+
+
+可以通过修改配置来达到client远程访问守护进程server
+

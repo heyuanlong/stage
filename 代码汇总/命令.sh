@@ -496,6 +496,8 @@ server
 	....
 }
 
+htpasswd  -c /usr/local/nginx/mysqlpasswd username
+
 //-----------------------------------------------------
 
 
