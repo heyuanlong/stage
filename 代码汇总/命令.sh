@@ -253,9 +253,9 @@ mount -l  				查看
 lsblk
 mkfs -t ext4 /dev/vdb  格式化硬盘
 umount /dev/vdb		 	卸载
-mkdir /apps 
+mkdir /data 
 mount -t ext4 /dev/vdb /data   挂载
-磁盘被手动挂载之后都必须把挂载信息写入/etc/fstab这个文件中，否则下次开机启动时仍然需要重新挂载。
+磁盘被手动挂载之后都必须把挂载信息写入/etc/fstab 这个文件中，否则下次开机启动时仍然需要重新挂载。
 ---------------------------vim---------------------------------
 在 vi 或 vim 的命令状态下
 :%!xxd              ——将当前文本转换为16进制格式。
@@ -423,24 +423,35 @@ firewall-cmd --list-all
 
 //-----------------------------------------------------
 
+Ctrl + A	该快捷键将移动光标到所在行首。
+Ctrl + E	移动光标到行尾。
+Ctrl + U	该快捷键会擦除从当前光标位置到行首的全部内容。
+Ctrl + K	它擦除的是从当前光标位置到行尾的全部内容。
+Ctrl + Y	这将粘贴使用 Ctrl+W，Ctrl+U 和 Ctrl+K 快捷键擦除的文本。 
 
+
+
+//-----------------------------------------------------
 
 ./geth --rpc --rpcapi admin,miner,eth,web3,personal,net --rpcaddr 0.0.0.0 --rpcport 11911 --datadir=/ssd/blockchain/data
 
-nohup ./bitcoind -conf=/btc/btc/btc.conf &
+
+nohup ./bitcoind -conf=/xdata/btc/btc.conf  >> /xdata/btc/btc.log 2>&1 &
 btc.conf{
+server=1
 rpcuser=test
 rpcpassword=123456
-rpcallowip=172.xx.xx.xxx
-rpcport=8932
-datadir=/btc/btc/blockchain
+rpcallowip=127.0.0.1
+rpcallowip=127.0.0.1
+rpcport=8832
+datadir=/xdata/btc/data
+txindex=1
 }
-./bitcoin-cli -conf=/btc/btc/btc.conf getbalance
-./bitcoin-cli -conf=/btc/btc/btc.conf get_info
-./bitcoin-cli -conf=/btc/btc/btc.conf getinfo
-./bitcoin-cli -conf=/btc/btc/btc.conf getnetworkinfo
-./bitcoin-cli -conf=/btc/btc/btc.conf getbalance encryptwallet "xxxxxxxxxment"
-./bitcoin-cli -conf=/btc/btc/btc.conf encryptwallet "of2018payment"
+./bitcoin-cli -conf=/xdata/btc/btc.conf help
+./bitcoin-cli -conf=/xdata/btc/btc.conf getbalance
+./bitcoin-cli -conf=/xdata/btc/btc.conf getnetworkinfo
+./bitcoin-cli -conf=/xdata/btc/btc.conf getbalance encryptwallet "xxxxxxxxxment"
+./bitcoin-cli -conf=/xdata/btc/btc.conf encryptwallet "of2018payment"
 
 
 
@@ -498,6 +509,15 @@ server
 
 htpasswd  -c /usr/local/nginx/mysqlpasswd username
 
+//----------------------lnmp-------------------------------
+show status  mysql服务器状态变量
+show variables mysql服务器 动态 运行时的系统变量
+
+/etc/init.d/nginx
+/etc/init.d/mysql
+/etc/init.d/php-fpm
+
+ps aux | grep php-fpm | grep -v grep |  awk {'print $2'} | xargs kill -9
+/usr/local/php/sbin/php-fpm --fpm-config /usr/local/php/etc/php-fpm.conf
+
 //-----------------------------------------------------
-
-
