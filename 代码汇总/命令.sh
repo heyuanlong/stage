@@ -251,10 +251,10 @@ fdisk -l
 df -h
 mount -l  				查看
 lsblk
-mkfs -t ext4 /dev/vdb  格式化硬盘
+mkfs -t ext4 /dev/sda  格式化硬盘
 umount /dev/vdb		 	卸载
 mkdir /data 
-mount -t ext4 /dev/vdb /data   挂载
+mount -t ext4 /dev/sda /xdata   挂载
 磁盘被手动挂载之后都必须把挂载信息写入/etc/fstab 这个文件中，否则下次开机启动时仍然需要重新挂载。
 ---------------------------vim---------------------------------
 在 vi 或 vim 的命令状态下
@@ -412,8 +412,8 @@ systemctl stop firewalld
 
 //-----------------------------------------------------
 firewall-cmd --add-port=22/tcp --permanent
-firewall-cmd --add-port=80/tcp --permanent
-firewall-cmd --add-port=8080/tcp --permanent
+firewall-cmd --add-port=3306/tcp --permanent
+firewall-cmd --add-port=6379/tcp --permanent
 firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="10.0.2.3/32" port protocol="tcp" port="3306" accept"
 
 firewall-cmd --list-all
@@ -429,7 +429,9 @@ Ctrl + U	该快捷键会擦除从当前光标位置到行首的全部内容。
 Ctrl + K	它擦除的是从当前光标位置到行尾的全部内容。
 Ctrl + Y	这将粘贴使用 Ctrl+W，Ctrl+U 和 Ctrl+K 快捷键擦除的文本。 
 
-
+//-----------------vim------------------------------------
+:s/from/to/g    将当前行中的所有from都替换成to。
+:%s/from/to/g   对所有行的内容进行替换。
 
 //-----------------------------------------------------
 
@@ -494,7 +496,7 @@ cat /etc/resolv.conf
 磁盘被手动挂载之后都必须把挂载信息写入/etc/fstab这个文件中，否则下次开机启动时仍然需要重新挂载。
 cat /etc/fstab 查看当前系统已经存在的挂载信息
 blkid 命令查看磁盘 UUID
-
+088d4826-247a-4e0f-bb50-0b24f0cae5df
 //-----------------------------------------------------
 nginx 简单验证方式
 server
@@ -506,8 +508,9 @@ server
 	....
 	....
 }
-
-htpasswd  -c /usr/local/nginx/mysqlpasswd username
+yum install -y httpd-tools
+htpasswd  -c /usr/local/nginx/conf/pass_file/pmadmintt pmadmintt
+htpasswd  -c /usr/local/nginx/conf/pass_file/testwedang wendang
 
 //----------------------lnmp-------------------------------
 show status  mysql服务器状态变量
@@ -521,3 +524,22 @@ ps aux | grep php-fpm | grep -v grep |  awk {'print $2'} | xargs kill -9
 /usr/local/php/sbin/php-fpm --fpm-config /usr/local/php/etc/php-fpm.conf
 
 //-----------------------------------------------------
+整站下载命令
+wget -r -p -np -k http://xxx.com/xxx
+-r, –recursive（递归） specify recursive download.（指定递归下载）
+-k, –convert-links（转换链接） make links in downloaded HTML point to local files.（将下载的HTML页面中的链接转换为相对链接即本地链接）
+-p, –page-requisites（页面必需元素） get all images, etc. needed to display HTML page.（下载所有的图片等页面显示所需的内容）
+-np, –no-parent（不追溯至父级） don’t ascend to the parent directory.
+//-----------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+

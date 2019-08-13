@@ -598,8 +598,8 @@ fmt.Printf("quit (%v)\n", <-sig)
 
 
 golang gorm update的时候如何主键id为默认值0的话，会更新整个表。注意咯
-
-
+golang解析json时把所有的int,float,double等数字，向interface{}解析时都当成float64
+decoder := json.NewDecoder(bytes.NewBuffer([]byte(msg)));decoder.UseNumber();decoder.Decode(&info);//这样可以解析出json.Number
 
 
 
