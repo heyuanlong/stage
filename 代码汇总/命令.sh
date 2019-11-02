@@ -497,6 +497,8 @@ cat /etc/resolv.conf
 cat /etc/fstab 查看当前系统已经存在的挂载信息
 blkid 命令查看磁盘 UUID
 088d4826-247a-4e0f-bb50-0b24f0cae5df
+
+UUID=c47b5689-1612-4b85-97ec-e5046e4b6332 /xdata                   ext4     defaults,_netdev  0 0
 //-----------------------------------------------------
 nginx 简单验证方式
 server
